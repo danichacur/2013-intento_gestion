@@ -93,11 +93,11 @@
     <Compile Include="Abm Permisos\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Recorrido\Alta.cs">
+    <Compile Include="Abm Recorrido\RecorridoCrear.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Recorrido\Alta.designer.cs">
-      <DependentUpon>Alta.cs</DependentUpon>
+    <Compile Include="Abm Recorrido\RecorridoCrear.designer.cs">
+      <DependentUpon>RecorridoCrear.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Recorrido\Form1.cs">
       <SubType>Form</SubType>
@@ -105,23 +105,11 @@
     <Compile Include="Abm Recorrido\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Recorrido\Listar..cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Recorrido\Listar..designer.cs">
-      <DependentUpon>Listar..cs</DependentUpon>
-    </Compile>
     <Compile Include="Abm Recorrido\Modificar_recorrido.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Abm Recorrido\Modificar_recorrido.designer.cs">
       <DependentUpon>Modificar_recorrido.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Abm Recorrido\RecorridoCrear.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Recorrido\RecorridoCrear.Designer.cs">
-      <DependentUpon>RecorridoCrear.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Recorrido\RecorridoListar.cs">
       <SubType>Form</SubType>
@@ -165,10 +153,10 @@
     <Compile Include="ciudades\CiudadModificar.Designer.cs">
       <DependentUpon>CiudadModificar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Consulta Puntos Adquiridos\Compra de Pasajes\Form1.cs">
+    <Compile Include="Compra de Pasajes\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Consulta Puntos Adquiridos\Compra de Pasajes\Form1.Designer.cs">
+    <Compile Include="Compra de Pasajes\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="conexion.cs" />
@@ -201,12 +189,6 @@
     </Compile>
     <Compile Include="func_usuario\modUsu.Designer.cs">
       <DependentUpon>modUsu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GenerarViaje\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GenerarViaje\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GenerarViaje\Generar.cs">
       <SubType>Form</SubType>
@@ -243,14 +225,11 @@
     <EmbeddedResource Include="Abm Permisos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Abm Recorrido\Alta.resx">
-      <DependentUpon>Alta.cs</DependentUpon>
+    <EmbeddedResource Include="Abm Recorrido\RecorridoCrear.resx">
+      <DependentUpon>RecorridoCrear.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Recorrido\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Abm Recorrido\Listar..resx">
-      <DependentUpon>Listar..cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Recorrido\Modificar_recorrido.resx">
       <DependentUpon>Modificar_recorrido.cs</DependentUpon>
@@ -270,8 +249,8 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GenerarViaje\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="GenerarViaje\Generar.resx">
+      <DependentUpon>Generar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

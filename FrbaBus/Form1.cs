@@ -92,7 +92,7 @@ namespace FrbaBus
 
         private void listarToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            GenerarViaje.Form1 listViaj = new GenerarViaje.Form1();
+            GenerarViaje.Generar listViaj = new GenerarViaje.Generar();
             listViaj.MdiParent = this;
             listViaj.Show();
         }
@@ -141,7 +141,9 @@ namespace FrbaBus
 
         private void anulacionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Cancelar_Viaje.Form1 CancelViaje = new Cancelar_Viaje.Form1();
+            CancelViaje.MdiParent = this;
+            CancelViaje.Show();
         }   
     }
 }
