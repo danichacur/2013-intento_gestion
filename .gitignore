@@ -29,3 +29,5 @@ FrbaBus/obj/Release/FrbaBus.csproj.GenerateResource.Cache
 FrbaBus/obj/Release/FrbaBus.exe
 FrbaBus/obj/Release/FrbaBus.pdb
 FrbaBus/obj/Release/FrbaBus.Properties.Resources.resources
+FrbaBus/obj/Debug/FrbaBus.Abm_Recorrido.RecorridoCrear.resources
+FrbaBus/obj/Debug/FrbaBus.GenerarViaje.Generar.resources
