@@ -31,3 +31,4 @@ FrbaBus/obj/Release/FrbaBus.pdb
 FrbaBus/obj/Release/FrbaBus.Properties.Resources.resources
 FrbaBus/obj/Debug/FrbaBus.Abm_Recorrido.RecorridoCrear.resources
 FrbaBus/obj/Debug/FrbaBus.GenerarViaje.Generar.resources
+FrbaBus/obj/*

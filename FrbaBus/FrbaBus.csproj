@@ -244,8 +244,14 @@
     <EmbeddedResource Include="Canje de Ptos\canje.resx">
       <DependentUpon>canje.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ciudades\CiudadCrear.resx">
+      <DependentUpon>CiudadCrear.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ciudades\CiudadListar.resx">
       <DependentUpon>CiudadListar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ciudades\CiudadModificar.resx">
+      <DependentUpon>CiudadModificar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
