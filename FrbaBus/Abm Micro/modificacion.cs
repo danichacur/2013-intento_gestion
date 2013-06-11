@@ -11,9 +11,12 @@ namespace FrbaBus.Abm_Micro
 {
     public partial class modificacion : Form
     {
+        public static modificacion f1;
         public modificacion()
         {
             InitializeComponent();
+       
+            modificacion.f1 = this;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -30,5 +33,19 @@ namespace FrbaBus.Abm_Micro
             microBaja.Show();
             this.Hide();
         }
-    }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        public TextBox TextBox1
+        {
+            get
+            {
+                return textBox1;
+            }
+        }
+
+        }    
 }
