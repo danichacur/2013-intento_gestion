@@ -113,5 +113,111 @@ namespace FrbaBus
             da.Fill(ds, "tipo_servicio");
             return ds;
         }
+
+        public int contarPasajesVendidos(DateTime inicio, DateTime fin, String patente)
+        {
+            int result = 0;
+            this.sql = string.Format(@"SELECT SUM(PASA_CANTIDAD) 
+                                        FROM TRANSPORTADOS.PASAJE Q,
+                                        TRANSPORTADOS.VIAJES V,
+                                        TRANSPORTADOS.MICROS B
+                                        WHERE Q.PASA_VIAJE_ID = V.VIAJ_ID
+	                                        AND V.VIAJ_MICRO = B.MICR_ID
+	                                        AND B.MICR_PATENTE = '(0)'
+	                                        AND V.VIAJ_FECHA_SALIDA BETWEEN (1) AND (2)", patente, inicio, fin);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            this.cnn.Close();
+            return result;
+
+        }
+
+        public bool bajaServicioMicro(DateTime inicio, String patente)
+        {
+            bool Resultado = false;
+            int result = 0;
+            this.sql = string.Format(@"UPDATE transportados.micros
+                                        SET
+                                        micr_baja = 1,
+                                        micr_fecha_baja = (0) ,
+
+                                        micr_baja_tecnica
+                                        micr_fecha_baja_tecnica
+                                        micr_fecha_regreso
+
+                                        WHERE micr_patente = (1) ", inicio, patente);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
+            this.cnn.Close();
+            return Resultado;
+
+        }
+
+
+        public bool bajaTecnicaMicro(DateTime inicio, DateTime fin, String patente)
+        {
+            bool Resultado = false;
+            int result = 0;
+            this.sql = string.Format(@"UPDATE transportados.micros
+                                        SET
+                                        micr_baja_tecnica = 1,
+                                        micr_fecha_baja_tecnica = (0) ,
+                                        micr_fecha_regreso = (1)
+                                        WHERE micr_patente = (2) ", inicio, fin, patente); 
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
+            this.cnn.Close();
+            return Resultado;
+        }
+
+        public string buscarMicroAlternativo(DateTime inicio, DateTime fin, String patente)
+        {
+            bool Resultado = false;
+            int result = 0;
+            string patenteAlterna = "";
+            //this.sql = string.Format(@"select tipo_id,tipo_nombre from transportados.tipo_servicio");
+            this.sql = string.Format(@"EJECUTAR_SP  
+                                        ");
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            //result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
+            this.cnn.Close();
+            return patenteAlterna;
+        }
+
+
+
+        public void reemplazarViajes(string microAlterno)
+        {
+            /*PROCESO TRANSPARENTE QUE CAMBIA EL MICRO ASIGNADO POR OTRO*/
+        }
+
     }
 }
