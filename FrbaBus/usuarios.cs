@@ -55,7 +55,7 @@ namespace FrbaBus
             }
             else
             {
-                this.mensaje= "Mmmm Lo siento";
+                this.mensaje= "Usuario/Contraseña invalidos";
             }
             this.cnn.Close();
             return Resultado;

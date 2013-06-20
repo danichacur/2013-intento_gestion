@@ -63,6 +63,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abm Micro\buscaMicro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\buscaMicro.Designer.cs">
+      <DependentUpon>buscaMicro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Micro\MicroAlta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +92,12 @@
     </Compile>
     <Compile Include="Abm Micro\modificacion.Designer.cs">
       <DependentUpon>modificacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Micro\nuevoMicro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\nuevoMicro.Designer.cs">
+      <DependentUpon>nuevoMicro.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Permisos\Form1.cs">
       <SubType>Form</SubType>
@@ -203,14 +215,23 @@
     <Compile Include="GenerarViaje\modificar.Designer.cs">
       <DependentUpon>modificar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login\Form1.cs">
+    <Compile Include="Inicio.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Login\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Inicio.Designer.cs">
+      <DependentUpon>Inicio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\Login_usu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\Login_usu.Designer.cs">
+      <DependentUpon>Login_usu.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Abm Micro\buscaMicro.resx">
+      <DependentUpon>buscaMicro.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Abm Micro\MicroAlta.resx">
       <DependentUpon>MicroAlta.cs</DependentUpon>
     </EmbeddedResource>
@@ -222,6 +243,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Micro\modificacion.resx">
       <DependentUpon>modificacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\nuevoMicro.resx">
+      <DependentUpon>nuevoMicro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Permisos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -259,8 +283,11 @@
     <EmbeddedResource Include="GenerarViaje\Generar.resx">
       <DependentUpon>Generar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Login\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Inicio.resx">
+      <DependentUpon>Inicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\Login_usu.resx">
+      <DependentUpon>Login_usu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

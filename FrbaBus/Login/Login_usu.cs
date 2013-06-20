@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace FrbaBus.Login
 {
-    public partial class Form1 : Form
+    public partial class Login_usu : Form
     {
-        public Form1()
+        public Login_usu()
         {
             InitializeComponent();
         }
@@ -25,10 +25,15 @@ namespace FrbaBus.Login
             if (Usuario0b.Buscar() == true)
             {
                 MessageBox.Show(Usuario0b.Mensaje, "Login");
+                Inicio parentForm = (Inicio)this.MdiParent;
+                parentForm.Hide();
+                Form1 IniAdmin = new Form1();
+                IniAdmin.Show();
             }
             else
             {
                 MessageBox.Show(Usuario0b.Mensaje, "Error");
+                text2.Text = string.Empty;
             }
         }
 

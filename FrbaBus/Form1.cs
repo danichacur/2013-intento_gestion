@@ -18,7 +18,7 @@ namespace FrbaBus
 
         private void loginToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Login.Form1 login = new Login.Form1();
+            Login.Login_usu login = new Login.Login_usu();
             login.Show();
         }
 
@@ -144,6 +144,16 @@ namespace FrbaBus
             Cancelar_Viaje.Form1 CancelViaje = new Cancelar_Viaje.Form1();
             CancelViaje.MdiParent = this;
             CancelViaje.Show();
+        }
+
+        private void compraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CiudadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }   
     }
 }
