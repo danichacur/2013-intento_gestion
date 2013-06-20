@@ -18,7 +18,7 @@ namespace FrbaBus
             contraseña = string.Empty;
             this.sql = string.Empty;
         }
-        /*public static string getHashSha256(string text)
+        public string getHashSha256(string text)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(text);
             SHA256Managed hashstring = new SHA256Managed();
@@ -29,7 +29,7 @@ namespace FrbaBus
                 hashString += String.Format("{0:x2}", x);
             }
             return hashString;
-        }*/
+        }
         public string Usuario
         {
             get { return this.usuario; }
@@ -43,6 +43,7 @@ namespace FrbaBus
         public bool Buscar()
         {
             bool Resultado = false;
+            
             this.sql = string.Format(@"select usua_id from transportados.usuario where usua_username='{0}' and usua_password = '{1}'", this.usuario, this.contraseña);
             this.comandosSql = new SqlCommand(this.sql,this.cnn);
             this.cnn.Open();

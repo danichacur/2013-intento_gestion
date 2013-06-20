@@ -20,8 +20,7 @@ namespace FrbaBus.Login
         {
             Usuarios Usuario0b = new Usuarios();
             Usuario0b.Usuario = this.text1.Text;
-            Usuario0b.Contraseña = this.text2.Text;
-
+            Usuario0b.Contraseña = Usuario0b.getHashSha256(this.text2.Text);
             if (Usuario0b.Buscar() == true)
             {
                 MessageBox.Show(Usuario0b.Mensaje, "Login");

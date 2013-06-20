@@ -669,3 +669,44 @@ CREATE TABLE [transportados].[usuario](
 ) ON [PRIMARY]
 
 GO
+
+INSERT INTO [GD1C2013].[transportados].[usuario]
+           ([usua_username]
+           ,[usua_password]
+           ,[usua_creado]
+           ,[usua_modificado]
+           ,[usua_habilitado])
+     VALUES
+           ('Administrador'
+           ,'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7'
+           ,SYSDATETIME()
+           ,SYSDATETIME()
+           ,1)
+           ,('Admin'
+           ,'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7'
+           ,SYSDATETIME()
+           ,SYSDATETIME()
+           ,1)
+           ,('Vanina'
+           ,'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7'
+           ,SYSDATETIME()
+           ,SYSDATETIME()
+           ,1)
+           ,('Daniel'
+           ,'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7'
+           ,SYSDATETIME()
+           ,SYSDATETIME()
+           ,1)
+           ,('Daniela'
+           ,'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7'
+           ,SYSDATETIME()
+           ,SYSDATETIME()
+           ,1)
+           ,('Diego'
+           ,'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7'
+           ,SYSDATETIME()
+           ,SYSDATETIME()
+           ,1)
+GO
+
+
