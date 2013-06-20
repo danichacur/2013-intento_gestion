@@ -39,6 +39,16 @@ namespace FrbaBus.Login
                 }
             }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Login_usu_Load(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+        }
+
 
         }
     }

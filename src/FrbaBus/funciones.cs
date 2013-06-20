@@ -113,6 +113,35 @@ namespace FrbaBus
             da.Fill(ds, "tipo_servicio");
             return ds;
         }
+
+        public DataSet llenaComboboxRecorrido()
+        {
+            this.sql = string.Format(@"select reco_id,cd.ciud_nombre+'-'+ci.ciud_nombre as reco_nombre
+                                from transportados.recorrido
+                                left outer join transportados.ciudad ci on ci.ciud_id=reco_id_ciudad_origen
+                                left outer join transportados.ciudad cd on cd.ciud_id=reco_id_ciudad_destino");
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "reco_nombre");
+            return ds;
+        }
+
+        public DataSet llenaComboboxRecorrido_micro(int recorrido_id)
+        {
+            this.sql = string.Format(@"select micr_id,micr_patente
+                                        from transportados.recorrido
+                                        left outer join transportados.micros on micr_tipo_id=reco_tipo_id
+                                        where reco_id = {0}", recorrido_id);
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "micr_patente");
+            return ds;
+        }
+
         public bool noExistePatente( String patente)
         {
             bool Resultado = false;
