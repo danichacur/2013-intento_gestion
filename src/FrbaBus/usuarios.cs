@@ -44,22 +44,73 @@ namespace FrbaBus
         {
             bool Resultado = false;
             
-            this.sql = string.Format(@"select usua_id from transportados.usuario where usua_username='{0}' and usua_password = '{1}'", this.usuario, this.contraseña);
+            this.sql = string.Format(@"select usua_logins from transportados.usuario where usua_username='{0}' and usua_password = '{1}'", this.usuario, this.contraseña);
             this.comandosSql = new SqlCommand(this.sql,this.cnn);
             this.cnn.Open();
             SqlDataReader Reg = null;
             Reg = this.comandosSql.ExecuteReader();
             if (Reg.Read())
             {
-                Resultado = true;
-                this.mensaje = "Bienvenido Datos correctos";
+                if (Convert.ToInt32(Reg[0]) < 3)
+                {
+                    Resultado = true;
+                    this.mensaje = "Bienvenido Datos correctos";
+                }
+                else
+                {
+                    this.mensaje = "Usuario Inhabilitado";
+                }
             }
             else
             {
+                
                 this.mensaje= "Usuario/Contraseña invalidos";
+            }
+            this.cnn.Close();        
+            return Resultado;
+        }
+        public bool fail_login()
+        {
+            bool Resultado = false;
+            int result = 0;
+            this.sql = string.Format(@"update transportados.usuario
+                                       set usua_logins=usua_logins+1
+                                           where usua_username= '{0}'", this.usuario);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
             }
             this.cnn.Close();
             return Resultado;
         }
+        public bool reset_login()
+        {
+            bool Resultado = false;
+            int result = 0;
+            this.sql = string.Format(@"update transportados.usuario
+                                       set usua_logins=0
+                                           where usua_username= '{0}'", this.usuario);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
+            this.cnn.Close();
+            return Resultado;
+        }
+            
     }
 }
