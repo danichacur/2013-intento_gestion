@@ -94,7 +94,7 @@ namespace FrbaBus
                                         r.reco_id as 'ID_recorrido'
                                         ,c1.ciud_nombre as 'Ciudad Origen'
                                         ,c2.ciud_nombre as 'Ciudad Destino'
-                                        ,t.tipo_nombre as 'Tipo de recorrido'
+                                        ,t.tipo_nombre as 'Tipo de servicio'
                                         ,r.reco_precio_base as 'Precio Base Pasaje'
                                         ,r.reco_precio_encomienda as 'Precio Base Encomienda'
                                       from transportados.recorrido r
@@ -113,7 +113,30 @@ namespace FrbaBus
             da.Fill(ds, "tipo_servicio");
             return ds;
         }
+        public bool noExistePatente( String patente)
+        {
+            bool Resultado = false;
+            int result = 0;
+            this.sql = string.Format(@"SELECT 1 
+                                        FROM TRANSPORTADOS.MICROS 
+                                        WHERE MICR_PATENTE = '(0)'", patente);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
 
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
+            this.cnn.Close();
+            return Resultado;
+
+        }
+        
         public int contarPasajesVendidos(DateTime inicio, DateTime fin, String patente)
         {
             int result = 0;
@@ -173,7 +196,7 @@ namespace FrbaBus
                                         micr_baja_tecnica = 1,
                                         micr_fecha_baja_tecnica = (0) ,
                                         micr_fecha_regreso = (1)
-                                        WHERE micr_patente = (2) ", inicio, fin, patente); 
+                                        WHERE micr_patente = '(2)' ", inicio, fin, patente); 
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
@@ -189,18 +212,28 @@ namespace FrbaBus
             return Resultado;
         }
 
-        public string buscarMicroAlternativo(DateTime inicio, DateTime fin, String patente)
+        public int buscarMicroAlternativo(DateTime inicio, DateTime fin, String patente)
         {
-            bool Resultado = false;
+            //bool Resultado = false;
             int result = 0;
-            string patenteAlterna = "";
-            //this.sql = string.Format(@"select tipo_id,tipo_nombre from transportados.tipo_servicio");
-            this.sql = string.Format(@"EJECUTAR_SP  
-                                        ");
+            Object otro;
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
-            //result = this.comandosSql.ExecuteNonQuery();
-            if (result > 0)
+
+            // 1.  create a command object identifying the stored procedure
+            SqlCommand cmd = new SqlCommand("microAlterno", this.cnn);
+            // 2. set the command object so it knows to execute a stored procedure
+            cmd.CommandType = CommandType.StoredProcedure;
+            // 3. add parameter to command, which will be passed to the stored procedure
+            cmd.Parameters.Add(new SqlParameter("@PATENTE", patente));
+            cmd.Parameters.Add(new SqlParameter("@FECHA_INI", inicio));
+            cmd.Parameters.Add(new SqlParameter("@FECHA_FIN ", fin));
+                      
+            // execute the command
+            otro = cmd.ExecuteScalar();
+
+            System.Console.WriteLine(otro);
+ /*           if (otro)
             {
                 Resultado = true;
             }
@@ -208,15 +241,35 @@ namespace FrbaBus
             {
                 Resultado = false;
             }
-            this.cnn.Close();
-            return patenteAlterna;
+*/            this.cnn.Close();
+            return result;
         }
 
 
 
-        public void reemplazarViajes(string microAlterno)
+        public void reemplazarViajes(int microAlterno, string microViejo, DateTime fecha)
         {
             /*PROCESO TRANSPARENTE QUE CAMBIA EL MICRO ASIGNADO POR OTRO*/
+          //  bool Resultado = false;
+            int result = 0;
+            this.sql = string.Format(@"UPDATE TRANSPORTADOS.VIAJES
+                SET VIAJ_MICRO = @ID_MICRO_NUEVO
+                WHERE VIAJ_MICRO = (SELECT MICR_ID FROM TRANSPORTADOS.MICROS
+				                WHERE MICR_PATENTE = @ID_MICRO_ORIGINAL)
+                AND VIAJ_FECHA_SALIDA >= @FECHA_ORIGEN", microAlterno, microViejo, fecha);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+         /*   if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }*/
+            this.cnn.Close();
+          //  return Resultado;
         }
 
     }

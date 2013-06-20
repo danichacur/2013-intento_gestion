@@ -40,8 +40,8 @@ namespace FrbaBus.Abm_Micro
              * QUE EL PROCESO DE ALTA SEA NORMAL COMO SI NADA?
              DSP HAY QUE ASIGNAR A LOS PASAJES VENDIDOS ESTE NUEVO MICRO!! OJO*/
             funciones pasajes = new funciones();
-            string microAlterno = null;
-            pasajes.reemplazarViajes(microAlterno);
+            int microAlterno = 0;
+            pasajes.reemplazarViajes(microAlterno, modificacion.f1.TextBox1.Text, MicroFormBaja.f1.inicio.Value);
         }
 
 
