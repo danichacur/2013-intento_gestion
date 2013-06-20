@@ -30,9 +30,6 @@ namespace FrbaBus.Abm_Recorrido
         public void llenacombobox()
         {
             funciones dataCiudad = new funciones();
-            /*SqlDataAdapter da = dataCiudad.llenaComboboxCiudad();
-            DataSet ds_origen = new DataSet();
-            DataSet ds_destino = new DataSet();*/
             DataSet ds_origen = dataCiudad.llenaComboboxCiudad();
             DataSet ds_destino = dataCiudad.llenaComboboxCiudad();
             DataSet ds_tipo = dataCiudad.llenaComboboxTipo();
