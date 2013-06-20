@@ -660,12 +660,13 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [transportados].[usuario](
-      [usua_id] [int] IDENTITY(1,1) NOT NULL,
-      [usua_username] [nvarchar](255) NOT NULL,
-      [usua_password] [nvarchar](255) NOT NULL,
-      [usua_creado] [datetime] NULL,
-      [usua_modificado] [datetime] NULL,
-      [usua_habilitado] [bit] NULL
+  [usua_id] [int] IDENTITY(1,1) NOT NULL,
+  [usua_username] [nvarchar](255) NOT NULL,
+  [usua_password] [nvarchar](255) NOT NULL,
+  [usua_creado] [datetime] NULL,
+  [usua_modificado] [datetime] NULL,
+  [usua_habilitado] [bit] NULL,
+  [usua_logins] [smallint] 0
 ) ON [PRIMARY]
 
 GO

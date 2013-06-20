@@ -24,17 +24,17 @@ namespace FrbaBus.Abm_Micro
         private void button3_Click(object sender, EventArgs e)
         {
             funciones pasajes = new funciones();
-            string microAlterno = null;
+            int microAlterno = 0;
             microAlterno = pasajes.buscarMicroAlternativo(MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value, modificacion.f1.TextBox1.Text);
-            if (microAlterno == null)
+            if (microAlterno == 0)
             {
                 Abm_Micro.nuevoMicro MicroNuevo = new Abm_Micro.nuevoMicro();
-                MicroNuevo.MdiParent = this;
+              //  MicroNuevo.MdiParent = this;
                 MicroNuevo.Show();
               
             }else
             {
-                pasajes.reemplazarViajes(microAlterno);
+                pasajes.reemplazarViajes(microAlterno, modificacion.f1.TextBox1.Text, MicroFormBaja.f1.inicio.Value);
             }
         }
 
