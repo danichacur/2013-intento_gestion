@@ -79,6 +79,7 @@
             this.button2.TabIndex = 4;
             this.button2.Text = "Cancelar";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // text2
             // 
@@ -86,7 +87,7 @@
             this.text2.Name = "text2";
             this.text2.PasswordChar = '*';
             this.text2.Size = new System.Drawing.Size(100, 20);
-            this.text2.TabIndex = 5;
+            this.text2.TabIndex = 2;
             // 
             // Login_usu
             // 
@@ -101,6 +102,7 @@
             this.Controls.Add(this.button1);
             this.Name = "Login_usu";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Login_usu_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

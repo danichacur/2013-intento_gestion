@@ -15,5 +15,10 @@ namespace FrbaBus.Compra_de_Pasajes
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Maximized;
+        }
     }
 }
