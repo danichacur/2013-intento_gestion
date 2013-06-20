@@ -99,6 +99,12 @@
     <Compile Include="Abm Micro\nuevoMicro.Designer.cs">
       <DependentUpon>nuevoMicro.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Micro\patenteNueva.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\patenteNueva.Designer.cs">
+      <DependentUpon>patenteNueva.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Permisos\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -246,6 +252,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Micro\nuevoMicro.resx">
       <DependentUpon>nuevoMicro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\patenteNueva.resx">
+      <DependentUpon>patenteNueva.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Permisos\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

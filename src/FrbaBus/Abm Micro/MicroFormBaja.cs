@@ -69,7 +69,6 @@ namespace FrbaBus.Abm_Micro
                 /*preguntar si se cancelan los viajes existentes o se busca un micro sustituto*/
             {
                 Abm_Micro.buscaMicro buscarMicro = new Abm_Micro.buscaMicro();
-              //  buscarMicro.MdiParent = this;
                 buscarMicro.Show();
             }
                         

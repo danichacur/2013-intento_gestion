@@ -19,9 +19,11 @@ namespace FrbaBus.Abm_Micro
         protected SqlCommand comandosSql;
         protected string mensaje;
 
+        public static MicroAlta Malta;
         public MicroAlta()
         {
             InitializeComponent();
+            MicroAlta.Malta = this;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -29,14 +31,14 @@ namespace FrbaBus.Abm_Micro
          //insertar_micro();
         }
 
-        void insertar_micro(int tipoServ,int cantButaca,int kgCarga, string marca, int modelo, string patente, int pisos )
+        public void insertar_micro(int tipoServ,int cantButaca,int kgCarga, string marca, int modelo, string patente, int pisos )
         {
             bool Resultado;
             this.cadenaConexion = (@"Data Source=PC_PRUEBA\SQLSERVER2008;Initial Catalog =GD1C2013; integrated security =true;User Id=gd;Password=gd2013;");
             this.cnn = new SqlConnection(cadenaConexion);
             this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[micros](
     [micr_tipo_id],[micr_cant_butacas],[micr_kg_encomienda],[micr_marca],[micr_modelo],[micr_baja],[micr_baja_tecnica],[micro_creado],[micr_patente],[micr_pisos] )
-    (select t.tipo_id {0},{1},{2},{3},{4},0,0,SYSDATETIME(),'{5}',{6}
+    (select t.tipo_id, {0},{1},{2},{3},{4},0,0,SYSDATETIME(),'{5}',{6}
         from transportados.tipo_servicio)"
                 ,tipoServ,cantButaca,kgCarga,marca,modelo,patente,pisos);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
@@ -47,7 +49,7 @@ namespace FrbaBus.Abm_Micro
             if (Reg.Read())
             {
                 Resultado = true;
-                this.mensaje = "Bienvenido Datos correctos";
+                this.mensaje = "Datos correctos";
             }
             else
             {

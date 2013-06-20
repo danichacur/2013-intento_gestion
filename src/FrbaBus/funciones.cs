@@ -29,6 +29,35 @@ namespace FrbaBus
             da.Fill(ds, "tipo_servicio");
             return ds;
         }
+
+        public DataSet llenaComboboxRecorrido()
+        {
+            this.sql = string.Format(@"select reco_id,cd.ciud_nombre+'-'+ci.ciud_nombre as reco_nombre
+            from transportados.recorrido
+            left outer join transportados.ciudad ci on ci.ciud_id=reco_id_ciudad_origen
+            left outer join transportados.ciudad cd on cd.ciud_id=reco_id_ciudad_destino");
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "reco_nombre");
+            return ds;
+        }
+
+        public DataSet llenaComboboxRecorrido_micro(int recorrido_id)
+        {
+            this.sql = string.Format(@"select micr_id,micr_patente
+            from transportados.recorrido
+            left outer join transportados.micros on micr_tipo_id=reco_tipo_id
+            where reco_id = {0}", recorrido_id);
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "micr_patente");
+            return ds;
+        }
+
         public bool insertarRecorrido(int ciudOrigen, int ciudDestino,int tipoServ,int basePasaje,int baseEncomienda)
         {
             bool Resultado = false;
@@ -117,9 +146,12 @@ namespace FrbaBus
         {
             bool Resultado = false;
             int result = 0;
-            this.sql = string.Format(@"SELECT 1 
-                                        FROM TRANSPORTADOS.MICROS 
-                                        WHERE MICR_PATENTE = '(0)'", patente);
+            this.sql = string.Format(@"IF EXISTS (SELECT 1 
+                                FROM TRANSPORTADOS.MICROS 
+                                WHERE MICR_PATENTE = '(0)')
+                                SELECT 1
+                                ELSE
+                                SELECT 0", patente);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
@@ -233,43 +265,69 @@ namespace FrbaBus
             otro = cmd.ExecuteScalar();
 
             System.Console.WriteLine(otro);
- /*           if (otro)
-            {
-                Resultado = true;
-            }
-            else
-            {
-                Resultado = false;
-            }
-*/            this.cnn.Close();
+           this.cnn.Close();
             return result;
         }
 
+        public int cargameMicro(String patenteNueva, string patenteVieja)
+        {
+            int result = 0;
 
+            this.sql = string.Format(@"
+            INSERT INTO [GD1C2013].[transportados].[micros]([micr_tipo_id],
+            [micr_cant_butacas],[micr_kg_encomienda],[micr_marca],[micr_modelo],
+            [micr_baja],[micr_baja_tecnica],[micro_creado],[micr_patente],[micr_pisos])
+            (select t.tipo_id,  m.micr_cant_butacas, m.micr_kg_encomienda, m.micr_marca,
+             m.micr_modelo, 0, 0, SYSDATETIME(), '(0)', m.micr_pisos
+             from transportados.tipo_servicio t,
+             transportados.micros m
+             where m.micr_patente = '(1)')", patenteNueva, patenteVieja);
+
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+
+            this.cnn.Close();
+            return result;
+        }
+
+        public int buscarMicro(String patente)
+        {
+            int result = 0;
+            Object otro;
+            this.sql = string.Format(@"SELECT MICR_ID
+                                WHERE MICR_PATENTE = '(0)'", patente);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+  
+
+            otro = this.comandosSql.ExecuteScalar();
+
+            //devuelvo el id del micro recien creado
+            result = (int)otro;
+
+            this.cnn.Close();
+            return result;
+        }
+
+  
 
         public void reemplazarViajes(int microAlterno, string microViejo, DateTime fecha)
         {
             /*PROCESO TRANSPARENTE QUE CAMBIA EL MICRO ASIGNADO POR OTRO*/
-          //  bool Resultado = false;
+ 
             int result = 0;
             this.sql = string.Format(@"UPDATE TRANSPORTADOS.VIAJES
-                SET VIAJ_MICRO = @ID_MICRO_NUEVO
+                SET VIAJ_MICRO = (0)
                 WHERE VIAJ_MICRO = (SELECT MICR_ID FROM TRANSPORTADOS.MICROS
-				                WHERE MICR_PATENTE = @ID_MICRO_ORIGINAL)
-                AND VIAJ_FECHA_SALIDA >= @FECHA_ORIGEN", microAlterno, microViejo, fecha);
+				                WHERE MICR_PATENTE = (1))
+                AND VIAJ_FECHA_SALIDA >= '(2)'", microAlterno, microViejo, fecha);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
-         /*   if (result > 0)
-            {
-                Resultado = true;
-            }
-            else
-            {
-                Resultado = false;
-            }*/
+
             this.cnn.Close();
-          //  return Resultado;
+
         }
 
     }

@@ -29,8 +29,7 @@ namespace FrbaBus.Abm_Micro
             if (microAlterno == 0)
             {
                 Abm_Micro.nuevoMicro MicroNuevo = new Abm_Micro.nuevoMicro();
-              //  MicroNuevo.MdiParent = this;
-                MicroNuevo.Show();
+                 MicroNuevo.Show();
               
             }else
             {
