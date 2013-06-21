@@ -26,7 +26,7 @@ UPDATE transportados.pasaje
 SET pasa_fecha_devolucion = SYSDATETIME(),
 	pasa_desc_devolucion = 'Micro cancelado',
 	pasa_cod_devolucion = pasa_viaje_id
-WHERE PASA_VIAJE_ID = (select distinct V.VIAJ_ID from 
+WHERE PASA_VIAJE_ID in (select distinct V.VIAJ_ID from 
 			TRANSPORTADOS.VIAJES V,
 			TRANSPORTADOS.MICROS B
 			where
