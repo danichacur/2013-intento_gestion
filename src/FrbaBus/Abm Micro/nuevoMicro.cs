@@ -42,15 +42,11 @@ namespace FrbaBus.Abm_Micro
              * TENDRIA QUE TOMAR LOS DATOS DEL MICRO QUE SE DIO DE BAJA O
              * QUE EL PROCESO DE ALTA SEA NORMAL COMO SI NADA?
              DSP HAY QUE ASIGNAR A LOS PASAJES VENDIDOS ESTE NUEVO MICRO!! OJO*/
-            funciones pasajes = new funciones();
-            int microAlterno = 0;
+
             Abm_Micro.patenteNueva patenteNueva = new Abm_Micro.patenteNueva();
-            patenteNueva.Show();
+           patenteNueva.Show();
+           this.Close();
 
-
-            pasajes.cargameMicro(modificacion.f1.TextBox1.Text, patenteNueva.nueva.text.Text);
-            microAlterno = pasajes.buscarMicro(patenteNueva.nueva.text.Text);
-            pasajes.reemplazarViajes(microAlterno, modificacion.f1.TextBox1.Text, MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value);
         }
 
 

@@ -26,9 +26,21 @@ namespace FrbaBus.Abm_Micro
             MicroAlta.Malta = this;
         }
 
+       
         private void button1_Click(object sender, EventArgs e)
         {
-         //insertar_micro();
+            funciones patente = new funciones();
+            if (!patente.noExistePatente(patenteBox.Text))
+            {
+                MessageBox.Show("La patente ingresada ya existe!");
+            }
+            else
+            {
+                MessageBox.Show("Gracias!");
+
+                insertar_micro(Convert.ToInt32(servicioCombo.SelectedText), Convert.ToInt32(butacaCombo.Value), Convert.ToInt32(kgText.Text), marcaCombo.SelectedText, Convert.ToInt32(modeloBox.Text), patenteBox.Text, Convert.ToInt32(pisos.Text));
+            }
+
         }
 
         public void insertar_micro(int tipoServ,int cantButaca,int kgCarga, string marca, int modelo, string patente, int pisos )
@@ -56,6 +68,32 @@ namespace FrbaBus.Abm_Micro
                 this.mensaje = "Mmmm Lo siento";
             }
             this.cnn.Close();
+        }
+
+        private void MicroAlta_Load(object sender, EventArgs e)
+        {
+            llenacombobox();
+        }
+
+         public void llenacombobox()
+        {
+            funciones combos = new funciones();
+            DataSet servicio = combos.llenaComboboxTipo();
+            //DataSet modelo = combos.llenaComboboxModelo();
+            DataSet marca = combos.llenaComboboxMarca();
+            //da.Fill(ds_origen, "Ciudad");
+            marcaCombo.DataSource = marca.Tables[0].DefaultView;
+            //se especifica el campo de la tabla
+            marcaCombo.DisplayMember = "micr_marca";
+            marcaCombo.ValueMember = "micr_marca";
+            
+            servicioCombo.DataSource = servicio.Tables[0].DefaultView;
+            //se especifica el campo de la tabla
+            servicioCombo.DisplayMember = "tipo_nombre";
+            servicioCombo.ValueMember = "tipo_id";
+            //int value = ((KeyValuePair<string, int>)comboBox1.SelectedItem).Value;
+            //MessageBox.Show(value.ToString());
+
         }
     }
 }

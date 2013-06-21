@@ -30,6 +30,7 @@ namespace FrbaBus.Abm_Micro
             {
                 Abm_Micro.nuevoMicro MicroNuevo = new Abm_Micro.nuevoMicro();
                  MicroNuevo.Show();
+                 this.Close();
               
             }else
             {

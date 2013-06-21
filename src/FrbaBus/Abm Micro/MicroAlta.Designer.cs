@@ -41,6 +41,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.kgText = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.pisos = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.butacaCombo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -144,7 +146,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(105, 209);
+            this.button1.Location = new System.Drawing.Point(103, 231);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
@@ -152,11 +154,29 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(127, 194);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(121, 20);
+            this.textBox1.TabIndex = 14;
+            // 
+            // pisos
+            // 
+            this.pisos.AutoSize = true;
+            this.pisos.Location = new System.Drawing.Point(15, 202);
+            this.pisos.Name = "pisos";
+            this.pisos.Size = new System.Drawing.Size(91, 13);
+            this.pisos.TabIndex = 13;
+            this.pisos.Text = "Cantidad de pisos";
+            // 
             // MicroAlta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(292, 266);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.pisos);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.kgText);
             this.Controls.Add(this.label6);
@@ -172,6 +192,7 @@
             this.Controls.Add(this.label1);
             this.Name = "MicroAlta";
             this.Text = "Alta de micros";
+            this.Load += new System.EventHandler(this.MicroAlta_Load);
             ((System.ComponentModel.ISupportInitialize)(this.butacaCombo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -193,6 +214,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox kgText;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label pisos;
 
     }
 }

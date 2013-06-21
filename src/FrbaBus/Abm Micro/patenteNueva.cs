@@ -32,9 +32,39 @@ namespace FrbaBus.Abm_Micro
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Gracias!");
+           
+        }
 
-            this.Close();
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            funciones patente = new funciones();
+
+            if (!patente.noExistePatente(textBox1.Text))
+            {
+                MessageBox.Show("La patente ingresada ya existe!");
+            }
+            else
+            {
+                MessageBox.Show("Gracias!");
+
+                funciones pasajes = new funciones();
+                int microAlterno = 0;
+                pasajes.cargameMicro(modificacion.f1.TextBox1.Text, textBox1.Text);
+                microAlterno = pasajes.buscarMicro(patenteNueva.nueva.text.Text);
+                pasajes.reemplazarViajes(microAlterno, modificacion.f1.TextBox1.Text, Abm_Micro.MicroFormBaja.f1.inicio.Value, Abm_Micro.MicroFormBaja.f1.fin.Value);
+
+                if (microAlterno == 0)
+                {
+                    MessageBox.Show("Hubo un error, no se pudo dar de alta el micro");
+                }
+                else
+                {
+                    MessageBox.Show("Micro dado de alta correctamente");
+                }
+
+                this.Close();
+            }
+            
         }
     }
 }

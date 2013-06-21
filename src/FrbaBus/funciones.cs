@@ -30,6 +30,17 @@ namespace FrbaBus
             return ds;
         }
 
+        public DataSet llenaComboboxMarca()
+        {
+            this.sql = string.Format(@"select distinct micr_marca from transportados.micros");
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "marca");
+            return ds;
+        }
+
         public DataSet llenaComboboxRecorrido()
         {
             this.sql = string.Format(@"select reco_id,cd.ciud_nombre+'-'+ci.ciud_nombre as reco_nombre
@@ -258,7 +269,7 @@ namespace FrbaBus
             cmd.Parameters.Add(new SqlParameter("@PATENTE", patente));
             cmd.Parameters.Add(new SqlParameter("@FECHA_INI", inicio));
             cmd.Parameters.Add(new SqlParameter("@FECHA_FIN ", fin));
-                      
+            this.cnn.Open();          
             // execute the command
             otro = cmd.ExecuteScalar();
             result = Convert.ToInt32(otro);
@@ -267,23 +278,17 @@ namespace FrbaBus
             return result;
         }
 
-        public void cargameMicro(String patenteNueva, string patenteVieja)
+        public void cargameMicro(String patenteVieja, string patenteNueva)
         {
             int result = 0;
 
-            this.sql = string.Format(@"
-            INSERT INTO [GD1C2013].[transportados].[micros]([micr_tipo_id],
-            [micr_cant_butacas],[micr_kg_encomienda],[micr_marca],[micr_modelo],
-            [micr_baja],[micr_baja_tecnica],[micro_creado],[micr_patente],[micr_pisos])
-            (select t.tipo_id,  m.micr_cant_butacas, m.micr_kg_encomienda, m.micr_marca,
-             m.micr_modelo, 0, 0, SYSDATETIME(), '(0)', m.micr_pisos
-             from transportados.tipo_servicio t,
-             transportados.micros m
-             where m.micr_patente = '(1)')", patenteNueva, patenteVieja);
-
-            this.comandosSql = new SqlCommand(this.sql, this.cnn);
-            this.cnn.Open();
-            result = this.comandosSql.ExecuteNonQuery();
+            SqlCommand cmd = new SqlCommand("cargarMicro", this.cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@patenteNueva", patenteNueva));
+            cmd.Parameters.Add(new SqlParameter("@patenteVieja", patenteVieja));
+    
+            this.cnn.Open();          
+            result = cmd.ExecuteNonQuery();
 
             this.cnn.Close();
             //return result;
@@ -296,7 +301,7 @@ namespace FrbaBus
             SqlCommand cmd = new SqlCommand("idMicro", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@PATENTE", patente));
-
+            this.cnn.Open();
             // execute the command
             otro = cmd.ExecuteScalar();
             result = Convert.ToInt32(otro);
@@ -313,11 +318,18 @@ namespace FrbaBus
  
             int result = 0;
             this.sql = string.Format(@"UPDATE TRANSPORTADOS.VIAJES
-                SET VIAJ_MICRO = (0)
+                SET VIAJ_MICRO = @id_micro
                 WHERE VIAJ_MICRO = (SELECT MICR_ID FROM TRANSPORTADOS.MICROS
-				                WHERE MICR_PATENTE = (1))
-                AND VIAJ_FECHA_SALIDA BETWEEN '(2)' AND '(3)'", microAlterno, microViejo, fecha, fechalleg);
+				                WHERE MICR_PATENTE = @patente)
+                AND VIAJ_FECHA_SALIDA BETWEEN @inicio AND @fin");
+            
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@id_micro", microAlterno));
+            this.comandosSql.Parameters.Add(new SqlParameter("@patente", microViejo));
+            this.comandosSql.Parameters.Add(new SqlParameter("@inicio", fecha));
+            this.comandosSql.Parameters.Add(new SqlParameter("@fin", fechalleg));
+
+
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
 
@@ -337,7 +349,8 @@ namespace FrbaBus
             cmd.Parameters.Add(new SqlParameter("@FECHA_FIN ", fechalleg));
 
             this.cnn.Open();
-            result = this.comandosSql.ExecuteNonQuery();
+            result = cmd.ExecuteNonQuery();
+            this.cnn.Close();
 
             if (result > 0)
             {
@@ -347,10 +360,6 @@ namespace FrbaBus
             {
                 MessageBox.Show("Ocurrió un error al devolver los pasajes");
             }
-
-
-            this.cnn.Close();
-
         }
 
         public bool devolucionPersonal(string voucher, int codPasaje, string motivo)
@@ -365,7 +374,7 @@ namespace FrbaBus
             cmd.Parameters.Add(new SqlParameter("@MOTIVO ", motivo));
 
             this.cnn.Open();
-            result = this.comandosSql.ExecuteNonQuery();
+            result = cmd.ExecuteNonQuery();
 
             if (result > 0)
             {

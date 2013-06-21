@@ -76,6 +76,7 @@ namespace FrbaBus.Abm_Micro
                 pasajes.bajaServicioMicro(dateTimePicker1.Value, this.textBox1.Text);
             else
                 pasajes.bajaTecnicaMicro(dateTimePicker1.Value, dateTimePicker2.Value, this.textBox1.Text);
+            this.Close();
         }
 
     }
