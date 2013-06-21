@@ -147,6 +147,12 @@
     <Compile Include="Cancelar Viaje\Baja de viaje.Designer.cs">
       <DependentUpon>Baja de viaje.cs</DependentUpon>
     </Compile>
+    <Compile Include="ciudades\CiudadModificar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ciudades\CiudadModificar.Designer.cs">
+      <DependentUpon>CiudadModificar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Devolucion pasaje\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,11 +177,11 @@
     <Compile Include="ciudades\CiudadListar.Designer.cs">
       <DependentUpon>CiudadListar.cs</DependentUpon>
     </Compile>
-    <Compile Include="ciudades\CiudadModificar.cs">
+    <Compile Include="ciudades\CiudadBuscar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ciudades\CiudadModificar.Designer.cs">
-      <DependentUpon>CiudadModificar.cs</DependentUpon>
+    <Compile Include="ciudades\CiudadBuscar.Designer.cs">
+      <DependentUpon>CiudadBuscar.cs</DependentUpon>
     </Compile>
     <Compile Include="Compra de Pasajes\Form1.cs">
       <SubType>Form</SubType>
@@ -278,6 +284,9 @@
     <EmbeddedResource Include="Abm Recorrido\RecorridoListar.resx">
       <DependentUpon>RecorridoListar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ciudades\CiudadModificar.resx">
+      <DependentUpon>CiudadModificar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Devolucion pasaje\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -290,8 +299,8 @@
     <EmbeddedResource Include="ciudades\CiudadListar.resx">
       <DependentUpon>CiudadListar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ciudades\CiudadModificar.resx">
-      <DependentUpon>CiudadModificar.cs</DependentUpon>
+    <EmbeddedResource Include="ciudades\CiudadBuscar.resx">
+      <DependentUpon>CiudadBuscar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Compra de Pasajes\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

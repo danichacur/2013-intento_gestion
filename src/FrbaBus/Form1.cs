@@ -53,6 +53,7 @@ namespace FrbaBus
         private void Form1_Load(object sender, EventArgs e)
         {
             ((ToolStripMenuItem)CiudadListarToolStripMenuItem).Visible = true;
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void crearToolStripMenuItem_Click(object sender, EventArgs e)
@@ -64,7 +65,7 @@ namespace FrbaBus
 
         private void modificarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ciudades.CiudadModificar CiudMod = new ciudades.CiudadModificar();
+            ciudades.CiudadBuscar CiudMod = new ciudades.CiudadBuscar();
             CiudMod.MdiParent = this;
             CiudMod.Show();
         }

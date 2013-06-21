@@ -19,17 +19,22 @@ namespace FrbaBus.ciudades
         private void button1_Click(object sender, EventArgs e)
         {
             bool result;
+            bool citiExist = true;
             funciones dataCiudad = new funciones();
-            result = dataCiudad.insertarCiudad(this.textBox1.Text);
-            if (result == true)
+            citiExist = dataCiudad.CheckCity(this.textBox1.Text);
+            if (citiExist)
             {
-                MessageBox.Show("Ciudad Creada correctamente");
-                this.Close();
+                result = dataCiudad.insertarCiudad(this.textBox1.Text);
+                if (result == true)
+                {
+                    MessageBox.Show("Ciudad Creada correctamente");
+                    this.Close();
+                }
             }
             else
             {
-                MessageBox.Show("Error");
-                this.Close();
+                MessageBox.Show("Ciudad Duplicada","Error");
+                
             }
         }
 

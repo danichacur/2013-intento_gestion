@@ -267,7 +267,7 @@ namespace FrbaBus
 
             this.cnn.Open();
             result = cmd.ExecuteNonQuery();
-            this.cnn.Close();
+            
 
             if (result > 0)
             {
@@ -277,6 +277,7 @@ namespace FrbaBus
             {
                 MessageBox.Show("Ocurrió un error al devolver los pasajes");
             }
+
         }
 
         public bool devolucionPersonal(string voucher, int codPasaje, string motivo)
@@ -307,5 +308,41 @@ namespace FrbaBus
             this.cnn.Close();
             return Resultado;
         }
+        public void ModifyCity(string CiudName, Int32 IsBaja,string CiudNameOrig)
+        {
+            int result = 0;
+            this.sql = string.Format(@"UPDATE [transportados].[ciudad]
+                                        SET
+                                        ciud_baja = @Baja ,
+                                        ciud_modificado=SYSDATETIME()
+                                        where ciud_nombre =@CiudMod"); 
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@CiudMod", CiudName));
+            this.comandosSql.Parameters.Add(new SqlParameter("@Baja", IsBaja));
+            this.cnn.Open();
+            this.comandosSql.ExecuteNonQuery();   
+            this.cnn.Close();
+        }
+        public bool CheckCity(string CiudName)
+        {   
+            int result = 0;
+            bool Resultado = false;
+            this.sql = string.Format(@"select ciud_id
+                                        from transportados.ciudad
+                                        WHERE ciud_nombre = '(0)' ", CiudName); 
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+           
+            this.cnn.Close();
+            return Resultado;
+            
+        }
+
+        }
     }
-}
+

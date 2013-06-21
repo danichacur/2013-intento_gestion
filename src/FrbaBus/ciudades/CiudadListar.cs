@@ -25,10 +25,10 @@ namespace FrbaBus.Ciudades
         private void Form1_Load(object sender, EventArgs e)
         {
             Formularios Ciudad = new Formularios();
-            DataSet ciudadLista = Ciudad.listarCiudad();
+            DataSet ciudadLista = Ciudad.listarCiudad(string.Empty);
             dataGridView1.DataSource = ciudadLista.Tables[0].DefaultView;
         }
-            void cargagrid()
+       /*     void cargagrid()
         {
             this.cadenaConexion = (@"Data Source=PC_PRUEBA\SQLSERVER2008;Initial Catalog =GD1C2013; integrated security =true;User Id=gd;Password=gd2013;");
             this.cnn = new SqlConnection (cadenaConexion);
@@ -51,6 +51,6 @@ namespace FrbaBus.Ciudades
 
             }
             this.cnn.Close();
-        }
+        }*/
     }
 }

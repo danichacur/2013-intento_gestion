@@ -89,7 +89,7 @@ namespace FrbaBus
             da.Fill(ds, "tipo_servicio");
             return ds;
         }
-        public DataSet listarCiudad()
+        public DataSet listarCiudad(string ciudad)
         {
             this.sql = string.Format(@"select ciud_nombre as 'Nombre'
                                             ,ciud_creado as 'Fecha de creacion'
@@ -98,7 +98,8 @@ namespace FrbaBus
                                             	when 0 then 'NO'
 	                                            else 'SI' 
                                             end as 'Dada de Baja' 
-                                            from transportados.ciudad");
+                                            from transportados.ciudad
+                                            where ciud_nombre like '%{0}%'",ciudad);
             DataSet ds = new DataSet();
             //indicamos la consulta en SQL
             SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
