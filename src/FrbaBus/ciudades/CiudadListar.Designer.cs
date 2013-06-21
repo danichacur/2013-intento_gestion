@@ -29,11 +29,6 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ciud_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ciud_nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ciud_creado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ciud_modificado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ciud_baja = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,43 +37,15 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AllowUserToOrderColumns = true;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ciud_id,
-            this.ciud_nombre,
-            this.ciud_creado,
-            this.ciud_modificado,
-            this.ciud_baja});
             this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(544, 227);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // ciud_id
-            // 
-            this.ciud_id.HeaderText = "ID_Coiudad";
-            this.ciud_id.Name = "ciud_id";
-            // 
-            // ciud_nombre
-            // 
-            this.ciud_nombre.HeaderText = "Nombre";
-            this.ciud_nombre.Name = "ciud_nombre";
-            // 
-            // ciud_creado
-            // 
-            this.ciud_creado.HeaderText = "Creado";
-            this.ciud_creado.Name = "ciud_creado";
-            // 
-            // ciud_modificado
-            // 
-            this.ciud_modificado.HeaderText = "Modificado";
-            this.ciud_modificado.Name = "ciud_modificado";
-            // 
-            // ciud_baja
-            // 
-            this.ciud_baja.HeaderText = "Baja";
-            this.ciud_baja.Name = "ciud_baja";
             // 
             // Form1
             // 
@@ -97,10 +64,5 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ciud_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ciud_nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ciud_creado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ciud_modificado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ciud_baja;
     }
 }

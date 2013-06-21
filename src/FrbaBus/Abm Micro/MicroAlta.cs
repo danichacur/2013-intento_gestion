@@ -45,7 +45,7 @@ namespace FrbaBus.Abm_Micro
 
         public void insertar_micro(int tipoServ,int cantButaca,int kgCarga, string marca, int modelo, string patente, int pisos )
         {
-            bool Resultado;
+            //bool Resultado;
             this.cadenaConexion = (@"Data Source=PC_PRUEBA\SQLSERVER2008;Initial Catalog =GD1C2013; integrated security =true;User Id=gd;Password=gd2013;");
             this.cnn = new SqlConnection(cadenaConexion);
             this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[micros](
@@ -60,7 +60,7 @@ namespace FrbaBus.Abm_Micro
             Reg = this.comandosSql.ExecuteReader();
             if (Reg.Read())
             {
-                Resultado = true;
+                //Resultado = true;
                 this.mensaje = "Datos correctos";
             }
             else
@@ -77,7 +77,7 @@ namespace FrbaBus.Abm_Micro
 
          public void llenacombobox()
         {
-            funciones combos = new funciones();
+            Formularios combos = new Formularios();
             DataSet servicio = combos.llenaComboboxTipo();
             //DataSet modelo = combos.llenaComboboxModelo();
             DataSet marca = combos.llenaComboboxMarca();

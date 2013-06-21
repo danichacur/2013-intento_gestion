@@ -196,6 +196,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios.cs" />
     <Compile Include="funciones.cs" />
     <Compile Include="func_usuario\listFunc.cs">
       <SubType>Form</SubType>

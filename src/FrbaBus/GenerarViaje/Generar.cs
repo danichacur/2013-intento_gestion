@@ -25,7 +25,7 @@ namespace FrbaBus.GenerarViaje
         {
             if (comboBox1.SelectedValue.GetType() != typeof(System.Data.DataRowView))
             {
-                funciones dataRecorrido_micro = new funciones();
+                Formularios dataRecorrido_micro = new Formularios();
                 DataSet ds_Recorrido_micro = dataRecorrido_micro.llenaComboboxRecorrido_micro(Convert.ToInt32(comboBox1.SelectedValue));
                 //da.Fill(ds_origen, "Ciudad");
                 comboBox2.DataSource = ds_Recorrido_micro.Tables[0].DefaultView;
@@ -41,7 +41,7 @@ namespace FrbaBus.GenerarViaje
         }
         public void Llenarcombobox()
         {
-            funciones dataRecorrido = new funciones();
+            Formularios dataRecorrido = new Formularios();
             DataSet ds_Recorrido = dataRecorrido.llenaComboboxRecorrido();
             //da.Fill(ds_origen, "Ciudad");
             comboBox1.DataSource = ds_Recorrido.Tables[0].DefaultView;

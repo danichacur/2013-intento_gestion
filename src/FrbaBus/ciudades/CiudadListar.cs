@@ -24,7 +24,9 @@ namespace FrbaBus.Ciudades
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            cargagrid();
+            Formularios Ciudad = new Formularios();
+            DataSet ciudadLista = Ciudad.listarCiudad();
+            dataGridView1.DataSource = ciudadLista.Tables[0].DefaultView;
         }
             void cargagrid()
         {
