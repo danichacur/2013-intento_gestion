@@ -147,23 +147,20 @@ namespace FrbaBus
         {
             bool Resultado = false;
             int result = 0;
-            this.sql = string.Format(@"IF EXISTS (SELECT 1 
-                                FROM TRANSPORTADOS.MICROS 
-                                WHERE MICR_PATENTE = '(0)')
-                                SELECT 1
-                                ELSE
-                                SELECT 0", patente);
-            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            object otro;
+            SqlCommand cmd = new SqlCommand("existe", this.cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@PATENTE", patente));
             this.cnn.Open();
-            result = this.comandosSql.ExecuteNonQuery();
-
+            otro = cmd.ExecuteScalar();
+            result = Convert.ToInt32(otro);
             if (result > 0)
             {
-                Resultado = true;
+                Resultado = false;
             }
             else
             {
-                Resultado = false;
+                Resultado = true;
             }
             this.cnn.Close();
             return Resultado;
@@ -173,17 +170,22 @@ namespace FrbaBus
         public int contarPasajesVendidos(DateTime inicio, DateTime fin, String patente)
         {
             int result = 0;
-            this.sql = string.Format(@"SELECT SUM(PASA_CANTIDAD) 
-                                        FROM TRANSPORTADOS.PASAJE Q,
-                                        TRANSPORTADOS.VIAJES V,
-                                        TRANSPORTADOS.MICROS B
-                                        WHERE Q.PASA_VIAJE_ID = V.VIAJ_ID
-	                                        AND V.VIAJ_MICRO = B.MICR_ID
-	                                        AND B.MICR_PATENTE = '(0)'
-	                                        AND V.VIAJ_FECHA_SALIDA BETWEEN (1) AND (2)", patente, inicio, fin);
-            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            object otro;
+            SqlCommand cmd = new SqlCommand("pasajesVendidos", this.cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@PATENTE", patente));
+            cmd.Parameters.Add(new SqlParameter("@FECHA_INI", inicio));
+            cmd.Parameters.Add(new SqlParameter("@FECHA_FIN ", fin));
             this.cnn.Open();
-            result = this.comandosSql.ExecuteNonQuery();
+            otro = cmd.ExecuteScalar();
+            if (string.IsNullOrEmpty(Convert.ToString(otro)))
+            {
+                result = 0;
+            }
+            else
+            {
+                result = Convert.ToInt32(otro);
+            }
             this.cnn.Close();
             return result;
 
@@ -247,30 +249,25 @@ namespace FrbaBus
 
         public int buscarMicroAlternativo(DateTime inicio, DateTime fin, String patente)
         {
-            //bool Resultado = false;
+
             int result = 0;
             Object otro;
-            this.comandosSql = new SqlCommand(this.sql, this.cnn);
-            this.cnn.Open();
-
-            // 1.  create a command object identifying the stored procedure
+  
             SqlCommand cmd = new SqlCommand("microAlterno", this.cnn);
-            // 2. set the command object so it knows to execute a stored procedure
             cmd.CommandType = CommandType.StoredProcedure;
-            // 3. add parameter to command, which will be passed to the stored procedure
             cmd.Parameters.Add(new SqlParameter("@PATENTE", patente));
             cmd.Parameters.Add(new SqlParameter("@FECHA_INI", inicio));
             cmd.Parameters.Add(new SqlParameter("@FECHA_FIN ", fin));
                       
             // execute the command
             otro = cmd.ExecuteScalar();
-
-            System.Console.WriteLine(otro);
+            result = Convert.ToInt32(otro);
+            //System.Console.WriteLine(otro);
            this.cnn.Close();
             return result;
         }
 
-        public int cargameMicro(String patenteNueva, string patenteVieja)
+        public void cargameMicro(String patenteNueva, string patenteVieja)
         {
             int result = 0;
 
@@ -289,24 +286,21 @@ namespace FrbaBus
             result = this.comandosSql.ExecuteNonQuery();
 
             this.cnn.Close();
-            return result;
+            //return result;
         }
 
         public int buscarMicro(String patente)
         {
             int result = 0;
             Object otro;
-            this.sql = string.Format(@"SELECT MICR_ID
-                                WHERE MICR_PATENTE = '(0)'", patente);
-            this.comandosSql = new SqlCommand(this.sql, this.cnn);
-            this.cnn.Open();
-  
+            SqlCommand cmd = new SqlCommand("idMicro", this.cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@PATENTE", patente));
 
-            otro = this.comandosSql.ExecuteScalar();
-
-            //devuelvo el id del micro recien creado
-            result = (int)otro;
-
+            // execute the command
+            otro = cmd.ExecuteScalar();
+            result = Convert.ToInt32(otro);
+            //System.Console.WriteLine(otro);
             this.cnn.Close();
             return result;
         }

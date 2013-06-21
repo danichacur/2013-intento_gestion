@@ -43,10 +43,25 @@ namespace FrbaBus.Abm_Micro
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Abm_Micro.MicroFormBaja microBaja = new Abm_Micro.MicroFormBaja();
-            //microBaja.MdiParent = this;
-            microBaja.Show();
-            this.Hide();
+            if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                MessageBox.Show("Error, debe ingresar una patente");
+            }
+            else
+            {
+                funciones existe = new funciones();
+                if (existe.noExistePatente(textBox1.Text))
+                {
+                    MessageBox.Show("Error, no existen micros con esa patente");
+                }
+                else
+                {
+                    Abm_Micro.MicroFormBaja microBaja = new Abm_Micro.MicroFormBaja();
+                    microBaja.Show();
+                    this.Hide();
+                }
+            }
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
