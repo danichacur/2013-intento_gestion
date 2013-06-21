@@ -141,10 +141,16 @@
     <Compile Include="Abm Recorrido\RecorridoModificar.Designer.cs">
       <DependentUpon>RecorridoModificar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cancelar Viaje\Form1.cs">
+    <Compile Include="Cancelar Viaje\Baja de viaje.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cancelar Viaje\Form1.Designer.cs">
+    <Compile Include="Cancelar Viaje\Baja de viaje.Designer.cs">
+      <DependentUpon>Baja de viaje.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Devolucion pasaje\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Devolucion pasaje\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Canje de Ptos\canje.cs">
@@ -271,7 +277,7 @@
     <EmbeddedResource Include="Abm Recorrido\RecorridoListar.resx">
       <DependentUpon>RecorridoListar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cancelar Viaje\Form1.resx">
+    <EmbeddedResource Include="Devolucion pasaje\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Canje de Ptos\canje.resx">

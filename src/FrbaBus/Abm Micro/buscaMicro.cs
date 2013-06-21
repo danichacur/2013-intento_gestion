@@ -33,14 +33,16 @@ namespace FrbaBus.Abm_Micro
               
             }else
             {
-                pasajes.reemplazarViajes(microAlterno, modificacion.f1.TextBox1.Text, MicroFormBaja.f1.inicio.Value);
+                pasajes.reemplazarViajes(microAlterno, modificacion.f1.TextBox1.Text, MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value);
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("En proceso...");
+            funciones pasajes = new funciones();
             /*VER BIEN DONDE ENGANCHA EN EL PROCESO DE DEVOLVER LOS PASAJES*/
+            pasajes.devolverPasajes(modificacion.f1.TextBox1.Text, MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value);
+          //  MessageBox.Show("En proceso...");
         }
     }
 }

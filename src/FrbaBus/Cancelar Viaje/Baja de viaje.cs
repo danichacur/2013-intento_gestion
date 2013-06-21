@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace FrbaBus.Cancelar_Viaje
 {
-    public partial class Form1 : Form
+    public partial class Baja_de_viaje : Form
     {
-        public Form1()
+        public Baja_de_viaje()
         {
             InitializeComponent();
         }

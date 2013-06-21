@@ -24,10 +24,11 @@ namespace FrbaBus.Abm_Micro
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("En proceso...");
+            funciones pasajes = new funciones();
             /*VER BIEN DONDE ENGANCHA EN EL PROCESO DE DEVOLVER LOS PASAJES*/
-            Cancelar_Viaje.Form1 cancelarViajes = new Cancelar_Viaje.Form1();
-             cancelarViajes.Show();
+            pasajes.devolverPasajes(modificacion.f1.TextBox1.Text, MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value);
+         //   MessageBox.Show("En proceso...");
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -37,8 +38,6 @@ namespace FrbaBus.Abm_Micro
           
         private void button4_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("En proceso...");
-
             /*VER BIEN DONDE ENGANCHA EN EL PROCESO DE ALTA DE MICRO.. 
              * TENDRIA QUE TOMAR LOS DATOS DEL MICRO QUE SE DIO DE BAJA O
              * QUE EL PROCESO DE ALTA SEA NORMAL COMO SI NADA?
@@ -51,7 +50,7 @@ namespace FrbaBus.Abm_Micro
 
             pasajes.cargameMicro(modificacion.f1.TextBox1.Text, patenteNueva.nueva.text.Text);
             microAlterno = pasajes.buscarMicro(patenteNueva.nueva.text.Text);
-            pasajes.reemplazarViajes(microAlterno, modificacion.f1.TextBox1.Text, MicroFormBaja.f1.inicio.Value);
+            pasajes.reemplazarViajes(microAlterno, modificacion.f1.TextBox1.Text, MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value);
         }
 
 

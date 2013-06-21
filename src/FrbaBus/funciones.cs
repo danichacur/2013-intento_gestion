@@ -305,9 +305,9 @@ namespace FrbaBus
             return result;
         }
 
-  
 
-        public void reemplazarViajes(int microAlterno, string microViejo, DateTime fecha)
+
+        public void reemplazarViajes(int microAlterno, string microViejo, DateTime fecha, DateTime fechalleg)
         {
             /*PROCESO TRANSPARENTE QUE CAMBIA EL MICRO ASIGNADO POR OTRO*/
  
@@ -316,7 +316,7 @@ namespace FrbaBus
                 SET VIAJ_MICRO = (0)
                 WHERE VIAJ_MICRO = (SELECT MICR_ID FROM TRANSPORTADOS.MICROS
 				                WHERE MICR_PATENTE = (1))
-                AND VIAJ_FECHA_SALIDA >= '(2)'", microAlterno, microViejo, fecha);
+                AND VIAJ_FECHA_SALIDA BETWEEN '(2)' AND '(3)'", microAlterno, microViejo, fecha, fechalleg);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
@@ -325,5 +325,61 @@ namespace FrbaBus
 
         }
 
+        public void devolverPasajes(string microViejo, DateTime fecha, DateTime fechalleg)
+        {
+            /*PROCESO TRANSPARENTE QUE DEVUELVE LOS PASAJES*/
+            int result = 0;
+
+            SqlCommand cmd = new SqlCommand("devuelvePasajes", this.cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@PATENTE", microViejo));
+            cmd.Parameters.Add(new SqlParameter("@FECHA_INI", fecha));
+            cmd.Parameters.Add(new SqlParameter("@FECHA_FIN ", fechalleg));
+
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+
+            if (result > 0)
+            {
+                MessageBox.Show("Devolución de pasajes completa");
+            }
+            else
+            {
+                MessageBox.Show("Ocurrió un error al devolver los pasajes");
+            }
+
+
+            this.cnn.Close();
+
+        }
+
+        public bool devolucionPersonal(string voucher, int codPasaje, string motivo)
+        {
+            /*PROCESO TRANSPARENTE QUE DEVUELVE LOS PASAJES*/
+            int result = 0;
+            bool Resultado = false;
+            SqlCommand cmd = new SqlCommand("devolucionPersonal", this.cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@VOUCHER", voucher));
+            cmd.Parameters.Add(new SqlParameter("@PASAJE", codPasaje));
+            cmd.Parameters.Add(new SqlParameter("@MOTIVO ", motivo));
+
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+
+            if (result > 0)
+            {
+                Resultado = true;
+                MessageBox.Show("Devolución de pasajes completa");
+            }
+            else
+            {
+                Resultado = false;
+                MessageBox.Show("Ocurrió un error al devolver los pasajes");
+            }
+            
+            this.cnn.Close();
+            return Resultado;
+        }
     }
 }
