@@ -39,8 +39,8 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.MaskedTextBox();
+            this.textBox2 = new System.Windows.Forms.MaskedTextBox();
             this.SuspendLayout();
             // 
             // button2
@@ -150,17 +150,24 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(220, 230);
+            this.textBox1.Location = new System.Drawing.Point(220, 229);
+            this.textBox1.Mask = "99999";
             this.textBox1.Name = "textBox1";
+            this.textBox1.PromptChar = ' ';
             this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 23;
+            this.textBox1.TabIndex = 25;
+            this.textBox1.ValidatingType = typeof(int);
+            this.textBox1.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBox1_MaskInputRejected);
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(220, 273);
+            this.textBox2.Mask = "99999";
             this.textBox2.Name = "textBox2";
+            this.textBox2.PromptChar = ' ';
             this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 24;
+            this.textBox2.TabIndex = 26;
+            this.textBox2.ValidatingType = typeof(int);
             // 
             // RecorridoCrear
             // 
@@ -183,7 +190,7 @@
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
             this.Name = "RecorridoCrear";
-            this.Text = "Alta";
+            this.Text = "sep";
             this.Load += new System.EventHandler(this.RecorridoCrear_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -203,7 +210,7 @@
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.MaskedTextBox textBox1;
+        private System.Windows.Forms.MaskedTextBox textBox2;
     }
 }

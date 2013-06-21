@@ -79,7 +79,7 @@ namespace FrbaBus
 
         private void modificarToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Abm_Recorrido.RecorridoModificar RecoMod = new Abm_Recorrido.RecorridoModificar();
+            Abm_Recorrido.Recorrido_buscar RecoMod = new Abm_Recorrido.Recorrido_buscar();
             RecoMod.MdiParent = this;
             RecoMod.Show();
         }

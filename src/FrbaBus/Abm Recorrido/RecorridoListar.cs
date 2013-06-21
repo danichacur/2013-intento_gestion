@@ -31,7 +31,7 @@ namespace FrbaBus.Abm_Recorrido
         void cargagrid()
         {
             Formularios Recorrido = new Formularios();
-            DataSet recorridoLista = Recorrido.listarRecorrido();
+            DataSet recorridoLista = Recorrido.listarRecorrido(string.Empty);
             dataGridView1.DataSource = recorridoLista.Tables[0].DefaultView;
         }
 

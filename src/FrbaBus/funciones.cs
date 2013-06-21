@@ -342,7 +342,39 @@ namespace FrbaBus
             return Resultado;
             
         }
+        /*public bool CheckRecorrido(Int32 Ciudorig, Int32 CiudDest, Int32 tipo)
+        {
+            Int32 result = 0;
+            bool Resultado = false;
+            this.sql = string.Format(@"select * from transportados.recorrido");
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
 
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = false;
+            }
+
+            this.cnn.Close();
+            return Resultado;
+
+        }*/
+        public void ModifyReco(Int32 reco_id, Int32 IsBaja)
+        {
+            int result = 0;
+            this.sql = string.Format(@"UPDATE [transportados].[recorrido]
+                                        SET
+                                        reco_baja = @Baja ,
+                                        reco_modificado=SYSDATETIME()
+                                        where reco_id =@Reco_id");
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@Reco_id", reco_id));
+            this.comandosSql.Parameters.Add(new SqlParameter("@Baja", IsBaja));
+            this.cnn.Open();
+            this.comandosSql.ExecuteNonQuery();
+            this.cnn.Close();
+        }
         }
     }
 

@@ -38,5 +38,10 @@ namespace FrbaBus.ciudades
             CiudMod.CiudBaja = dataGridView1.CurrentRow.Cells["Dada de Baja"].Value.ToString();
             CiudMod.Show();
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

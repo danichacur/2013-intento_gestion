@@ -61,17 +61,43 @@ namespace FrbaBus.Abm_Recorrido
         {
             bool result;
             funciones dataCiudad = new funciones();
-            result=dataCiudad.insertarRecorrido(Convert.ToInt32(comboBox1.SelectedValue), Convert.ToInt32(comboBox2.SelectedValue), Convert.ToInt32(comboBox3.SelectedValue), Convert.ToInt32(this.textBox1.Text), Convert.ToInt32(this.textBox2.Text));
-            if (result == true)
+            if (Convert.ToInt32(comboBox1.SelectedValue) != Convert.ToInt32(comboBox2.SelectedValue) && this.textBox1.Text != string.Empty && this.textBox2.Text != string.Empty)
             {
-                MessageBox.Show("Iupppi");
-                this.Close();
+                if (/*dataCiudad.CheckRecorrido(Convert.ToInt32(comboBox1.SelectedValue), Convert.ToInt32(comboBox2.SelectedValue), Convert.ToInt32(comboBox3.SelectedValue)) == false*/ true)
+                {
+                    result = dataCiudad.insertarRecorrido(Convert.ToInt32(comboBox1.SelectedValue), Convert.ToInt32(comboBox2.SelectedValue), Convert.ToInt32(comboBox3.SelectedValue), Convert.ToInt32(this.textBox1.Text), Convert.ToInt32(this.textBox2.Text));
+                    if (result == true)
+                    {
+                        MessageBox.Show("Recorrido creado correctamente", "Crear Recorrido");
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("El recorrido que trata de crear ya existe", "Error");
+                }
             }
-            else
-            {
-                MessageBox.Show("Error");
-                this.Close();
-            }
+                else if (Convert.ToInt32(comboBox1.SelectedValue) == Convert.ToInt32(comboBox2.SelectedValue))
+                {
+                    MessageBox.Show("Existe un error en los destinos ","Error");
+                    
+                }
+                else if (this.textBox1.Text == string.Empty)
+                {
+                    MessageBox.Show("El precio base de encomienda no puede ser 0 ", "Error");
+                    
+                }
+            else if (this.textBox2.Text == string.Empty)
+                {
+                    MessageBox.Show("El precio base de pasaje no puede ser 0 ", "Error");
+                   
+                }
+            
+        }
+
+        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
         }
 
         

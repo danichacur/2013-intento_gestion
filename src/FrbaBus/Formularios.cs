@@ -69,7 +69,7 @@ namespace FrbaBus
             da.Fill(ds, "micr_patente");
             return ds;
         }
-        public DataSet listarRecorrido()
+        public DataSet listarRecorrido(string ciudad)
         {
             this.sql = string.Format(@"select 
                                         r.reco_id as 'ID_recorrido'
@@ -78,15 +78,18 @@ namespace FrbaBus
                                         ,t.tipo_nombre as 'Tipo de servicio'
                                         ,r.reco_precio_base as 'Precio Base Pasaje'
                                         ,r.reco_precio_encomienda as 'Precio Base Encomienda'
+                                        ,r.reco_baja as 'dado de baja'
                                       from transportados.recorrido r
                                         left outer join transportados.ciudad c1 on r.reco_id_ciudad_destino=c1.ciud_id
                                         left outer join transportados.ciudad c2 on r.reco_id_ciudad_origen=c2.ciud_id
-                                        left outer join transportados.tipo_servicio t on r.reco_tipo_id=t.tipo_id;");
+                                        left outer join transportados.tipo_servicio t on r.reco_tipo_id=t.tipo_id
+                                        where c1.ciud_nombre like'%{0}%'
+                                        or c2.ciud_nombre like '%{0}%';", ciudad);
             DataSet ds = new DataSet();
             //indicamos la consulta en SQL
             SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
             //return da;
-            da.Fill(ds, "tipo_servicio");
+            da.Fill(ds, "ID_recorrido");
             return ds;
         }
         public DataSet listarCiudad(string ciudad)
