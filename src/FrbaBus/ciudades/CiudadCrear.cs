@@ -24,16 +24,17 @@ namespace FrbaBus.ciudades
             citiExist = dataCiudad.CheckCity(this.textBox1.Text);
             if (citiExist)
             {
+                MessageBox.Show("Ciudad Duplicada", "Error");  
+            }
+            else
+            {
+                
                 result = dataCiudad.insertarCiudad(this.textBox1.Text);
                 if (result == true)
                 {
                     MessageBox.Show("Ciudad Creada correctamente");
                     this.Close();
                 }
-            }
-            else
-            {
-                MessageBox.Show("Ciudad Duplicada","Error");
                 
             }
         }

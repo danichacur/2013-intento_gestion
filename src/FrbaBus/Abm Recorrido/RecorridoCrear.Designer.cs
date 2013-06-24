@@ -190,7 +190,7 @@
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
             this.Name = "RecorridoCrear";
-            this.Text = "sep";
+            this.Text = "Crear Recorrido";
             this.Load += new System.EventHandler(this.RecorridoCrear_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

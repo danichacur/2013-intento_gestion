@@ -63,18 +63,19 @@ namespace FrbaBus.Abm_Recorrido
             funciones dataCiudad = new funciones();
             if (Convert.ToInt32(comboBox1.SelectedValue) != Convert.ToInt32(comboBox2.SelectedValue) && this.textBox1.Text != string.Empty && this.textBox2.Text != string.Empty)
             {
-                if (/*dataCiudad.CheckRecorrido(Convert.ToInt32(comboBox1.SelectedValue), Convert.ToInt32(comboBox2.SelectedValue), Convert.ToInt32(comboBox3.SelectedValue)) == false*/ true)
+                if (dataCiudad.CheckRecorrido(Convert.ToInt32(comboBox1.SelectedValue), Convert.ToInt32(comboBox2.SelectedValue), Convert.ToInt32(comboBox3.SelectedValue)))
                 {
+                    MessageBox.Show("El recorrido que trata de crear ya existe", "Error");
+                }
+                else
+                {
+                    
                     result = dataCiudad.insertarRecorrido(Convert.ToInt32(comboBox1.SelectedValue), Convert.ToInt32(comboBox2.SelectedValue), Convert.ToInt32(comboBox3.SelectedValue), Convert.ToInt32(this.textBox1.Text), Convert.ToInt32(this.textBox2.Text));
                     if (result == true)
                     {
                         MessageBox.Show("Recorrido creado correctamente", "Crear Recorrido");
                         this.Close();
                     }
-                }
-                else
-                {
-                    MessageBox.Show("El recorrido que trata de crear ya existe", "Error");
                 }
             }
                 else if (Convert.ToInt32(comboBox1.SelectedValue) == Convert.ToInt32(comboBox2.SelectedValue))

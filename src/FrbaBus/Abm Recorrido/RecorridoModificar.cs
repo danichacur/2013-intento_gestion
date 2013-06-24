@@ -59,5 +59,10 @@ namespace FrbaBus.Abm_Recorrido
                 this.checkBox1.Checked = true;
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

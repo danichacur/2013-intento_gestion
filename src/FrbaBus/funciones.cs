@@ -325,15 +325,14 @@ namespace FrbaBus
         }
         public bool CheckCity(string CiudName)
         {   
-            int result = 0;
             bool Resultado = false;
             this.sql = string.Format(@"select ciud_id
                                         from transportados.ciudad
-                                        WHERE ciud_nombre = '(0)' ", CiudName); 
+                                        WHERE ciud_nombre = '{0}' ", CiudName); 
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
-            result = this.comandosSql.ExecuteNonQuery();
-            if (result > 0)
+            SqlDataReader Reg = this.comandosSql.ExecuteReader();
+            if (Reg.HasRows)
             {
                 Resultado = true;
             }
@@ -342,24 +341,27 @@ namespace FrbaBus
             return Resultado;
             
         }
-        /*public bool CheckRecorrido(Int32 Ciudorig, Int32 CiudDest, Int32 tipo)
+        public bool CheckRecorrido(Int32 Ciudorig, Int32 CiudDest, Int32 tipo)
         {
             Int32 result = 0;
             bool Resultado = false;
-            this.sql = string.Format(@"select * from transportados.recorrido");
+            this.sql = string.Format(@"select * from transportados.recorrido
+                                        where reco_id_ciudad_destino ={0}
+                                        and reco_id_ciudad_origen={1}
+                                        and reco_tipo_id={2}", CiudDest, Ciudorig, tipo);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
 
             this.cnn.Open();
-            result = this.comandosSql.ExecuteNonQuery();
-            if (result > 0)
+            SqlDataReader Reg = this.comandosSql.ExecuteReader();
+            if (Reg.HasRows)
             {
-                Resultado = false;
+                Resultado = true;
             }
 
             this.cnn.Close();
             return Resultado;
 
-        }*/
+        }
         public void ModifyReco(Int32 reco_id, Int32 IsBaja)
         {
             int result = 0;
