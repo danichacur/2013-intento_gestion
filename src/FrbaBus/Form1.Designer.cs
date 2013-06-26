@@ -31,9 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.CiudadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.crearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modificarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CiudadListarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crear_ciudad = new System.Windows.Forms.ToolStripMenuItem();
+            this.modificar_ciudad = new System.Windows.Forms.ToolStripMenuItem();
+            this.listar_ciudad = new System.Windows.Forms.ToolStripMenuItem();
             this.recorridoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.crearToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.modificarToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,34 +79,34 @@
             // CiudadToolStripMenuItem
             // 
             this.CiudadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.crearToolStripMenuItem,
-            this.modificarToolStripMenuItem,
-            this.CiudadListarToolStripMenuItem});
+            this.crear_ciudad,
+            this.modificar_ciudad,
+            this.listar_ciudad});
             this.CiudadToolStripMenuItem.Name = "CiudadToolStripMenuItem";
             this.CiudadToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.CiudadToolStripMenuItem.Text = "Ciudades";
             this.CiudadToolStripMenuItem.Click += new System.EventHandler(this.CiudadToolStripMenuItem_Click);
             // 
-            // crearToolStripMenuItem
+            // crear_ciudad
             // 
-            this.crearToolStripMenuItem.Name = "crearToolStripMenuItem";
-            this.crearToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.crearToolStripMenuItem.Text = "Crear";
-            this.crearToolStripMenuItem.Click += new System.EventHandler(this.crearToolStripMenuItem_Click);
+            this.crear_ciudad.Name = "crear_ciudad";
+            this.crear_ciudad.Size = new System.Drawing.Size(152, 22);
+            this.crear_ciudad.Text = "Crear";
+            this.crear_ciudad.Click += new System.EventHandler(this.crearToolStripMenuItem_Click);
             // 
-            // modificarToolStripMenuItem
+            // modificar_ciudad
             // 
-            this.modificarToolStripMenuItem.Name = "modificarToolStripMenuItem";
-            this.modificarToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.modificarToolStripMenuItem.Text = "Modificar";
-            this.modificarToolStripMenuItem.Click += new System.EventHandler(this.modificarToolStripMenuItem_Click);
+            this.modificar_ciudad.Name = "modificar_ciudad";
+            this.modificar_ciudad.Size = new System.Drawing.Size(152, 22);
+            this.modificar_ciudad.Text = "Modificar";
+            this.modificar_ciudad.Click += new System.EventHandler(this.modificarToolStripMenuItem_Click);
             // 
-            // CiudadListarToolStripMenuItem
+            // listar_ciudad
             // 
-            this.CiudadListarToolStripMenuItem.Name = "CiudadListarToolStripMenuItem";
-            this.CiudadListarToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.CiudadListarToolStripMenuItem.Text = "Listar";
-            this.CiudadListarToolStripMenuItem.Click += new System.EventHandler(this.CiudadListarToolStripMenuItem_Click);
+            this.listar_ciudad.Name = "listar_ciudad";
+            this.listar_ciudad.Size = new System.Drawing.Size(152, 22);
+            this.listar_ciudad.Text = "Listar";
+            this.listar_ciudad.Click += new System.EventHandler(this.CiudadListarToolStripMenuItem_Click);
             // 
             // recorridoToolStripMenuItem
             // 
@@ -308,9 +308,9 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem CiudadToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem CiudadListarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem crearToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem modificarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listar_ciudad;
+        private System.Windows.Forms.ToolStripMenuItem crear_ciudad;
+        private System.Windows.Forms.ToolStripMenuItem modificar_ciudad;
         private System.Windows.Forms.ToolStripMenuItem recorridoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem crearToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem modificarToolStripMenuItem1;
