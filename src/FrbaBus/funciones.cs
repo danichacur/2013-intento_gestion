@@ -377,6 +377,18 @@ namespace FrbaBus
             this.comandosSql.ExecuteNonQuery();
             this.cnn.Close();
         }
+
+        public SqlDataReader getFuncID(string user_id)
+        {
+            this.sql = string.Format(@"select rf.rolf_func_id,fu.func_name from transportados.usuario u
+left outer join  transportados.rol_usuario ru on ru.rolu_user_id=u.usua_id
+left outer join transportados.Rol_funcionalidad rf on rf.rolf_rol_id=ru.rolu_rol_id
+left outer join transportados.funcionalidad fu on fu.func_id=rf.rolf_func_id
+where u.usua_username =  '{0}' ", user_id);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            return this.comandosSql.ExecuteReader();
+        }
         }
     }
 

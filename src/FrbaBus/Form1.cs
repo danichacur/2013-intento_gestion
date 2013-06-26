@@ -6,11 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace FrbaBus
 {
     public partial class Form1 : Form
     {
+        public string login_usu;
+
         public Form1()
         {
             InitializeComponent();
@@ -52,7 +55,19 @@ namespace FrbaBus
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ((ToolStripMenuItem)CiudadListarToolStripMenuItem).Visible = true;
+            funciones Func = new funciones();
+            SqlDataReader list_func = Func.getFuncID(login_usu);
+            while (list_func.Read())
+            {
+                string menu = list_func.GetString(1);
+               var m = menuStrip1.Items.Find(menu, true);
+                //((ToolStripMenuItem) menu).Visible = true;
+                var o = m.ToList();
+                foreach (var p in o)
+                {
+                    p.Visible = false;
+                }
+            }
             this.WindowState = FormWindowState.Maximized;
         }
 

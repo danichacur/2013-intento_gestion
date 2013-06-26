@@ -28,6 +28,7 @@ namespace FrbaBus.Login
                     Inicio parentForm = (Inicio)this.MdiParent;
                     parentForm.Hide();
                     Form1 IniAdmin = new Form1();
+                    IniAdmin.login_usu = this.text1.Text;
                     IniAdmin.Show();
                 }
                 else

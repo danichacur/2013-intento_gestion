@@ -711,3 +711,65 @@ INSERT INTO [GD1C2013].[transportados].[usuario]
 GO
 
 
+GO
+INSERT INTO [GD1C2013].[transportados].[funcionalidad]([func_name],[func_creado],[func_modificado])
+  VALUES
+('crear_recorrido',SYSDATETIME(),SYSDATETIME()) ,
+('listar_recorrido',SYSDATETIME(),SYSDATETIME()) ,
+('modificar_recorrido',SYSDATETIME(),SYSDATETIME()), 
+('crear_ciudad',SYSDATETIME(),SYSDATETIME()) ,
+('listar_ciudad',SYSDATETIME(),SYSDATETIME()) ,
+('modificar_ciudad',SYSDATETIME(),SYSDATETIME()), 
+('crear_micro',SYSDATETIME(),SYSDATETIME()) ,
+('listar_micro',SYSDATETIME(),SYSDATETIME()) ,
+('modificar_micro',SYSDATETIME(),SYSDATETIME()), 
+('registrar_llegada',SYSDATETIME(),SYSDATETIME()), 
+('crear_viaje',SYSDATETIME(),SYSDATETIME()) ,
+('modificar_viaje',SYSDATETIME(),SYSDATETIME()), 
+('listar_viaje',SYSDATETIME(),SYSDATETIME()) ,
+('pasaje_generar',SYSDATETIME(),SYSDATETIME()), 
+('pasaje_anular',SYSDATETIME(),SYSDATETIME()) ,
+('consulta_puntos',SYSDATETIME(),SYSDATETIME()), 
+('listar_roles',SYSDATETIME(),SYSDATETIME()) ,
+('listar_funcionalidades',SYSDATETIME(),SYSDATETIME()) ,
+('modificar_usuario',SYSDATETIME(),SYSDATETIME()) 
+
+GO
+
+
+
+GO
+insert into [GD1C2013].[transportados].[Rol_funcionalidad]
+ ([rolf_rol_id],[rolf_func_id],[rolf_creado],[rolf_modificado])
+ values
+(1,1,SYSDATETIME(),SYSDATETIME()),
+(1,2,SYSDATETIME(),SYSDATETIME()),
+(1,3,SYSDATETIME(),SYSDATETIME()),
+(1,4,SYSDATETIME(),SYSDATETIME()),
+(1,5,SYSDATETIME(),SYSDATETIME()),
+(1,6,SYSDATETIME(),SYSDATETIME()),
+(1,7,SYSDATETIME(),SYSDATETIME()),
+(1,8,SYSDATETIME(),SYSDATETIME()),
+(1,9,SYSDATETIME(),SYSDATETIME()),
+(1,10,SYSDATETIME(),SYSDATETIME()),
+(1,11,SYSDATETIME(),SYSDATETIME()),
+(1,12,SYSDATETIME(),SYSDATETIME()),
+(1,13,SYSDATETIME(),SYSDATETIME()),
+(1,14,SYSDATETIME(),SYSDATETIME()),
+(1,15,SYSDATETIME(),SYSDATETIME()),
+(1,16,SYSDATETIME(),SYSDATETIME()),
+(1,17,SYSDATETIME(),SYSDATETIME()),
+(1,18,SYSDATETIME(),SYSDATETIME()),
+(1,19,SYSDATETIME(),SYSDATETIME())
+
+
+GO
+GO
+
+  insert into [GD1C2013].[transportados].[rol_usuario]
+  ([rolu_user_id],[rolu_rol_id],[rolu_creado],[rolu_modificado])
+  values
+  (1,1,SYSDATETIME(),SYSDATETIME()),
+  (2,2,SYSDATETIME(),SYSDATETIME())
+
+  GO
