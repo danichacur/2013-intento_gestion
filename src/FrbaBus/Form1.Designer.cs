@@ -30,68 +30,69 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.CiudadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Ciudad = new System.Windows.Forms.ToolStripMenuItem();
             this.crear_ciudad = new System.Windows.Forms.ToolStripMenuItem();
             this.modificar_ciudad = new System.Windows.Forms.ToolStripMenuItem();
             this.listar_ciudad = new System.Windows.Forms.ToolStripMenuItem();
-            this.recorridoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.crearToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.modificarToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.listarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.microsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.crearToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.modificarToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.listarToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.registrarLlegadaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viajeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.generarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listarToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bajaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modificadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasajeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.compraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.anulacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.puntosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.consultaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.usuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listarRolesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listarFuncionalidadesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modificarUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Recorrido = new System.Windows.Forms.ToolStripMenuItem();
+            this.crear_recorrido = new System.Windows.Forms.ToolStripMenuItem();
+            this.modificar_recorrido = new System.Windows.Forms.ToolStripMenuItem();
+            this.listar_recorrido = new System.Windows.Forms.ToolStripMenuItem();
+            this.Micros = new System.Windows.Forms.ToolStripMenuItem();
+            this.crear_micro = new System.Windows.Forms.ToolStripMenuItem();
+            this.modificar_micro = new System.Windows.Forms.ToolStripMenuItem();
+            this.listar_micro = new System.Windows.Forms.ToolStripMenuItem();
+            this.registrar_llegada = new System.Windows.Forms.ToolStripMenuItem();
+            this.Viaje = new System.Windows.Forms.ToolStripMenuItem();
+            this.crear_viaje = new System.Windows.Forms.ToolStripMenuItem();
+            this.listar_viaje = new System.Windows.Forms.ToolStripMenuItem();
+            this.modificar_viaje = new System.Windows.Forms.ToolStripMenuItem();
+            this.Pasaje = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasaje_generar = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasaje_anular = new System.Windows.Forms.ToolStripMenuItem();
+            this.Puntos = new System.Windows.Forms.ToolStripMenuItem();
+            this.consulta_puntos = new System.Windows.Forms.ToolStripMenuItem();
+            this.Usuarios = new System.Windows.Forms.ToolStripMenuItem();
+            this.listar_roles = new System.Windows.Forms.ToolStripMenuItem();
+            this.listar_funcionalidades = new System.Windows.Forms.ToolStripMenuItem();
+            this.modificar_usuario = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CiudadToolStripMenuItem,
-            this.recorridoToolStripMenuItem,
-            this.microsToolStripMenuItem,
-            this.viajeToolStripMenuItem,
-            this.pasajeToolStripMenuItem,
-            this.puntosToolStripMenuItem,
-            this.usuariosToolStripMenuItem});
+            this.Ciudad,
+            this.Recorrido,
+            this.Micros,
+            this.Viaje,
+            this.Pasaje,
+            this.Puntos,
+            this.Usuarios});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(666, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // CiudadToolStripMenuItem
+            // Ciudad
             // 
-            this.CiudadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Ciudad.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.crear_ciudad,
             this.modificar_ciudad,
             this.listar_ciudad});
-            this.CiudadToolStripMenuItem.Name = "CiudadToolStripMenuItem";
-            this.CiudadToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
-            this.CiudadToolStripMenuItem.Text = "Ciudades";
-            this.CiudadToolStripMenuItem.Click += new System.EventHandler(this.CiudadToolStripMenuItem_Click);
+            this.Ciudad.Name = "Ciudad";
+            this.Ciudad.Size = new System.Drawing.Size(63, 20);
+            this.Ciudad.Text = "Ciudades";
+            this.Ciudad.Visible = false;
+            this.Ciudad.Click += new System.EventHandler(this.CiudadToolStripMenuItem_Click);
             // 
             // crear_ciudad
             // 
             this.crear_ciudad.Name = "crear_ciudad";
             this.crear_ciudad.Size = new System.Drawing.Size(152, 22);
             this.crear_ciudad.Text = "Crear";
+            this.crear_ciudad.Visible = false;
             this.crear_ciudad.Click += new System.EventHandler(this.crearToolStripMenuItem_Click);
             // 
             // modificar_ciudad
@@ -99,6 +100,7 @@
             this.modificar_ciudad.Name = "modificar_ciudad";
             this.modificar_ciudad.Size = new System.Drawing.Size(152, 22);
             this.modificar_ciudad.Text = "Modificar";
+            this.modificar_ciudad.Visible = false;
             this.modificar_ciudad.Click += new System.EventHandler(this.modificarToolStripMenuItem_Click);
             // 
             // listar_ciudad
@@ -106,183 +108,197 @@
             this.listar_ciudad.Name = "listar_ciudad";
             this.listar_ciudad.Size = new System.Drawing.Size(152, 22);
             this.listar_ciudad.Text = "Listar";
+            this.listar_ciudad.Visible = false;
             this.listar_ciudad.Click += new System.EventHandler(this.CiudadListarToolStripMenuItem_Click);
             // 
-            // recorridoToolStripMenuItem
+            // Recorrido
             // 
-            this.recorridoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.crearToolStripMenuItem1,
-            this.modificarToolStripMenuItem1,
-            this.listarToolStripMenuItem});
-            this.recorridoToolStripMenuItem.Name = "recorridoToolStripMenuItem";
-            this.recorridoToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
-            this.recorridoToolStripMenuItem.Text = "Recorrido";
+            this.Recorrido.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.crear_recorrido,
+            this.modificar_recorrido,
+            this.listar_recorrido});
+            this.Recorrido.Name = "Recorrido";
+            this.Recorrido.Size = new System.Drawing.Size(65, 20);
+            this.Recorrido.Text = "Recorrido";
+            this.Recorrido.Visible = false;
             // 
-            // crearToolStripMenuItem1
+            // crear_recorrido
             // 
-            this.crearToolStripMenuItem1.Name = "crearToolStripMenuItem1";
-            this.crearToolStripMenuItem1.Size = new System.Drawing.Size(128, 22);
-            this.crearToolStripMenuItem1.Text = "Crear";
-            this.crearToolStripMenuItem1.Click += new System.EventHandler(this.crearToolStripMenuItem1_Click);
+            this.crear_recorrido.Name = "crear_recorrido";
+            this.crear_recorrido.Size = new System.Drawing.Size(152, 22);
+            this.crear_recorrido.Text = "Crear";
+            this.crear_recorrido.Click += new System.EventHandler(this.crearToolStripMenuItem1_Click);
             // 
-            // modificarToolStripMenuItem1
+            // modificar_recorrido
             // 
-            this.modificarToolStripMenuItem1.Name = "modificarToolStripMenuItem1";
-            this.modificarToolStripMenuItem1.Size = new System.Drawing.Size(128, 22);
-            this.modificarToolStripMenuItem1.Text = "Modificar";
-            this.modificarToolStripMenuItem1.Click += new System.EventHandler(this.modificarToolStripMenuItem1_Click);
+            this.modificar_recorrido.Name = "modificar_recorrido";
+            this.modificar_recorrido.Size = new System.Drawing.Size(152, 22);
+            this.modificar_recorrido.Text = "Modificar";
+            this.modificar_recorrido.Visible = false;
+            this.modificar_recorrido.Click += new System.EventHandler(this.modificarToolStripMenuItem1_Click);
             // 
-            // listarToolStripMenuItem
+            // listar_recorrido
             // 
-            this.listarToolStripMenuItem.Name = "listarToolStripMenuItem";
-            this.listarToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.listarToolStripMenuItem.Text = "Listar";
-            this.listarToolStripMenuItem.Click += new System.EventHandler(this.listarToolStripMenuItem_Click);
+            this.listar_recorrido.Name = "listar_recorrido";
+            this.listar_recorrido.Size = new System.Drawing.Size(152, 22);
+            this.listar_recorrido.Text = "Listar";
+            this.listar_recorrido.Visible = false;
+            this.listar_recorrido.Click += new System.EventHandler(this.listarToolStripMenuItem_Click);
             // 
-            // microsToolStripMenuItem
+            // Micros
             // 
-            this.microsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.crearToolStripMenuItem2,
-            this.modificarToolStripMenuItem2,
-            this.listarToolStripMenuItem1,
-            this.registrarLlegadaToolStripMenuItem});
-            this.microsToolStripMenuItem.Name = "microsToolStripMenuItem";
-            this.microsToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
-            this.microsToolStripMenuItem.Text = "Micros";
+            this.Micros.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.crear_micro,
+            this.modificar_micro,
+            this.listar_micro,
+            this.registrar_llegada});
+            this.Micros.Name = "Micros";
+            this.Micros.Size = new System.Drawing.Size(49, 20);
+            this.Micros.Text = "Micros";
+            this.Micros.Visible = false;
             // 
-            // crearToolStripMenuItem2
+            // crear_micro
             // 
-            this.crearToolStripMenuItem2.Name = "crearToolStripMenuItem2";
-            this.crearToolStripMenuItem2.Size = new System.Drawing.Size(166, 22);
-            this.crearToolStripMenuItem2.Text = "Crear";
-            this.crearToolStripMenuItem2.Click += new System.EventHandler(this.crearToolStripMenuItem2_Click);
+            this.crear_micro.Name = "crear_micro";
+            this.crear_micro.Size = new System.Drawing.Size(166, 22);
+            this.crear_micro.Text = "Crear";
+            this.crear_micro.Visible = false;
+            this.crear_micro.Click += new System.EventHandler(this.crearToolStripMenuItem2_Click);
             // 
-            // modificarToolStripMenuItem2
+            // modificar_micro
             // 
-            this.modificarToolStripMenuItem2.Name = "modificarToolStripMenuItem2";
-            this.modificarToolStripMenuItem2.Size = new System.Drawing.Size(166, 22);
-            this.modificarToolStripMenuItem2.Text = "Modificar";
-            this.modificarToolStripMenuItem2.Click += new System.EventHandler(this.modificarToolStripMenuItem2_Click);
+            this.modificar_micro.Name = "modificar_micro";
+            this.modificar_micro.Size = new System.Drawing.Size(166, 22);
+            this.modificar_micro.Text = "Modificar";
+            this.modificar_micro.Visible = false;
+            this.modificar_micro.Click += new System.EventHandler(this.modificarToolStripMenuItem2_Click);
             // 
-            // listarToolStripMenuItem1
+            // listar_micro
             // 
-            this.listarToolStripMenuItem1.Name = "listarToolStripMenuItem1";
-            this.listarToolStripMenuItem1.Size = new System.Drawing.Size(166, 22);
-            this.listarToolStripMenuItem1.Text = "Listar";
+            this.listar_micro.Name = "listar_micro";
+            this.listar_micro.Size = new System.Drawing.Size(166, 22);
+            this.listar_micro.Text = "Listar";
+            this.listar_micro.Visible = false;
             // 
-            // registrarLlegadaToolStripMenuItem
+            // registrar_llegada
             // 
-            this.registrarLlegadaToolStripMenuItem.Name = "registrarLlegadaToolStripMenuItem";
-            this.registrarLlegadaToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.registrarLlegadaToolStripMenuItem.Text = "Registrar llegada";
-            this.registrarLlegadaToolStripMenuItem.Click += new System.EventHandler(this.registrarLlegadaToolStripMenuItem_Click);
+            this.registrar_llegada.Name = "registrar_llegada";
+            this.registrar_llegada.Size = new System.Drawing.Size(166, 22);
+            this.registrar_llegada.Text = "Registrar llegada";
+            this.registrar_llegada.Visible = false;
+            this.registrar_llegada.Click += new System.EventHandler(this.registrarLlegadaToolStripMenuItem_Click);
             // 
-            // viajeToolStripMenuItem
+            // Viaje
             // 
-            this.viajeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.generarToolStripMenuItem,
-            this.listarToolStripMenuItem2,
-            this.bajaToolStripMenuItem,
-            this.modificadoToolStripMenuItem});
-            this.viajeToolStripMenuItem.Name = "viajeToolStripMenuItem";
-            this.viajeToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
-            this.viajeToolStripMenuItem.Text = "Viaje";
+            this.Viaje.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.crear_viaje,
+            this.listar_viaje,
+            this.modificar_viaje});
+            this.Viaje.Name = "Viaje";
+            this.Viaje.Size = new System.Drawing.Size(42, 20);
+            this.Viaje.Text = "Viaje";
+            this.Viaje.Visible = false;
             // 
-            // generarToolStripMenuItem
+            // crear_viaje
             // 
-            this.generarToolStripMenuItem.Name = "generarToolStripMenuItem";
-            this.generarToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.generarToolStripMenuItem.Text = "Generar";
-            this.generarToolStripMenuItem.Click += new System.EventHandler(this.generarToolStripMenuItem_Click);
+            this.crear_viaje.Name = "crear_viaje";
+            this.crear_viaje.Size = new System.Drawing.Size(152, 22);
+            this.crear_viaje.Text = "Generar";
+            this.crear_viaje.Visible = false;
+            this.crear_viaje.Click += new System.EventHandler(this.generarToolStripMenuItem_Click);
             // 
-            // listarToolStripMenuItem2
+            // listar_viaje
             // 
-            this.listarToolStripMenuItem2.Name = "listarToolStripMenuItem2";
-            this.listarToolStripMenuItem2.Size = new System.Drawing.Size(128, 22);
-            this.listarToolStripMenuItem2.Text = "Listar";
-            this.listarToolStripMenuItem2.Click += new System.EventHandler(this.listarToolStripMenuItem2_Click);
+            this.listar_viaje.Name = "listar_viaje";
+            this.listar_viaje.Size = new System.Drawing.Size(152, 22);
+            this.listar_viaje.Text = "Listar";
+            this.listar_viaje.Visible = false;
+            this.listar_viaje.Click += new System.EventHandler(this.listarToolStripMenuItem2_Click);
             // 
-            // bajaToolStripMenuItem
+            // modificar_viaje
             // 
-            this.bajaToolStripMenuItem.Name = "bajaToolStripMenuItem";
-            this.bajaToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.bajaToolStripMenuItem.Text = "Baja";
-            this.bajaToolStripMenuItem.Click += new System.EventHandler(this.bajaToolStripMenuItem_Click);
+            this.modificar_viaje.Name = "modificar_viaje";
+            this.modificar_viaje.Size = new System.Drawing.Size(152, 22);
+            this.modificar_viaje.Text = "Modificar";
+            this.modificar_viaje.Visible = false;
+            this.modificar_viaje.Click += new System.EventHandler(this.modificadoToolStripMenuItem_Click);
             // 
-            // modificadoToolStripMenuItem
+            // Pasaje
             // 
-            this.modificadoToolStripMenuItem.Name = "modificadoToolStripMenuItem";
-            this.modificadoToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.modificadoToolStripMenuItem.Text = "Modificar";
-            this.modificadoToolStripMenuItem.Click += new System.EventHandler(this.modificadoToolStripMenuItem_Click);
+            this.Pasaje.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pasaje_generar,
+            this.pasaje_anular});
+            this.Pasaje.Name = "Pasaje";
+            this.Pasaje.Size = new System.Drawing.Size(51, 20);
+            this.Pasaje.Text = "Pasaje";
+            this.Pasaje.Visible = false;
             // 
-            // pasajeToolStripMenuItem
+            // pasaje_generar
             // 
-            this.pasajeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.compraToolStripMenuItem,
-            this.anulacionToolStripMenuItem});
-            this.pasajeToolStripMenuItem.Name = "pasajeToolStripMenuItem";
-            this.pasajeToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
-            this.pasajeToolStripMenuItem.Text = "Pasaje";
+            this.pasaje_generar.Name = "pasaje_generar";
+            this.pasaje_generar.Size = new System.Drawing.Size(152, 22);
+            this.pasaje_generar.Text = "Compra";
+            this.pasaje_generar.Visible = false;
+            this.pasaje_generar.Click += new System.EventHandler(this.compraToolStripMenuItem_Click);
             // 
-            // compraToolStripMenuItem
+            // pasaje_anular
             // 
-            this.compraToolStripMenuItem.Name = "compraToolStripMenuItem";
-            this.compraToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.compraToolStripMenuItem.Text = "Compra";
-            this.compraToolStripMenuItem.Click += new System.EventHandler(this.compraToolStripMenuItem_Click);
+            this.pasaje_anular.Name = "pasaje_anular";
+            this.pasaje_anular.Size = new System.Drawing.Size(152, 22);
+            this.pasaje_anular.Text = "Anulacion";
+            this.pasaje_anular.Visible = false;
+            this.pasaje_anular.Click += new System.EventHandler(this.anulacionToolStripMenuItem_Click);
             // 
-            // anulacionToolStripMenuItem
+            // Puntos
             // 
-            this.anulacionToolStripMenuItem.Name = "anulacionToolStripMenuItem";
-            this.anulacionToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.anulacionToolStripMenuItem.Text = "Anulacion";
-            this.anulacionToolStripMenuItem.Click += new System.EventHandler(this.anulacionToolStripMenuItem_Click);
+            this.Puntos.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.consulta_puntos});
+            this.Puntos.Name = "Puntos";
+            this.Puntos.Size = new System.Drawing.Size(52, 20);
+            this.Puntos.Text = "Puntos";
+            this.Puntos.Visible = false;
             // 
-            // puntosToolStripMenuItem
+            // consulta_puntos
             // 
-            this.puntosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.consultaToolStripMenuItem});
-            this.puntosToolStripMenuItem.Name = "puntosToolStripMenuItem";
-            this.puntosToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.puntosToolStripMenuItem.Text = "Puntos";
+            this.consulta_puntos.Name = "consulta_puntos";
+            this.consulta_puntos.Size = new System.Drawing.Size(152, 22);
+            this.consulta_puntos.Text = "Consulta";
+            this.consulta_puntos.Visible = false;
             // 
-            // consultaToolStripMenuItem
+            // Usuarios
             // 
-            this.consultaToolStripMenuItem.Name = "consultaToolStripMenuItem";
-            this.consultaToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-            this.consultaToolStripMenuItem.Text = "Consulta";
+            this.Usuarios.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.listar_roles,
+            this.listar_funcionalidades,
+            this.modificar_usuario});
+            this.Usuarios.Name = "Usuarios";
+            this.Usuarios.Size = new System.Drawing.Size(60, 20);
+            this.Usuarios.Text = "Usuarios";
+            this.Usuarios.Visible = false;
             // 
-            // usuariosToolStripMenuItem
+            // listar_roles
             // 
-            this.usuariosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.listarRolesToolStripMenuItem,
-            this.listarFuncionalidadesToolStripMenuItem,
-            this.modificarUsuarioToolStripMenuItem});
-            this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.usuariosToolStripMenuItem.Text = "Usuarios";
+            this.listar_roles.Name = "listar_roles";
+            this.listar_roles.Size = new System.Drawing.Size(188, 22);
+            this.listar_roles.Text = "Listar Roles";
+            this.listar_roles.Visible = false;
+            this.listar_roles.Click += new System.EventHandler(this.listarRolesToolStripMenuItem_Click);
             // 
-            // listarRolesToolStripMenuItem
+            // listar_funcionalidades
             // 
-            this.listarRolesToolStripMenuItem.Name = "listarRolesToolStripMenuItem";
-            this.listarRolesToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.listarRolesToolStripMenuItem.Text = "Listar Roles";
-            this.listarRolesToolStripMenuItem.Click += new System.EventHandler(this.listarRolesToolStripMenuItem_Click);
+            this.listar_funcionalidades.Name = "listar_funcionalidades";
+            this.listar_funcionalidades.Size = new System.Drawing.Size(188, 22);
+            this.listar_funcionalidades.Text = "Listar funcionalidades";
+            this.listar_funcionalidades.Visible = false;
+            this.listar_funcionalidades.Click += new System.EventHandler(this.listarFuncionalidadesToolStripMenuItem_Click);
             // 
-            // listarFuncionalidadesToolStripMenuItem
+            // modificar_usuario
             // 
-            this.listarFuncionalidadesToolStripMenuItem.Name = "listarFuncionalidadesToolStripMenuItem";
-            this.listarFuncionalidadesToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.listarFuncionalidadesToolStripMenuItem.Text = "Listar funcionalidades";
-            this.listarFuncionalidadesToolStripMenuItem.Click += new System.EventHandler(this.listarFuncionalidadesToolStripMenuItem_Click);
-            // 
-            // modificarUsuarioToolStripMenuItem
-            // 
-            this.modificarUsuarioToolStripMenuItem.Name = "modificarUsuarioToolStripMenuItem";
-            this.modificarUsuarioToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.modificarUsuarioToolStripMenuItem.Text = "Modificar usuario";
-            this.modificarUsuarioToolStripMenuItem.Click += new System.EventHandler(this.modificarUsuarioToolStripMenuItem_Click);
+            this.modificar_usuario.Name = "modificar_usuario";
+            this.modificar_usuario.Size = new System.Drawing.Size(188, 22);
+            this.modificar_usuario.Text = "Modificar usuario";
+            this.modificar_usuario.Visible = false;
+            this.modificar_usuario.Click += new System.EventHandler(this.modificarUsuarioToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -307,33 +323,32 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem CiudadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Ciudad;
         private System.Windows.Forms.ToolStripMenuItem listar_ciudad;
         private System.Windows.Forms.ToolStripMenuItem crear_ciudad;
         private System.Windows.Forms.ToolStripMenuItem modificar_ciudad;
-        private System.Windows.Forms.ToolStripMenuItem recorridoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem crearToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem modificarToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem listarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem microsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem crearToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem modificarToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem listarToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem viajeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem generarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem listarToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem bajaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pasajeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem compraToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem anulacionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem puntosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem consultaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem listarRolesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem listarFuncionalidadesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem modificarUsuarioToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem modificadoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem registrarLlegadaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Recorrido;
+        private System.Windows.Forms.ToolStripMenuItem crear_recorrido;
+        private System.Windows.Forms.ToolStripMenuItem modificar_recorrido;
+        private System.Windows.Forms.ToolStripMenuItem listar_recorrido;
+        private System.Windows.Forms.ToolStripMenuItem Micros;
+        private System.Windows.Forms.ToolStripMenuItem crear_micro;
+        private System.Windows.Forms.ToolStripMenuItem modificar_micro;
+        private System.Windows.Forms.ToolStripMenuItem listar_micro;
+        private System.Windows.Forms.ToolStripMenuItem Viaje;
+        private System.Windows.Forms.ToolStripMenuItem crear_viaje;
+        private System.Windows.Forms.ToolStripMenuItem listar_viaje;
+        private System.Windows.Forms.ToolStripMenuItem Pasaje;
+        private System.Windows.Forms.ToolStripMenuItem pasaje_generar;
+        private System.Windows.Forms.ToolStripMenuItem pasaje_anular;
+        private System.Windows.Forms.ToolStripMenuItem Puntos;
+        private System.Windows.Forms.ToolStripMenuItem consulta_puntos;
+        private System.Windows.Forms.ToolStripMenuItem Usuarios;
+        private System.Windows.Forms.ToolStripMenuItem listar_roles;
+        private System.Windows.Forms.ToolStripMenuItem listar_funcionalidades;
+        private System.Windows.Forms.ToolStripMenuItem modificar_usuario;
+        private System.Windows.Forms.ToolStripMenuItem modificar_viaje;
+        private System.Windows.Forms.ToolStripMenuItem registrar_llegada;
 
 
 

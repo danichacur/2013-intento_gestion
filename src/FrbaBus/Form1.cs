@@ -65,7 +65,7 @@ namespace FrbaBus
                 var o = m.ToList();
                 foreach (var p in o)
                 {
-                    p.Visible = false;
+                    p.Visible = true;
                 }
             }
             this.WindowState = FormWindowState.Maximized;
