@@ -84,7 +84,6 @@
             this.Ciudad.Name = "Ciudad";
             this.Ciudad.Size = new System.Drawing.Size(63, 20);
             this.Ciudad.Text = "Ciudades";
-            this.Ciudad.Visible = false;
             this.Ciudad.Click += new System.EventHandler(this.CiudadToolStripMenuItem_Click);
             // 
             // crear_ciudad
@@ -120,13 +119,13 @@
             this.Recorrido.Name = "Recorrido";
             this.Recorrido.Size = new System.Drawing.Size(65, 20);
             this.Recorrido.Text = "Recorrido";
-            this.Recorrido.Visible = false;
             // 
             // crear_recorrido
             // 
             this.crear_recorrido.Name = "crear_recorrido";
             this.crear_recorrido.Size = new System.Drawing.Size(152, 22);
             this.crear_recorrido.Text = "Crear";
+            this.crear_recorrido.Visible = false;
             this.crear_recorrido.Click += new System.EventHandler(this.crearToolStripMenuItem1_Click);
             // 
             // modificar_recorrido
@@ -155,7 +154,6 @@
             this.Micros.Name = "Micros";
             this.Micros.Size = new System.Drawing.Size(49, 20);
             this.Micros.Text = "Micros";
-            this.Micros.Visible = false;
             // 
             // crear_micro
             // 
@@ -197,7 +195,6 @@
             this.Viaje.Name = "Viaje";
             this.Viaje.Size = new System.Drawing.Size(42, 20);
             this.Viaje.Text = "Viaje";
-            this.Viaje.Visible = false;
             // 
             // crear_viaje
             // 
@@ -231,7 +228,6 @@
             this.Pasaje.Name = "Pasaje";
             this.Pasaje.Size = new System.Drawing.Size(51, 20);
             this.Pasaje.Text = "Pasaje";
-            this.Pasaje.Visible = false;
             // 
             // pasaje_generar
             // 
@@ -256,7 +252,6 @@
             this.Puntos.Name = "Puntos";
             this.Puntos.Size = new System.Drawing.Size(52, 20);
             this.Puntos.Text = "Puntos";
-            this.Puntos.Visible = false;
             // 
             // consulta_puntos
             // 
@@ -274,7 +269,6 @@
             this.Usuarios.Name = "Usuarios";
             this.Usuarios.Size = new System.Drawing.Size(60, 20);
             this.Usuarios.Text = "Usuarios";
-            this.Usuarios.Visible = false;
             // 
             // listar_roles
             // 

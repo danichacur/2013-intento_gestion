@@ -652,7 +652,7 @@ GO
 USE [GD1C2013]
 GO
 
-/****** Object:  Table [transportados].[usuario]    Script Date: 05/21/2013 22:24:19 ******/
+/****** Object:  Table [transportados].[usuario]    Script Date: 06/27/2013 23:37:54 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -666,9 +666,12 @@ CREATE TABLE [transportados].[usuario](
   [usua_creado] [datetime] NULL,
   [usua_modificado] [datetime] NULL,
   [usua_habilitado] [bit] NULL,
-  [usua_logins] [smallint] 0
+  [usua_logins] [smallint] NULL
 ) ON [PRIMARY]
 
+GO
+
+ALTER TABLE [transportados].[usuario] ADD  CONSTRAINT [DF_usuario_usua_logins]  DEFAULT ((0)) FOR [usua_logins]
 GO
 
 INSERT INTO [GD1C2013].[transportados].[usuario]
@@ -732,7 +735,15 @@ INSERT INTO [GD1C2013].[transportados].[funcionalidad]([func_name],[func_creado]
 ('consulta_puntos',SYSDATETIME(),SYSDATETIME()), 
 ('listar_roles',SYSDATETIME(),SYSDATETIME()) ,
 ('listar_funcionalidades',SYSDATETIME(),SYSDATETIME()) ,
-('modificar_usuario',SYSDATETIME(),SYSDATETIME()) 
+('modificar_usuario',SYSDATETIME(),SYSDATETIME()) ,
+('Ciudad',SYSDATETIME(),SYSDATETIME()) ,
+('Recorrido',SYSDATETIME(),SYSDATETIME()), 
+('Micros',SYSDATETIME(),SYSDATETIME()) ,
+('Viaje',SYSDATETIME(),SYSDATETIME()), 
+('Pasaje',SYSDATETIME(),SYSDATETIME()) ,
+('Puntos',SYSDATETIME(),SYSDATETIME()), 
+('Usuarios',SYSDATETIME(),SYSDATETIME()) 
+
 
 GO
 
@@ -760,7 +771,14 @@ insert into [GD1C2013].[transportados].[Rol_funcionalidad]
 (1,16,SYSDATETIME(),SYSDATETIME()),
 (1,17,SYSDATETIME(),SYSDATETIME()),
 (1,18,SYSDATETIME(),SYSDATETIME()),
-(1,19,SYSDATETIME(),SYSDATETIME())
+(1,19,SYSDATETIME(),SYSDATETIME()),
+(1,20,SYSDATETIME(),SYSDATETIME()),
+(1,21,SYSDATETIME(),SYSDATETIME()),
+(1,22,SYSDATETIME(),SYSDATETIME()),
+(1,23,SYSDATETIME(),SYSDATETIME()),
+(1,24,SYSDATETIME(),SYSDATETIME()),
+(1,25,SYSDATETIME(),SYSDATETIME()),
+(1,26,SYSDATETIME(),SYSDATETIME())
 
 
 GO
