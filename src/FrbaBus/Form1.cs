@@ -13,10 +13,14 @@ namespace FrbaBus
     public partial class Form1 : Form
     {
         public string login_usu;
+        public Inicio parentForm;
 
         public Form1()
         {
             InitializeComponent();
+            
+            this.WindowState = FormWindowState.Maximized;
+        
         }
 
         private void loginToolStripMenuItem_Click(object sender, EventArgs e)
@@ -60,16 +64,53 @@ namespace FrbaBus
             while (list_func.Read())
             {
                 string menu = list_func.GetString(1);
-               var m = menuStrip1.Items.Find(menu, true);
-                //((ToolStripMenuItem) menu).Visible = true;
+                var m = menuStrip1.Items.Find(menu, true);
+                var ciudad = Ciudad.DropDownItems.Find(menu, true);
+                var recorrido = Recorrido.DropDownItems.Find(menu, true);
+                var micros = Micros.DropDownItems.Find(menu, true);
+                var viaje = Viaje.DropDownItems.Find(menu, true);
+                var pasaje = Pasaje.DropDownItems.Find(menu, true);
+                var puntos = Puntos.DropDownItems.Find(menu, true);
+                var usuarios = Usuarios.DropDownItems.Find(menu, true);
+
+                if (ciudad.Count() > 0)
+                {
+                    m = ciudad;
+                }
+                else if (recorrido.Count() > 0)
+                {
+                    m = recorrido;
+                }
+                else if (micros.Count() > 0)
+                {
+                    m = micros;
+                }
+                else if (viaje.Count() > 0)
+                {
+                    m = viaje;
+                }
+                else if (pasaje.Count() > 0)
+                {
+                    m = pasaje;
+                }
+                else if (puntos.Count() > 0)
+                {
+                    m = puntos;
+                }
+                else if (usuarios.Count() > 0)
+                {
+                    m = usuarios;
+                }
+
+ 
+                    
                 var o = m.ToList();
                 foreach (var p in o)
                 {
                     p.Visible = true;
                 }
             }
-            this.WindowState = FormWindowState.Maximized;
-        }
+        } 
 
         private void crearToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -170,6 +211,27 @@ namespace FrbaBus
         private void CiudadToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-        }   
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            if (e.CloseReason == CloseReason.WindowsShutDown)
+            {
+                parentForm.Close();
+                return;
+            }
+
+            // Confirm user wants to close
+            switch (MessageBox.Show(this, "Are you sure you want to close?", "Closing", MessageBoxButtons.YesNo))
+            {
+                case DialogResult.No:
+                    e.Cancel = true;
+                    break;
+                default:
+                    parentForm.Close();
+                    break;
+            }
+        }
     }
 }

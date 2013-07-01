@@ -111,5 +111,49 @@ namespace FrbaBus
             return ds;
         }
 
+        public DataSet listarFuncion (string funcion)
+        {
+            this.sql = string.Format(@"SELECT  [func_name] as 'Nombre'
+      ,[func_creado] as 'Creado'
+      ,[func_modificado] as 'Modificado'
+  FROM [GD1C2013].[transportados].[funcionalidad]
+  where func_name like '%{0}%'", funcion);
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "Nombre");
+            return ds;
+        }
+        public DataSet listarRol(string rol)
+        {
+            this.sql = string.Format(@"SELECT [rol_nombre] as 'Nombre'
+      ,[rol_creado] as 'Creado'
+      ,[rol_modificado] as 'Modificado'
+      ,[rol_borrado] as 'Borrado'
+  FROM [GD1C2013].[transportados].[Rol]
+  where rol_nombre like '%{0}%'", rol);
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "Nombre");
+            return ds;
+        }
+        public DataSet RolxFunc(string rol_func)
+        {
+            this.sql = string.Format(@"SELECT [rol_nombre] as 'Rol'
+      ,func_name as 'Funcionalidad'
+  FROM [GD1C2013].[transportados].[Rol]
+  left outer join transportados.Rol_funcionalidad on rol_id=rolf_rol_id
+  left outer join transportados.funcionalidad on rolf_func_id=func_id
+  where rol_nombre like '%{0}%'", rol_func);
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "Nombre");
+            return ds;
+        }
     }
 }

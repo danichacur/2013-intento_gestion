@@ -15,5 +15,21 @@ namespace FrbaBus.func_usuario
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Formularios Rol = new Formularios();
+            DataSet rolLista = Rol.listarRol(this.textBox1.Text);
+            dataGridView1.DataSource = rolLista.Tables[0].DefaultView;
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            RolMod Modificar = new RolMod();
+            Modificar.nombre = dataGridView1.CurrentRow.Cells["Nombre"].Value.ToString(); ;
+            Modificar.Show();
+        }
+
+
     }
 }

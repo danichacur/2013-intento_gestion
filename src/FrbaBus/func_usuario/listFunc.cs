@@ -15,5 +15,14 @@ namespace FrbaBus.func_usuario
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Formularios Fumc = new Formularios();
+            DataSet fumcLista = Fumc.listarFuncion(this.textBox1.Text);
+            dataGridView1.DataSource = fumcLista.Tables[0].DefaultView;
+        }
+
+
     }
 }

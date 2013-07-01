@@ -210,23 +210,29 @@
     </Compile>
     <Compile Include="Formularios.cs" />
     <Compile Include="funciones.cs" />
-    <Compile Include="func_usuario\listFunc.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="func_usuario\listFunc.Designer.cs">
-      <DependentUpon>listFunc.cs</DependentUpon>
-    </Compile>
     <Compile Include="func_usuario\listRol.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="func_usuario\listRol.Designer.cs">
       <DependentUpon>listRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="func_usuario\listFunc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="func_usuario\listFunc.Designer.cs">
+      <DependentUpon>listFunc.cs</DependentUpon>
+    </Compile>
     <Compile Include="func_usuario\modUsu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="func_usuario\modUsu.Designer.cs">
       <DependentUpon>modUsu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="func_usuario\RolMod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="func_usuario\RolMod.Designer.cs">
+      <DependentUpon>RolMod.cs</DependentUpon>
     </Compile>
     <Compile Include="GenerarViaje\Generar.cs">
       <SubType>Form</SubType>
@@ -319,6 +325,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="func_usuario\listRol.resx">
+      <DependentUpon>listRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="func_usuario\listFunc.resx">
+      <DependentUpon>listFunc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="func_usuario\RolMod.resx">
+      <DependentUpon>RolMod.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GenerarViaje\Generar.resx">
       <DependentUpon>Generar.cs</DependentUpon>

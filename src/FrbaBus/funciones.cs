@@ -310,7 +310,6 @@ namespace FrbaBus
         }
         public void ModifyCity(string CiudName, Int32 IsBaja,string CiudNameOrig)
         {
-            int result = 0;
             this.sql = string.Format(@"UPDATE [transportados].[ciudad]
                                         SET
                                         ciud_baja = @Baja ,
@@ -343,7 +342,6 @@ namespace FrbaBus
         }
         public bool CheckRecorrido(Int32 Ciudorig, Int32 CiudDest, Int32 tipo)
         {
-            Int32 result = 0;
             bool Resultado = false;
             this.sql = string.Format(@"select * from transportados.recorrido
                                         where reco_id_ciudad_destino ={0}
@@ -364,7 +362,7 @@ namespace FrbaBus
         }
         public void ModifyReco(Int32 reco_id, Int32 IsBaja)
         {
-            int result = 0;
+            
             this.sql = string.Format(@"UPDATE [transportados].[recorrido]
                                         SET
                                         reco_baja = @Baja ,
