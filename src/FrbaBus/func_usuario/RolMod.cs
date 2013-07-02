@@ -25,12 +25,26 @@ namespace FrbaBus.func_usuario
 
         private void RolMod_Load(object sender, EventArgs e)
         {
-            Formularios Func = new Formularios();
+            Formularios Form = new Formularios();
             this.textBox1.Text = this.nombre;
-            DataSet RolxFunc_Lista = Func.RolxFunc(this.textBox1.Text);
+            DataSet RolxFunc_Lista = Form.RolxFunc(this.textBox1.Text);
             dataGridView1.DataSource = RolxFunc_Lista.Tables[0].DefaultView;
 
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            funciones Func = new funciones();
+            Func.BajaRol(this.nombre);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            AgregarFunc agregarFunc = new AgregarFunc();
+            agregarFunc.nombre = this.nombre;
+            agregarFunc.Show();
+ 
         }
     }
 }

@@ -1,23 +1,7 @@
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
--- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	<Description,,>
--- =============================================
 CREATE PROCEDURE cargarMicro
 @patenteNueva varchar(7),
 @patenteVieja varchar(7)
@@ -37,4 +21,14 @@ INSERT INTO [GD1C2013].[transportados].[micros]
          where m.micr_patente = @patenteVieja);
 
 END
+GO
+create procedure transportados.bajaRol @rol varchar(15)
+as
+begin 
+update transportados.Rol
+set rol_borrado=1
+where rol_nombre=@rol;
+delete transportados.rol_usuario
+where rolu_rol_id  in ( select rol_id from transportados.rol where rol_nombre=@rol)
+end
 GO

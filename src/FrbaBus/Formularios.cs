@@ -155,5 +155,42 @@ namespace FrbaBus
             da.Fill(ds, "Nombre");
             return ds;
         }
+        public DataSet ListarUser (string user)
+        {
+            this.sql = string.Format(@"SELECT TOP 1000 [usua_username] as 'Usuario'
+      ,isnull(rol_nombre,'No Creado') as 'Rol'
+      ,rolu_creado as 'Creacion'
+      ,rolu_modificado as 'Modificacion'
+  FROM [GD1C2013].[transportados].[usuario]
+  left outer join [GD1C2013].[transportados].rol_usuario on rolu_user_id=usua_id
+  left outer join [GD1C2013].[transportados].Rol on rol_id =rolu_rol_id
+  where usua_username like '%{0}%'", user);
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "Nombre");
+            return ds;
+        }
+
+        public DataSet llenaComboboxFunc(string rol)
+        {
+            this.sql = string.Format(@"select func_id,func_nombre
+from transportados.funcionalidad
+where func_id not in (select rolf_func_id
+from transportados.Rol_funcionalidad
+left outer join transportados.Rol on rolf_rol_id=rol_id
+where rol_nombre ={0})", rol);
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            if (da.TableMappings.Count > 0)
+            {
+                da.Fill(ds, "func_nombre");
+            }
+          
+            return ds;
+        }
     }
 }

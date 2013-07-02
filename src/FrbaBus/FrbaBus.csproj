@@ -210,6 +210,18 @@
     </Compile>
     <Compile Include="Formularios.cs" />
     <Compile Include="funciones.cs" />
+    <Compile Include="func_usuario\AgregarFunc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="func_usuario\AgregarFunc.Designer.cs">
+      <DependentUpon>AgregarFunc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="func_usuario\listarUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="func_usuario\listarUsuario.Designer.cs">
+      <DependentUpon>listarUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="func_usuario\listRol.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -325,6 +337,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="func_usuario\AgregarFunc.resx">
+      <DependentUpon>AgregarFunc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="func_usuario\listarUsuario.resx">
+      <DependentUpon>listarUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="func_usuario\listRol.resx">
       <DependentUpon>listRol.cs</DependentUpon>

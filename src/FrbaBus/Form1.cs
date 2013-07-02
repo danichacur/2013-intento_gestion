@@ -191,7 +191,7 @@ namespace FrbaBus
 
         private void modificarUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            func_usuario.modUsu ModUsu = new func_usuario.modUsu();
+            func_usuario.listarUsuario ModUsu = new func_usuario.listarUsuario();
             ModUsu.MdiParent = this;
             ModUsu.Show();
         }

@@ -7,10 +7,10 @@ using System.Data;
 using System.Windows.Forms;
 namespace FrbaBus
 {
-    class funciones:conexion
+    class funciones : conexion
     {
-        
-        public bool insertarRecorrido(int ciudOrigen, int ciudDestino,int tipoServ,int basePasaje,int baseEncomienda)
+
+        public bool insertarRecorrido(int ciudOrigen, int ciudDestino, int tipoServ, int basePasaje, int baseEncomienda)
         {
             bool Resultado = false;
             int result = 0;
@@ -25,14 +25,14 @@ namespace FrbaBus
                                             [reco_creado],
                                             [reco_modificado])
                                             values
-                                            ('ajbfkasafbksdf',{0},{1},{2},{3},{4},SYSDATETIME(),SYSDATETIME())", ciudOrigen,ciudDestino,tipoServ,basePasaje,baseEncomienda);
+                                            ('ajbfkasafbksdf',{0},{1},{2},{3},{4},SYSDATETIME(),SYSDATETIME())", ciudOrigen, ciudDestino, tipoServ, basePasaje, baseEncomienda);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
             //SqlDataReader Reg = null;
             //Reg = this.comandosSql.ExecuteReader();
             //MessageBox.Show(Reg.Read().ToString());
-            result=this.comandosSql.ExecuteNonQuery();
-            if (result>0)
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
             {
                 Resultado = true;
             }
@@ -69,9 +69,9 @@ namespace FrbaBus
             this.cnn.Close();
             return Resultado;
         }
-        
 
-        public bool noExistePatente( String patente)
+
+        public bool noExistePatente(String patente)
         {
             bool Resultado = false;
             int result = 0;
@@ -94,7 +94,7 @@ namespace FrbaBus
             return Resultado;
 
         }
-        
+
         public int contarPasajesVendidos(DateTime inicio, DateTime fin, String patente)
         {
             int result = 0;
@@ -159,7 +159,7 @@ namespace FrbaBus
                                         micr_baja_tecnica = 1,
                                         micr_fecha_baja_tecnica = (0) ,
                                         micr_fecha_regreso = (1)
-                                        WHERE micr_patente = '(2)' ", inicio, fin, patente); 
+                                        WHERE micr_patente = '(2)' ", inicio, fin, patente);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
@@ -180,18 +180,18 @@ namespace FrbaBus
 
             int result = 0;
             Object otro;
-  
+
             SqlCommand cmd = new SqlCommand("microAlterno", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@PATENTE", patente));
             cmd.Parameters.Add(new SqlParameter("@FECHA_INI", inicio));
             cmd.Parameters.Add(new SqlParameter("@FECHA_FIN ", fin));
-            this.cnn.Open();          
+            this.cnn.Open();
             // execute the command
             otro = cmd.ExecuteScalar();
             result = Convert.ToInt32(otro);
             //System.Console.WriteLine(otro);
-           this.cnn.Close();
+            this.cnn.Close();
             return result;
         }
 
@@ -203,8 +203,8 @@ namespace FrbaBus
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@patenteNueva", patenteNueva));
             cmd.Parameters.Add(new SqlParameter("@patenteVieja", patenteVieja));
-    
-            this.cnn.Open();          
+
+            this.cnn.Open();
             result = cmd.ExecuteNonQuery();
 
             this.cnn.Close();
@@ -232,14 +232,14 @@ namespace FrbaBus
         public void reemplazarViajes(int microAlterno, string microViejo, DateTime fecha, DateTime fechalleg)
         {
             /*PROCESO TRANSPARENTE QUE CAMBIA EL MICRO ASIGNADO POR OTRO*/
- 
+
             int result = 0;
             this.sql = string.Format(@"UPDATE TRANSPORTADOS.VIAJES
                 SET VIAJ_MICRO = @id_micro
                 WHERE VIAJ_MICRO = (SELECT MICR_ID FROM TRANSPORTADOS.MICROS
 				                WHERE MICR_PATENTE = @patente)
                 AND VIAJ_FECHA_SALIDA BETWEEN @inicio AND @fin");
-            
+
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.comandosSql.Parameters.Add(new SqlParameter("@id_micro", microAlterno));
             this.comandosSql.Parameters.Add(new SqlParameter("@patente", microViejo));
@@ -267,7 +267,7 @@ namespace FrbaBus
 
             this.cnn.Open();
             result = cmd.ExecuteNonQuery();
-            
+
 
             if (result > 0)
             {
@@ -304,30 +304,30 @@ namespace FrbaBus
                 Resultado = false;
                 MessageBox.Show("Ocurrió un error al devolver los pasajes");
             }
-            
+
             this.cnn.Close();
             return Resultado;
         }
-        public void ModifyCity(string CiudName, Int32 IsBaja,string CiudNameOrig)
+        public void ModifyCity(string CiudName, Int32 IsBaja, string CiudNameOrig)
         {
             this.sql = string.Format(@"UPDATE [transportados].[ciudad]
                                         SET
                                         ciud_baja = @Baja ,
                                         ciud_modificado=SYSDATETIME()
-                                        where ciud_nombre =@CiudMod"); 
+                                        where ciud_nombre =@CiudMod");
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.comandosSql.Parameters.Add(new SqlParameter("@CiudMod", CiudName));
             this.comandosSql.Parameters.Add(new SqlParameter("@Baja", IsBaja));
             this.cnn.Open();
-            this.comandosSql.ExecuteNonQuery();   
+            this.comandosSql.ExecuteNonQuery();
             this.cnn.Close();
         }
         public bool CheckCity(string CiudName)
-        {   
+        {
             bool Resultado = false;
             this.sql = string.Format(@"select ciud_id
                                         from transportados.ciudad
-                                        WHERE ciud_nombre = '{0}' ", CiudName); 
+                                        WHERE ciud_nombre = '{0}' ", CiudName);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
             SqlDataReader Reg = this.comandosSql.ExecuteReader();
@@ -335,10 +335,10 @@ namespace FrbaBus
             {
                 Resultado = true;
             }
-           
+
             this.cnn.Close();
             return Resultado;
-            
+
         }
         public bool CheckRecorrido(Int32 Ciudorig, Int32 CiudDest, Int32 tipo)
         {
@@ -362,7 +362,7 @@ namespace FrbaBus
         }
         public void ModifyReco(Int32 reco_id, Int32 IsBaja)
         {
-            
+
             this.sql = string.Format(@"UPDATE [transportados].[recorrido]
                                         SET
                                         reco_baja = @Baja ,
@@ -388,6 +388,34 @@ order by rf.rolf_func_id desc", user_id);
             this.cnn.Open();
             return this.comandosSql.ExecuteReader();
         }
+        public bool BajaRol(String Rol)
+        {
+            /*PROCESO TRANSPARENTE QUE DEVUELVE LOS PASAJES*/
+            int result = 0;
+            bool Resultado = false;
+            SqlCommand cmd = new SqlCommand("transportados.bajaRol", this.cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@rol", Rol));
+
+            this.cnn.Open();
+            result = cmd.ExecuteNonQuery();
+
+            if (result > 0)
+            {
+                Resultado = true;
+                MessageBox.Show("Baja de rol completa");
+            }
+            else
+            {
+                Resultado = false;
+                MessageBox.Show("Ocurrió un error al dar de baja al rol");
+            }
+
+            this.cnn.Close();
+            return Resultado;
+
+
         }
     }
+}
 
