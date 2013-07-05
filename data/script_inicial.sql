@@ -1,5 +1,4 @@
 USE [GD1C2013]
-
 GO
 
 CREATE SCHEMA [transportados] AUTHORIZATION [gd]
@@ -34,6 +33,7 @@ CREATE TABLE [transportados].[clientes](
       [Cli_Fecha_Nac] [datetime] NULL
       ,[cli_creado] [datetime] NULL
       ,[cli_modificado][datetime] NULL
+      ,[cli_id_pasa_frecuente] [int] NULL
 ) ON [PRIMARY]
 
 GO
@@ -165,8 +165,8 @@ GO
       ,[micr_patente]
       ,[micr_pisos] )
   (SELECT ts.tipo_id
-    ,null
-    ,null
+    ,0
+    ,[Micro_KG_Disponibles]
       ,[Micro_Marca]
       ,[Micro_Modelo]
       ,0
@@ -182,6 +182,7 @@ GO
       group by [Micro_Marca],
       [Micro_Modelo],
       [Micro_Patente],
+      [Micro_KG_Disponibles],
       ts.tipo_id);
   GO
 
@@ -229,6 +230,9 @@ GO
 USE [GD1C2013]
 GO
 
+
+
+
 /****** Object:  Table [transportados].[recorrido]    Script Date: 05/21/2013 22:23:22 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[recorrido]') AND type in (N'U'))
 DROP TABLE [transportados].[recorrido]
@@ -252,7 +256,8 @@ CREATE TABLE [transportados].[recorrido](
       [reco_precio_base] [int] NOT NULL,
       [reco_precio_encomienda] [int] NOT NULL,
       [reco_creado] [datetime] NULL,
-      [reco_modificado] [datetime] NULL
+      [reco_modificado] [datetime] NULL,
+      [reco_baja] [bit] DEFAULT ((0)) NOT NULL, 
 ) ON [PRIMARY]
 
 GO
@@ -290,64 +295,6 @@ GO
 USE [GD1C2013]
 GO
 
-/****** Object:  Table [transportados].[viajes]    Script Date: 05/21/2013 22:24:28 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[viajes]') AND type in (N'U'))
-DROP TABLE [transportados].[viajes]
-GO
-
-USE [GD1C2013]
-GO
-
-/****** Object:  Table [transportados].[viajes]    Script Date: 05/21/2013 22:24:28 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [transportados].[viajes](
-      [viaj_id] [int] IDENTITY(1,1) NOT NULL,
-      [viaj_fecha_salida] [datetime] NULL,
-      [viaj_fecha_llegada] [datetime] NULL,
-      [viaj_fecha_llegada_estimada] [datetime] NULL,
-      [viaj_micro] [int] NOT NULL,
-      [viaj_recorrido] [nvarchar](18) NULL,
-      [viaj_creado] [datetime] NULL,
-      [viaj_modificado] [datetime] NULL
-) ON [PRIMARY]
-
-GO
-
-
-/* crear los viajes */
-  INSERT INTO [GD1C2013].[transportados].[viajes] (
-    [viaj_fecha_salida]
-    ,[viaj_fecha_llegada]
-    ,[viaj_fecha_llegada_estimada]
-    ,[viaj_micro]
-    ,[viaj_recorrido]
-    ,[viaj_creado]
-    ,[viaj_modificado])
-    (SELECT 
-    m.[FechaSalida]
-    ,m.[FechaLLegada]
-    ,m.[Fecha_LLegada_Estimada]
-    ,mi.micr_id
-    ,m.[Recorrido_Codigo]
-    ,SYSDATETIME()
-    ,SYSDATETIME()
-    FROM [GD1C2013].[gd_esquema].[Maestra] m
-    left outer join  [GD1C2013].[transportados].[micros] mi on mi.micr_patente = m.Micro_Patente
-    group by m.[FechaSalida]
-    ,m.[FechaLLegada]
-    ,m.[Fecha_LLegada_Estimada]
-    ,mi.micr_id
-    ,m.[Recorrido_Codigo]);
-    GO
-
-
-USE [GD1C2013]
-GO
 
 /****** Object:  Table [transportados].[butaca]    Script Date: 05/21/2013 22:14:00 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[butaca]') AND type in (N'U'))
@@ -382,59 +329,281 @@ GO
       [buta_pasillo]
   )
   (select Butaca_Nro
-  ,Butaca_Piso
   ,mi.micr_id
+  ,Butaca_Piso
   ,case Butaca_Tipo
   when 'Pasillo' then 1
   else 0 end
    FROM [GD1C2013].[gd_esquema].[Maestra] m
   left outer join [transportados].[micros] mi on mi.micr_patente=m.Micro_Patente
   group by Butaca_Nro
-    ,Butaca_Tipo,Butaca_Piso,mi.micr_id 
+    ,Butaca_Piso,mi.micr_id,Butaca_Tipo 
     );
       GO
-USE [GD1C2013]
-GO
 
-/****** Object:  Table [transportados].[pasaje]    Script Date: 05/21/2013 22:22:55 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[pasaje]') AND type in (N'U'))
-DROP TABLE [transportados].[pasaje]
-GO
 
 USE [GD1C2013]
 GO
 
-/****** Object:  Table [transportados].[pasaje]    Script Date: 05/21/2013 22:22:55 ******/
+/*actualiza la cantidad de butacas por micro*/
+update transportados.micros 
+set [micr_cant_butacas] = (SELECT MAX(b.buta_numero) from transportados.butaca b
+  where transportados.micros.micr_id = b.buta_micro_id)
+      ,[micr_pisos] = (SELECT MAX(b.buta_piso) from transportados.butaca b
+  where transportados.micros.micr_id = b.buta_micro_id)
+  
+
+/****** Object:  Table [transportados].[viajes]    Script Date: 05/21/2013 22:24:28 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[viajes]') AND type in (N'U'))
+DROP TABLE [transportados].[viajes]
+GO
+
+USE [GD1C2013]
+GO
+
+/****** Object:  Table [transportados].[viajes]    Script Date: 05/21/2013 22:24:28 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [transportados].[pasaje](
-      [pasa_id] [int] IDENTITY(1,1) NOT NULL,
-      [pasa_cliente_id][int] NOT NULL,
-      [pasa_creado] [datetime] NULL,
-      [pasa_modificado] [datetime] NULL,
-      [pasa_cantidad] [int] NOT NULL,
-      [pasa_KG] [int] NOT NULL,
-      [pasa_viaje_id] [int],
-      [pasa_precio_total] [int] NULL,
-      [pasa_precio_bonificado] [int] NULL
+CREATE TABLE [transportados].[viajes](
+      [viaj_id] [int] IDENTITY(1,1) NOT NULL,
+      [viaj_fecha_salida] [datetime] NULL,
+      [viaj_fecha_llegada] [datetime] NULL,
+      [viaj_fecha_llegada_estimada] [datetime] NULL,
+      [viaj_micro] [int] NOT NULL,
+      [viaj_recorrido] [nvarchar](18) NULL,
+      [viaj_creado] [datetime] NULL,
+      [viaj_modificado] [datetime] NULL,
+      [viaj_butacas_libres] [int] NOT NULL,
+      [viaj_KG_disponible] [int]
 ) ON [PRIMARY]
 
 GO
 
-/* creacion del pasaje */
-  INSERT INTO [GD1C2013].[transportados].[pasaje] (
-      [pasa_cliente_id],
-      [pasa_creado],
-      [pasa_modificado],
-      [pasa_cantidad] ,
-      [pasa_KG],
-      [pasa_viaje_id],
-      [pasa_precio_total],
-      [pasa_precio_bonificado] )
+
+/* crear los viajes */
+  INSERT INTO [GD1C2013].[transportados].[viajes] (
+    [viaj_fecha_salida]
+    ,[viaj_fecha_llegada]
+    ,[viaj_fecha_llegada_estimada]
+    ,[viaj_micro]
+    ,[viaj_recorrido]
+    ,[viaj_creado]
+    ,[viaj_modificado]
+    ,[viaj_butacas_libres]
+    ,[viaj_KG_disponible]
+	)
+    (SELECT 
+    m.[FechaSalida]
+    ,m.[FechaLLegada]
+    ,m.[Fecha_LLegada_Estimada]
+    ,mi.micr_id
+    ,m.[Recorrido_Codigo]
+    ,SYSDATETIME()
+    ,SYSDATETIME()
+    ,isnull(mi.micr_cant_butacas,0) - COUNT(m.[Recorrido_Codigo])
+    ,isnull(mi.micr_kg_encomienda,0) - SUM(m.Paquete_KG)
+    FROM [GD1C2013].[gd_esquema].[Maestra] m
+    left outer join  [GD1C2013].[transportados].[micros] mi on mi.micr_patente = m.Micro_Patente
+    group by m.[FechaSalida]
+    ,m.[FechaLLegada]
+    ,m.[Fecha_LLegada_Estimada]
+    ,mi.micr_id
+    ,m.[Recorrido_Codigo]
+    ,mi.micr_cant_butacas
+    ,mi.micr_kg_encomienda);
+    GO
+    
+
+
+
+--USE [GD1C2013]
+--GO
+
+--/****** Object:  Table [transportados].[pasaje]    Script Date: 05/21/2013 22:22:55 ******/
+--IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[pasaje]') AND type in (N'U'))
+--DROP TABLE [transportados].[pasaje]
+--GO
+
+--USE [GD1C2013]
+--GO
+
+--/****** Object:  Table [transportados].[pasaje]    Script Date: 05/21/2013 22:22:55 ******/
+--SET ANSI_NULLS ON
+--GO
+
+--SET QUOTED_IDENTIFIER ON
+--GO
+
+--CREATE TABLE [transportados].[pasaje](
+--      [pasa_id] [int] IDENTITY(1,1) NOT NULL,
+--      [pasa_cliente_id][int] NOT NULL,
+--      [pasa_creado] [datetime] NULL,
+--      [pasa_modificado] [datetime] NULL,
+--      [pasa_cantidad] [int] NOT NULL,
+--      [pasa_KG] [int] NOT NULL,
+--      [pasa_viaje_id] [int],
+--      [pasa_precio_total] [int] NULL,
+--      [pasa_precio_bonificado] [int] NULL,
+--      [pasa_cod_devolucion] [int] NULL,
+--	  [pasa_fecha_devolucion] [datetime] NULL,
+--	  [pasa_desc_devolucion] [varchar](100) NULL
+--) ON [PRIMARY]
+
+--GO
+
+--/* creacion del pasaje */
+--  INSERT INTO [GD1C2013].[transportados].[pasaje] (
+--      [pasa_cliente_id],
+--      [pasa_creado],
+--      [pasa_modificado],
+--      [pasa_cantidad] ,
+--      [pasa_KG],
+--      [pasa_viaje_id],
+--      [pasa_precio_total],
+--      [pasa_precio_bonificado] )
+--  (select a.Cli_id
+--  ,a.Pasaje_FechaCompra
+--  ,SYSDATETIME()
+--  ,COUNT(*)
+--  ,sum(a.Paquete_KG)
+--  ,a.viaj_id
+--  ,sum(a.precio)
+--  ,0
+--  from (
+--  select cli.Cli_id,case 
+--  when Paquete_Precio =0 then pasaje_precio
+--  when Pasaje_Precio = 0 then Paquete_Precio
+--  else Pasaje_Precio+Paquete_Precio
+--  end precio,Paquete_KG,Pasaje_FechaCompra,vi.viaj_id
+--  from [GD1C2013].[gd_esquema].[Maestra] m
+--  left outer join transportados.clientes cli on cli.Cli_Dni=m.Cli_Dni,
+--  [GD1C2013].[transportados].[viajes] vi
+--  where vi.viaj_recorrido=m.Recorrido_Codigo
+--  and vi.viaj_fecha_salida=m.FechaSalida
+--  ) a
+--  group by a.Cli_id,a.Pasaje_FechaCompra,a.viaj_id);
+--  GO
+
+
+--USE [GD1C2013]
+--GO
+
+--/****** Object:  Table [transportados].[pasaje_coupon]    Script Date: 05/21/2013 22:23:12 ******/
+--IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[pasaje_coupon]') AND type in (N'U'))
+--DROP TABLE [transportados].[pasaje_coupon]
+--GO
+
+--USE [GD1C2013]
+--GO
+
+--/****** Object:  Table [transportados].[pasaje_coupon]    Script Date: 05/21/2013 22:23:12 ******/
+--SET ANSI_NULLS ON
+--GO
+
+--SET QUOTED_IDENTIFIER ON
+--GO
+
+--CREATE TABLE [transportados].[pasaje_coupon](
+--      [cupo_id] [int]  NOT NULL,
+--      [cupo_viaje_id] [int] NOT NULL,
+--      [cupo_pasa_id] [int] NOT NULL,
+--      [cupo_butaca_id] [int] NULL,
+--      [cupo_kg_encomienda] [int] NULL,
+--      [cupo_butaca] [bit] NULL,
+--      [cupo_bonificado] [bit] NULL,
+--      [cupo_creado] [datetime] NULL,
+--      [cupo_modificado] [datetime] NULL,
+--      [cupo_precio] [int] NULL
+--) ON [PRIMARY]
+
+--GO
+--/* creacion de los cupones de los pasajes*/
+--  insert into [transportados].[pasaje_coupon](
+--      [cupo_id] ,
+--      [cupo_viaje_id] ,
+--      [cupo_pasa_id] ,
+--      [cupo_butaca_id] ,
+--      [cupo_kg_encomienda] ,
+--      [cupo_butaca] ,
+--      [cupo_bonificado] ,
+--      [cupo_creado],
+--      [cupo_modificado] ,
+--      [cupo_precio])
+--(    select 
+--      Pasaje_Codigo
+--      ,vi.viaj_id
+--      ,p.pasa_id
+--      ,b.buta_id
+--      ,m.Paquete_KG
+--      ,Butaca_Nro
+--      ,0
+--      ,Pasaje_FechaCompra
+--      ,SYSDATETIME()
+--      ,case 
+--      when Pasaje_Precio=0 then Paquete_Precio
+--      else pasaje_precio end 
+--    from [GD1C2013].[gd_esquema].[Maestra] m
+--    left outer join transportados.clientes cli on cli.Cli_Dni=m.Cli_Dni,
+--  [GD1C2013].[transportados].[viajes] vi
+--  left outer join [GD1C2013].[transportados].[micros] mi on vi.viaj_micro=mi.micr_id
+--  left outer join [GD1C2013].[transportados].[butaca] b on b.buta_micro_id=mi.micr_id,
+--   [GD1C2013].[transportados].[pasaje] p
+--  where vi.viaj_recorrido=m.Recorrido_Codigo
+--  and vi.viaj_fecha_salida=m.FechaSalida
+--  and p.pasa_cliente_id=cli.Cli_id
+--  and p.pasa_viaje_id=vi.viaj_id
+--  and m.Pasaje_FechaCompra=p.pasa_creado
+--  and b.buta_numero=m.Butaca_Nro)
+
+
+
+USE [GD1C2013]
+GO
+
+/****** Object:  Table [transportados].[voucher_de_compra]    Script Date: 05/21/2013 22:22:55 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[voucher_de_compra]') AND type in (N'U'))
+DROP TABLE [transportados].[voucher_de_compra]
+GO
+
+USE [GD1C2013]
+GO
+
+/****** Object:  Table [transportados].[voucher_de_compra]    Script Date: 05/21/2013 22:22:55 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [transportados].[voucher_de_compra](
+      [vouc_id] [int] IDENTITY(1,1) NOT NULL,
+      [vouc_cliente_id][int] NOT NULL,
+      [vouc_creado] [datetime] NULL,
+      [vouc_modificado] [datetime] NULL,
+      [vouc_cantidad] [int] NOT NULL,
+      [vouc_KG] [int] NOT NULL,
+      [vouc_viaje_id] [int],
+      [vouc_precio_total] [int] NULL
+--    [vouc_precio_bonificado] [int] NULL,
+
+) ON [PRIMARY]
+
+GO
+
+/* creacion del voucher */
+  INSERT INTO [GD1C2013].[transportados].[voucher_de_compra] (
+      [vouc_cliente_id],
+      [vouc_creado],
+      [vouc_modificado],
+      [vouc_cantidad] ,
+      [vouc_KG],
+      [vouc_viaje_id],
+      [vouc_precio_total])
+ --     [vouc_precio_bonificado] )
   (select a.Cli_id
   ,a.Pasaje_FechaCompra
   ,SYSDATETIME()
@@ -442,7 +611,7 @@ GO
   ,sum(a.Paquete_KG)
   ,a.viaj_id
   ,sum(a.precio)
-  ,0
+--  ,0
   from (
   select cli.Cli_id,case 
   when Paquete_Precio =0 then pasaje_precio
@@ -459,55 +628,57 @@ GO
   GO
 
 
+USE [GD1C2013]
+GO
+
+/****** Object:  Table [transportados].[pasajes]    Script Date: 05/21/2013 22:23:12 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[pasajes]') AND type in (N'U'))
+DROP TABLE [transportados].[pasajes]
+GO
 
 USE [GD1C2013]
 GO
 
-/****** Object:  Table [transportados].[pasaje_coupon]    Script Date: 05/21/2013 22:23:12 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[pasaje_coupon]') AND type in (N'U'))
-DROP TABLE [transportados].[pasaje_coupon]
-GO
-
-USE [GD1C2013]
-GO
-
-/****** Object:  Table [transportados].[pasaje_coupon]    Script Date: 05/21/2013 22:23:12 ******/
+/****** Object:  Table [transportados].[pasajes]    Script Date: 05/21/2013 22:23:12 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [transportados].[pasaje_coupon](
-      [cupo_id] [int]  NOT NULL,
-      [cupo_viaje_id] [int] NOT NULL,
-      [cupo_pasa_id] [int] NOT NULL,
-      [cupo_butaca_id] [int] NULL,
-      [cupo_kg_encomienda] [int] NULL,
-      [cupo_butaca] [bit] NULL,
-      [cupo_bonificado] [bit] NULL,
-      [cupo_creado] [datetime] NULL,
-      [cupo_modificado] [datetime] NULL,
-      [cupo_precio] [int] NULL
+CREATE TABLE [transportados].[pasajes](
+      [pasa_id] [int] NOT NULL,
+      [pasa_viaje_id] [int] NOT NULL,
+      [pasa_voucher_id] [int] NOT NULL,
+      [pasa_butaca_id] [int] NULL,
+      [pasa_kg_encomienda] [int] NULL,
+      [pasa_butaca] [bit] NULL,
+      [pasa_bonificado] [bit] NULL,
+      [pasa_creado] [datetime] NULL,
+      [pasa_modificado] [datetime] NULL,
+      [pasa_precio] [int] DEFAULT ((0)) NOT NULL,
+      [pasa_cod_devolucion] [int] NULL,
+	  [pasa_fecha_devolucion] [datetime] NULL,
+	  [pasa_desc_devolucion] [varchar](100) NULL
 ) ON [PRIMARY]
 
 GO
 /* creacion de los cupones de los pasajes*/
-  insert into [transportados].[pasaje_coupon](
-      [cupo_id] ,
-      [cupo_viaje_id] ,
-      [cupo_pasa_id] ,
-      [cupo_butaca_id] ,
-      [cupo_kg_encomienda] ,
-      [cupo_butaca] ,
-      [cupo_bonificado] ,
-      [cupo_creado],
-      [cupo_modificado] ,
-      [cupo_precio])
+  insert into [transportados].[pasajes](
+	  [pasa_id],
+      [pasa_viaje_id] ,
+      [pasa_voucher_id] ,
+      [pasa_butaca_id] ,
+      [pasa_kg_encomienda] ,
+      [pasa_butaca] ,
+      [pasa_bonificado] ,
+      [pasa_creado],
+      [pasa_modificado] ,
+      [pasa_precio])
 (    select 
       Pasaje_Codigo
       ,vi.viaj_id
-      ,p.pasa_id
+      ,vc.vouc_id
       ,b.buta_id
       ,m.Paquete_KG
       ,Butaca_Nro
@@ -522,17 +693,20 @@ GO
   [GD1C2013].[transportados].[viajes] vi
   left outer join [GD1C2013].[transportados].[micros] mi on vi.viaj_micro=mi.micr_id
   left outer join [GD1C2013].[transportados].[butaca] b on b.buta_micro_id=mi.micr_id,
-   [GD1C2013].[transportados].[pasaje] p
+   [GD1C2013].[transportados].[voucher_de_compra] vc
   where vi.viaj_recorrido=m.Recorrido_Codigo
   and vi.viaj_fecha_salida=m.FechaSalida
-  and p.pasa_cliente_id=cli.Cli_id
-  and p.pasa_viaje_id=vi.viaj_id
-  and m.Pasaje_FechaCompra=p.pasa_creado
+  and vc.vouc_cliente_id=cli.Cli_id
+  and vc.vouc_viaje_id=vi.viaj_id
+  and m.Pasaje_FechaCompra=vc.vouc_creado
   and b.buta_numero=m.Butaca_Nro)
 
+ GO
 
 USE [GD1C2013]
 GO
+
+
 
 /****** Object:  Table [transportados].[funcionalidad]    Script Date: 05/21/2013 22:22:38 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[funcionalidad]') AND type in (N'U'))
@@ -791,3 +965,161 @@ GO
   (2,2,SYSDATETIME(),SYSDATETIME())
 
   GO
+  
+  
+  /****** Object:  Table [transportados].[facturas]    Script Date: 05/21/2013 22:24:19 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[facturas]') AND type in (N'U'))
+DROP TABLE [transportados].[facturas]
+GO
+
+USE [GD1C2013]
+GO
+  
+  /****** Object:  Table [transportados].[facturas]    Script Date: 07/05/2013 14:51:36 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [transportados].[facturas] (
+	[fact_nro_compra] [int] IDENTITY(1,1) NOT NULL,
+	[fact_voucher_id] [int] NOT NULL,
+	[fact_cliente_id] [int] NOT NULL,
+	[fact_fecha_de_compra] [date] NOT NULL,
+ CONSTRAINT [PK_transportados.facturas] PRIMARY KEY CLUSTERED 
+(
+	[fact_nro_compra] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+/****** Object:  Table [transportados].[premios]    Script Date: 05/21/2013 22:23:12 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[premios]') AND type in (N'U'))
+DROP TABLE [transportados].[premios]
+GO
+
+USE [GD1C2013]
+GO
+
+/****** Object:  Table [transportados].[premios]    Script Date: 07/05/2013 16:50:53 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [transportados].[premios](
+	[prem_id] [int] IDENTITY(1,1) NOT NULL,
+	[prem_descripcion] [nvarchar](255) NULL,
+	[prem_puntos] [int] NOT NULL,
+	[prem_stock] [int] NOT NULL,
+ CONSTRAINT [PK_premios] PRIMARY KEY CLUSTERED 
+(
+	[prem_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+USE [GD1C2013]
+GO
+/* creacion de los premios*/
+INSERT INTO transportados.premios([prem_descripcion],[prem_puntos],[prem_stock])
+VALUES	('Tablet',23000,10)
+INSERT INTO transportados.premios([prem_descripcion],[prem_puntos],[prem_stock])
+VALUES	('Set de Toallas',6000,30)
+INSERT INTO transportados.premios([prem_descripcion],[prem_puntos],[prem_stock])
+VALUES	('Perfume',11000,4)
+INSERT INTO transportados.premios([prem_descripcion],[prem_puntos],[prem_stock])
+VALUES	('Rompecabezas',700,10)
+INSERT INTO transportados.premios([prem_descripcion],[prem_puntos],[prem_stock])
+VALUES	('Planta',100,10)
+
+
+/* creacion de las facturas*/
+  insert into [transportados].[facturas](
+	  [fact_voucher_id],
+      [fact_cliente_id] ,
+      [fact_fecha_de_compra] 
+      )
+(    select 
+	 vc.vouc_id
+	, vc.vouc_cliente_id
+      ,Pasaje_FechaCompra
+
+    from [GD1C2013].[gd_esquema].[Maestra] m
+    left outer join transportados.clientes cli on cli.Cli_Dni=m.Cli_Dni,
+  [GD1C2013].[transportados].[viajes] vi
+  left outer join [GD1C2013].[transportados].[micros] mi on vi.viaj_micro=mi.micr_id,
+   [GD1C2013].[transportados].[voucher_de_compra] vc
+  where vi.viaj_recorrido=m.Recorrido_Codigo
+  and vi.viaj_fecha_salida=m.FechaSalida
+  and vc.vouc_cliente_id=cli.Cli_id
+  and vc.vouc_viaje_id=vi.viaj_id
+  and m.Pasaje_FechaCompra=vc.vouc_creado)
+
+ GO
+ 
+
+/****** Object:  Table [transportados].[puntos_pas_frecuente]    Script Date: 05/21/2013 22:23:12 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[puntos_pas_frecuente]') AND type in (N'U'))
+DROP TABLE [transportados].[puntos_pas_frecuente]
+GO
+
+USE [GD1C2013]
+GO
+
+/****** Object:  Table [transportados].[puntos_pas_frecuente]    Script Date: 07/05/2013 16:50:53 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [transportados].[puntos_pas_frecuente](
+	[punt_id] [int] IDENTITY(1,1) NOT NULL,
+	[punt_fecha] [date] NULL,
+	[punt_puntos] [int] NOT NULL,
+	[punt_id_viaje] [int] NOT NULL,
+	[punt_valido] [bit] DEFAULT ((0)) NOT NULL
+ CONSTRAINT [PK_puntos_pas_frecuente] PRIMARY KEY CLUSTERED 
+(
+	[punt_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
+/****** Object:  Table [transportados].[premios_obtenidos]    Script Date: 05/21/2013 22:23:12 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[premios_obtenidos]') AND type in (N'U'))
+DROP TABLE [transportados].[premios_obtenidos]
+GO
+
+USE [GD1C2013]
+GO
+
+/****** Object:  Table [transportados].[premios_obtenidos]    Script Date: 07/05/2013 16:50:53 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [transportados].[premios_obtenidos](
+	[obte_id] [int] IDENTITY(1,1) NOT NULL,
+	[obte_fecha] [date] NULL,
+	[obte_id_premio] [int] NOT NULL,
+	[obte_cantidad] [int] NULL
+ CONSTRAINT [PK_premios_obtenidos] PRIMARY KEY CLUSTERED 
+(
+	[obte_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
