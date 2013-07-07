@@ -1,25 +1,112 @@
 USE [GD1C2013]
 GO
 
-CREATE SCHEMA [transportados] AUTHORIZATION [gd]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[bajaRol]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [transportados].[bajaRol]
 GO
 
-USE [GD1C2013]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[devuelvePasajes]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [transportados].[devuelvePasajes]
 GO
 
-/****** Object:  Table [transportados].[clientes]    Script Date: 05/21/2013 22:22:29 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[cargarMicro]') AND type in (N'P', N'PC'))
+DROP PROCEDURE  [transportados].[cargarMicro]
+GO
+
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[buscaViajes]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [transportados].[buscaViajes]
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[existe]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [transportados].[existe]
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[microAlterno]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [transportados].[microAlterno]
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[pasajesVendidos]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [transportados].[pasajesVendidos]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[devolucionPersonal]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [transportados].[devolucionPersonal]
+GO
+
+
+/****** Object:  Table [transportados].[puntos_pas_frecuente]    Script Date: 05/21/2013 22:23:12 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[puntos_pas_frecuente]') AND type in (N'U'))
+DROP TABLE [transportados].[puntos_pas_frecuente]
+GO
+
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[clientes]') AND type in (N'U'))
 DROP TABLE [transportados].[clientes]
 GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[tipo_servicio]') AND type in (N'U'))
+DROP TABLE [transportados].[tipo_servicio]
+GO
 
-USE [GD1C2013]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[ciudad]') AND type in (N'U'))
+DROP TABLE [transportados].[ciudad]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[recorrido]') AND type in (N'U'))
+DROP TABLE [transportados].[recorrido]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[butaca]') AND type in (N'U'))
+DROP TABLE [transportados].[butaca]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[viajes]') AND type in (N'U'))
+DROP TABLE [transportados].[viajes]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[voucher_de_compra]') AND type in (N'U'))
+DROP TABLE [transportados].[voucher_de_compra]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[pasajes]') AND type in (N'U'))
+DROP TABLE [transportados].[pasajes]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[funcionalidad]') AND type in (N'U'))
+DROP TABLE [transportados].[funcionalidad]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[Rol]') AND type in (N'U'))
+DROP TABLE [transportados].[Rol]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[Rol_funcionalidad]') AND type in (N'U'))
+DROP TABLE [transportados].[Rol_funcionalidad]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[usuario]') AND type in (N'U'))
+DROP TABLE [transportados].[usuario]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[rol_usuario]') AND type in (N'U'))
+DROP TABLE [transportados].[rol_usuario]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[facturas]') AND type in (N'U'))
+DROP TABLE [transportados].[facturas]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[premios]') AND type in (N'U'))
+DROP TABLE [transportados].[premios]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[micros]') AND type in (N'U'))
+DROP TABLE [transportados].[micros]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[premios_obtenidos]') AND type in (N'U'))
+DROP TABLE [transportados].[premios_obtenidos]
+GO
+
+drop schema transportados
+
+
+
+Select 'Creo el esquema'
+
+GO
+
+CREATE SCHEMA [transportados] AUTHORIZATION [gd]
 GO
 
 /****** Object:  Table [transportados].[clientes]    Script Date: 05/21/2013 22:22:29 ******/
-SET ANSI_NULLS ON
-GO
 
-SET QUOTED_IDENTIFIER ON
+Select 'Creo tabla clientes'
+
 GO
 
 CREATE TABLE [transportados].[clientes](
@@ -35,6 +122,10 @@ CREATE TABLE [transportados].[clientes](
       ,[cli_modificado][datetime] NULL
       ,[cli_id_pasa_frecuente] [int] NULL
 ) ON [PRIMARY]
+
+GO
+
+Select 'Migro la tabla clientes'
 
 GO
 
@@ -70,23 +161,13 @@ GO
   ,[Cli_Fecha_Nac]);
   GO
 
-USE [GD1C2013]
-GO
 
 /****** Object:  Table [transportados].[tipo_servicio]    Script Date: 05/21/2013 22:24:02 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[tipo_servicio]') AND type in (N'U'))
-DROP TABLE [transportados].[tipo_servicio]
+
+Select 'Creo tabla tipo_servicio'
+
 GO
 
-USE [GD1C2013]
-GO
-
-/****** Object:  Table [transportados].[tipo_servicio]    Script Date: 05/21/2013 22:24:02 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [transportados].[tipo_servicio](
       [tipo_id] [int] IDENTITY(1,1) NOT NULL,
@@ -111,24 +192,10 @@ GO
     );
     GO
 
+Select 'Creo tabla Micros'
 
-USE [GD1C2013]
 GO
 
-/****** Object:  Table [transportados].[micros]    Script Date: 05/21/2013 22:22:48 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[micros]') AND type in (N'U'))
-DROP TABLE [transportados].[micros]
-GO
-
-USE [GD1C2013]
-GO
-
-/****** Object:  Table [transportados].[micros]    Script Date: 05/21/2013 22:22:48 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [transportados].[micros](
       [micr_id] [int] IDENTITY(1,1) NOT NULL,
@@ -186,23 +253,13 @@ GO
       ts.tipo_id);
   GO
 
-  USE [GD1C2013]
-GO
 
 /****** Object:  Table [transportados].[ciudad]    Script Date: 05/21/2013 22:22:16 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[ciudad]') AND type in (N'U'))
-DROP TABLE [transportados].[ciudad]
+
+Select 'Creo tabla Ciudad'
+
 GO
 
-USE [GD1C2013]
-GO
-
-/****** Object:  Table [transportados].[ciudad]    Script Date: 05/21/2013 22:22:16 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [transportados].[ciudad](
       [ciud_id] [int] IDENTITY(1,1) NOT NULL,
@@ -227,26 +284,13 @@ GO
   select Recorrido_Ciudad_Destino from [GD1C2013].[gd_esquema].[Maestra] ) a);
   GO
 
-USE [GD1C2013]
-GO
-
-
-
 
 /****** Object:  Table [transportados].[recorrido]    Script Date: 05/21/2013 22:23:22 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[recorrido]') AND type in (N'U'))
-DROP TABLE [transportados].[recorrido]
+
+Select 'Creo tabla Recorrido'
+
 GO
 
-USE [GD1C2013]
-GO
-
-/****** Object:  Table [transportados].[recorrido]    Script Date: 05/21/2013 22:23:22 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [transportados].[recorrido](
       [reco_id] [nvarchar](255) NOT NULL,
@@ -292,23 +336,11 @@ GO
       ,ts.tipo_id);
   GO
 
-USE [GD1C2013]
-GO
-
 
 /****** Object:  Table [transportados].[butaca]    Script Date: 05/21/2013 22:14:00 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[butaca]') AND type in (N'U'))
-DROP TABLE [transportados].[butaca]
-GO
 
-USE [GD1C2013]
-GO
+Select 'Creo tabla butaca'
 
-/****** Object:  Table [transportados].[butaca]    Script Date: 05/21/2013 22:14:00 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [transportados].[butaca](
@@ -342,9 +374,6 @@ GO
       GO
 
 
-USE [GD1C2013]
-GO
-
 /*actualiza la cantidad de butacas por micro*/
 update transportados.micros 
 set [micr_cant_butacas] = (SELECT MAX(b.buta_numero) from transportados.butaca b
@@ -354,18 +383,9 @@ set [micr_cant_butacas] = (SELECT MAX(b.buta_numero) from transportados.butaca b
   
 
 /****** Object:  Table [transportados].[viajes]    Script Date: 05/21/2013 22:24:28 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[viajes]') AND type in (N'U'))
-DROP TABLE [transportados].[viajes]
-GO
 
-USE [GD1C2013]
-GO
+Select 'Creo tabla viajes'
 
-/****** Object:  Table [transportados].[viajes]    Script Date: 05/21/2013 22:24:28 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [transportados].[viajes](
@@ -418,25 +438,11 @@ GO
     GO
     
 
-
-
---USE [GD1C2013]
---GO
-
 --/****** Object:  Table [transportados].[pasaje]    Script Date: 05/21/2013 22:22:55 ******/
 --IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[pasaje]') AND type in (N'U'))
 --DROP TABLE [transportados].[pasaje]
 --GO
 
---USE [GD1C2013]
---GO
-
---/****** Object:  Table [transportados].[pasaje]    Script Date: 05/21/2013 22:22:55 ******/
---SET ANSI_NULLS ON
---GO
-
---SET QUOTED_IDENTIFIER ON
---GO
 
 --CREATE TABLE [transportados].[pasaje](
 --      [pasa_id] [int] IDENTITY(1,1) NOT NULL,
@@ -488,24 +494,11 @@ GO
 --  group by a.Cli_id,a.Pasaje_FechaCompra,a.viaj_id);
 --  GO
 
-
---USE [GD1C2013]
---GO
-
 --/****** Object:  Table [transportados].[pasaje_coupon]    Script Date: 05/21/2013 22:23:12 ******/
 --IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[pasaje_coupon]') AND type in (N'U'))
 --DROP TABLE [transportados].[pasaje_coupon]
 --GO
 
---USE [GD1C2013]
---GO
-
---/****** Object:  Table [transportados].[pasaje_coupon]    Script Date: 05/21/2013 22:23:12 ******/
---SET ANSI_NULLS ON
---GO
-
---SET QUOTED_IDENTIFIER ON
---GO
 
 --CREATE TABLE [transportados].[pasaje_coupon](
 --      [cupo_id] [int]  NOT NULL,
@@ -561,22 +554,10 @@ GO
 
 
 
-USE [GD1C2013]
-GO
-
 /****** Object:  Table [transportados].[voucher_de_compra]    Script Date: 05/21/2013 22:22:55 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[voucher_de_compra]') AND type in (N'U'))
-DROP TABLE [transportados].[voucher_de_compra]
-GO
 
-USE [GD1C2013]
-GO
+Select 'Creo tabla Voucher de voucher_de_compra'
 
-/****** Object:  Table [transportados].[voucher_de_compra]    Script Date: 05/21/2013 22:22:55 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [transportados].[voucher_de_compra](
@@ -628,22 +609,11 @@ GO
   GO
 
 
-USE [GD1C2013]
-GO
 
 /****** Object:  Table [transportados].[pasajes]    Script Date: 05/21/2013 22:23:12 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[pasajes]') AND type in (N'U'))
-DROP TABLE [transportados].[pasajes]
-GO
 
-USE [GD1C2013]
-GO
+Select 'Creo tabla pasajes'
 
-/****** Object:  Table [transportados].[pasajes]    Script Date: 05/21/2013 22:23:12 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [transportados].[pasajes](
@@ -703,24 +673,10 @@ GO
 
  GO
 
-USE [GD1C2013]
-GO
-
-
-
 /****** Object:  Table [transportados].[funcionalidad]    Script Date: 05/21/2013 22:22:38 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[funcionalidad]') AND type in (N'U'))
-DROP TABLE [transportados].[funcionalidad]
-GO
 
-USE [GD1C2013]
-GO
+Select 'Creo tabla funcionalidad'
 
-/****** Object:  Table [transportados].[funcionalidad]    Script Date: 05/21/2013 22:22:38 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [transportados].[funcionalidad](
@@ -732,23 +688,13 @@ CREATE TABLE [transportados].[funcionalidad](
 
 GO
 
-USE [GD1C2013]
-GO
 
 /****** Object:  Table [transportados].[Rol]    Script Date: 05/21/2013 22:23:31 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[Rol]') AND type in (N'U'))
-DROP TABLE [transportados].[Rol]
+
+Select 'Creo tabla Rol'
+
 GO
 
-USE [GD1C2013]
-GO
-
-/****** Object:  Table [transportados].[Rol]    Script Date: 05/21/2013 22:23:31 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [transportados].[Rol](
       [rol_id] [int] IDENTITY(1,1) NOT NULL,
@@ -759,23 +705,13 @@ CREATE TABLE [transportados].[Rol](
 ) ON [PRIMARY]
 
 GO
-USE [GD1C2013]
-GO
 
 /****** Object:  Table [transportados].[Rol_funcionalidad]    Script Date: 05/21/2013 22:23:41 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[Rol_funcionalidad]') AND type in (N'U'))
-DROP TABLE [transportados].[Rol_funcionalidad]
+
+Select 'Creo tabla rol funcionalidad'
+
 GO
 
-USE [GD1C2013]
-GO
-
-/****** Object:  Table [transportados].[Rol_funcionalidad]    Script Date: 05/21/2013 22:23:41 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [transportados].[Rol_funcionalidad](
       [rolf_id] [int] IDENTITY(1,1) NOT NULL,
@@ -787,51 +723,15 @@ CREATE TABLE [transportados].[Rol_funcionalidad](
 
 GO
 
-USE [GD1C2013]
-GO
 
-/****** Object:  Table [transportados].[rol_usuario]    Script Date: 05/21/2013 22:23:54 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[rol_usuario]') AND type in (N'U'))
-DROP TABLE [transportados].[rol_usuario]
-GO
 
-USE [GD1C2013]
-GO
-
-/****** Object:  Table [transportados].[rol_usuario]    Script Date: 05/21/2013 22:23:54 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [transportados].[rol_usuario](
-      [rolu_id] [int] IDENTITY(1,1) NOT NULL,
-      [rolu_user_id] [int] NOT NULL,
-      [rolu_rol_id] [int] NOT NULL,
-      [rolu_creado] [datetime] NULL,
-      [rolu_modificado] [datetime] NULL
-) ON [PRIMARY]
-
-GO
-
-USE [GD1C2013]
-GO
 
 /****** Object:  Table [transportados].[usuario]    Script Date: 05/21/2013 22:24:19 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[usuario]') AND type in (N'U'))
-DROP TABLE [transportados].[usuario]
+
+Select 'Creo tabla Usuarios'
+
 GO
 
-USE [GD1C2013]
-GO
-
-/****** Object:  Table [transportados].[usuario]    Script Date: 06/27/2013 23:37:54 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [transportados].[usuario](
   [usua_id] [int] IDENTITY(1,1) NOT NULL,
@@ -956,7 +856,25 @@ insert into [GD1C2013].[transportados].[Rol_funcionalidad]
 
 
 GO
+
+
+/****** Object:  Table [transportados].[rol_usuario]    Script Date: 05/21/2013 22:23:54 ******/
+
+Select 'Creo tabla Relacion rol usuario'
+
 GO
+
+
+CREATE TABLE [transportados].[rol_usuario](
+      [rolu_id] [int] IDENTITY(1,1) NOT NULL,
+      [rolu_user_id] [int] NOT NULL,
+      [rolu_rol_id] [int] NOT NULL,
+      [rolu_creado] [datetime] NULL,
+      [rolu_modificado] [datetime] NULL
+) ON [PRIMARY]
+
+GO
+
 
   insert into [GD1C2013].[transportados].[rol_usuario]
   ([rolu_user_id],[rolu_rol_id],[rolu_creado],[rolu_modificado])
@@ -968,19 +886,11 @@ GO
   
   
   /****** Object:  Table [transportados].[facturas]    Script Date: 05/21/2013 22:24:19 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[facturas]') AND type in (N'U'))
-DROP TABLE [transportados].[facturas]
+
+Select 'Creo tabla facturas'
+
 GO
 
-USE [GD1C2013]
-GO
-  
-  /****** Object:  Table [transportados].[facturas]    Script Date: 07/05/2013 14:51:36 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [transportados].[facturas] (
 	[fact_nro_compra] [int] IDENTITY(1,1) NOT NULL,
@@ -997,19 +907,11 @@ GO
 
 
 /****** Object:  Table [transportados].[premios]    Script Date: 05/21/2013 22:23:12 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[premios]') AND type in (N'U'))
-DROP TABLE [transportados].[premios]
+
+Select 'Creo tabla premios'
+
 GO
 
-USE [GD1C2013]
-GO
-
-/****** Object:  Table [transportados].[premios]    Script Date: 07/05/2013 16:50:53 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [transportados].[premios](
 	[prem_id] [int] IDENTITY(1,1) NOT NULL,
@@ -1024,8 +926,6 @@ CREATE TABLE [transportados].[premios](
 
 GO
 
-USE [GD1C2013]
-GO
 /* creacion de los premios*/
 INSERT INTO transportados.premios([prem_descripcion],[prem_puntos],[prem_stock])
 VALUES	('Tablet',23000,10)
@@ -1064,20 +964,11 @@ VALUES	('Planta',100,10)
  GO
  
 
-/****** Object:  Table [transportados].[puntos_pas_frecuente]    Script Date: 05/21/2013 22:23:12 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[puntos_pas_frecuente]') AND type in (N'U'))
-DROP TABLE [transportados].[puntos_pas_frecuente]
+
+Select 'Creo tabla Puntos pasajero frecuente'
+
 GO
 
-USE [GD1C2013]
-GO
-
-/****** Object:  Table [transportados].[puntos_pas_frecuente]    Script Date: 07/05/2013 16:50:53 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [transportados].[puntos_pas_frecuente](
 	[punt_id] [int] IDENTITY(1,1) NOT NULL,
@@ -1096,18 +987,10 @@ GO
 
 
 /****** Object:  Table [transportados].[premios_obtenidos]    Script Date: 05/21/2013 22:23:12 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[premios_obtenidos]') AND type in (N'U'))
-DROP TABLE [transportados].[premios_obtenidos]
-GO
 
-USE [GD1C2013]
-GO
 
-/****** Object:  Table [transportados].[premios_obtenidos]    Script Date: 07/05/2013 16:50:53 ******/
-SET ANSI_NULLS ON
-GO
+Select 'Creo tabla Premios Obtenidos'
 
-SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [transportados].[premios_obtenidos](
@@ -1120,6 +1003,236 @@ CREATE TABLE [transportados].[premios_obtenidos](
 	[obte_id] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
+GO
+
+
+
+Select 'Creo Procedure cargarMicro'
+
+GO
+
+
+CREATE PROCEDURE [transportados].cargarMicro
+@patenteNueva varchar(7),
+@patenteVieja varchar(7)
+
+AS
+BEGIN 
+
+INSERT INTO [GD1C2013].[transportados].[micros]
+      ([micr_tipo_id],
+        [micr_cant_butacas],[micr_kg_encomienda],[micr_marca],[micr_modelo],
+        [micr_baja],[micr_baja_tecnica],[micro_creado],[micr_patente],[micr_pisos])
+        
+        (select distinct t.tipo_id,  m.micr_cant_butacas, m.micr_kg_encomienda, m.micr_marca,
+         m.micr_modelo, 0, 0, SYSDATETIME(), @patenteNueva , m.micr_pisos
+         from transportados.tipo_servicio t,
+         transportados.micros m
+         where m.micr_patente = @patenteVieja);
+
+END
+GO
+
+
+Select 'Creo Procedure bajaRol'
+
+GO
+create procedure transportados.bajaRol @rol varchar(15)
+as
+begin 
+update transportados.Rol
+set rol_borrado=1
+where rol_nombre=@rol;
+delete transportados.rol_usuario
+where rolu_rol_id  in ( select rol_id from transportados.rol where rol_nombre=@rol)
+end
+GO
+
+
+
+Select 'Creo Procedure buscaViajes'
+
+GO
+CREATE PROCEDURE [transportados].[buscaViajes]
+  -- Add the parameters for the stored procedure here
+  @PATENTE VARCHAR(6),
+  @FECHA_INI DATETIME,
+  @FECHA_FIN DATETIME
+AS
+BEGIN
+
+  SET NOCOUNT ON;
+  --ESTOS SON LOS PASAJES VENDIDOS DEL MICRO DADO DE BAJA
+  SELECT TOP 1 1 
+  FROM TRANSPORTADOS.PASAJE Q,
+  TRANSPORTADOS.VIAJES V,
+  TRANSPORTADOS.MICROS B
+  WHERE Q.PASA_VIAJE_ID = V.VIAJ_ID
+  AND V.VIAJ_MICRO = B.MICR_ID
+  AND B.MICR_PATENTE = @PATENTE
+  AND V.VIAJ_FECHA_SALIDA BETWEEN @FECHA_INI AND @FECHA_FIN
+  
+
+    
+END
+
+GO
+
+
+Select 'Creo Procedure devolucionPersonal'
+
+GO
+
+CREATE PROCEDURE [transportados].devolucionPersonal
+
+@VOUCHER INT,
+@PASAJE int,
+@MOTIVO varchar(100)
+
+AS
+BEGIN
+  
+
+UPDATE transportados.pasaje
+SET pasa_fecha_devolucion = SYSDATETIME(),
+  pasa_desc_devolucion = @MOTIVO,
+  pasa_cod_devolucion = pasa_viaje_id
+WHERE PASA_ID = @PASAJE
+
+END
+GO
+
+
+Select 'Creo Procedure devuelvePasajes'
+
+GO
+
+CREATE PROCEDURE [transportados].[devuelvePasajes]
+
+@PATENTE varchar (7),
+@FECHA_INI datetime,
+@FECHA_FIN datetime
+AS
+BEGIN
+  
+
+UPDATE transportados.pasaje
+SET pasa_fecha_devolucion = SYSDATETIME(),
+  pasa_desc_devolucion = 'Micro cancelado',
+  pasa_cod_devolucion = pasa_viaje_id
+WHERE PASA_VIAJE_ID in (select distinct V.VIAJ_ID from 
+      TRANSPORTADOS.VIAJES V,
+      TRANSPORTADOS.MICROS B
+      where
+       V.VIAJ_MICRO = B.MICR_ID
+      AND B.MICR_PATENTE = @PATENTE
+      AND V.VIAJ_FECHA_SALIDA BETWEEN @FECHA_INI AND @FECHA_FIN)
+END
+
+GO
+
+
+Select 'Creo Procedure existe'
+
+GO
+
+CREATE PROCEDURE [transportados].[existe]
+  -- Add the parameters for the stored procedure here
+@PATENTE varchar(7)
+AS
+BEGIN
+
+IF EXISTS (SELECT 1 
+FROM TRANSPORTADOS.MICROS 
+  WHERE MICR_PATENTE = @PATENTE)
+ SELECT 1
+  ELSE
+  SELECT 0
+
+END
+
+GO
+
+Select 'Creo Procedure microAlterno'
+
+GO
+
+CREATE PROCEDURE [transportados].[microAlterno] 
+  -- Add the parameters for the stored procedure here
+   @PATENTE VARCHAR(6),
+   @FECHA_INI DATETIME,
+   @FECHA_FIN DATETIME
+AS
+BEGIN
+
+-- Y SI SON VARIOS LOS VIAJES? PUEDO ITERAR HASTA QUE NO HAYA NINGUNO?
+SELECT TOP 1 A.MICR_ID
+FROM TRANSPORTADOS.MICROS A,
+TRANSPORTADOS.MICROS B,
+TRANSPORTADOS.VIAJES V
+/*BUSCO UN MICRO DE LAS MISMAS CARACTERISTICAS QUE NO ESTE INHABILITADO*/
+WHERE B.MICR_PATENTE = @PATENTE
+AND A.MICR_PATENTE <> @PATENTE
+AND A.MICR_CANT_BUTACAS = B.MICR_CANT_BUTACAS
+AND A.MICR_PISOS = B.MICR_PISOS
+AND A.MICR_MARCA = B.MICR_MARCA
+AND A.MICR_MODELO = B.MICR_MODELO
+AND A.MICR_BAJA = 0
+AND A.MICR_BAJA_TECNICA = 0
+AND A.MICR_TIPO_ID = B.MICR_TIPO_ID
+--/*BUSCO QUE LOS ASIENTOS LIBRES (NO VENDIDOS) ALCANCEN*/
+--AND (A.MICR_CANT_BUTACAS -
+--  (SELECT SUM(PASA_CANTIDAD) FROM 
+--  TRANSPORTADOS.PASAJE Q
+--  WHERE Q.PASA_VIAJE_ID = V.VIAJ_ID
+--  AND V.VIAJ_MICRO = A.MICR_ID)) 
+--  > =
+----ESTOS SON LOS PASAJES VENDIDOS DEL MICRO DADO DE BAJA
+--(SELECT SUM(PASA_CANTIDAD) FROM TRANSPORTADOS.PASAJE Q
+--  WHERE Q.PASA_VIAJE_ID = V.VIAJ_ID
+--  AND V.VIAJ_MICRO = B.MICR_ID)
+  
+/*BUSCO QUE NO TENGA VIAJES ASIGNADOS*/ 
+AND NOT EXISTS (SELECT 1 FROM TRANSPORTADOS.VIAJES C
+        WHERE V.VIAJ_MICRO = B.MICR_ID
+        AND C.VIAJ_MICRO = A.MICR_ID
+        --AND C.VIAJ_FECHA_LLEGADA = V.VIAJ_FECHA_LLEGADA
+        --AND C.VIAJ_FECHA_SALIDA = V.VIAJ_FECHA_SALIDA
+        AND C.VIAJ_RECORRIDO = V.VIAJ_RECORRIDO
+        --AND V.VIAJ_FECHA_SALIDA BETWEEN @FECHA_INI AND @FECHA_FIN
+        )
+
+
+
+   
+END
+
+GO
+
+Select 'Creo Procedure pasajesVendidos'
+
+GO
+
+CREATE PROCEDURE [transportados].[pasajesVendidos]
+  -- Add the parameters for the stored procedure here
+@PATENTE varchar (7),
+@FECHA_INI datetime,
+@FECHA_FIN datetime
+AS
+BEGIN
+  
+  SELECT SUM(PASA_CANTIDAD) 
+                                        FROM TRANSPORTADOS.PASAJE Q,
+                                        TRANSPORTADOS.VIAJES V,
+                                        TRANSPORTADOS.MICROS B
+                                        WHERE Q.PASA_VIAJE_ID = V.VIAJ_ID
+                                          AND V.VIAJ_MICRO = B.MICR_ID
+                                          AND B.MICR_PATENTE = @PATENTE
+                                          AND V.VIAJ_FECHA_SALIDA BETWEEN @FECHA_INI AND @FECHA_FIN
+  
+  
+END
 
 GO
 
