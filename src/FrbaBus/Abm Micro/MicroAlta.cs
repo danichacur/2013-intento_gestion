@@ -36,41 +36,18 @@ namespace FrbaBus.Abm_Micro
             }
             else
             {
-                insertar_micro(servicioCombo.Text, Convert.ToInt32(butacaCombo.Value), Convert.ToInt32(kgText.Text), marcaCombo.Text, modeloBox.Text, patenteBox.Text, Convert.ToInt32(textBox1.Text));
+                bool res = patente.insertar_micro(servicioCombo.Text, Convert.ToInt32(butacaCombo.Value), Convert.ToInt32(kgText.Text), marcaCombo.Text, modeloBox.Text, patenteBox.Text, Convert.ToInt32(textBox1.Text));
+                if (res)
+                    this.mensaje = "Datos correctos";
+                else
+                    this.mensaje = "Mmmm Lo siento, no se pudo crear el micro";
+
                 MessageBox.Show(mensaje);
             }
 
         }
 
-        public void insertar_micro(string tipoServ,int cantButaca,int kgCarga, string marca, string modelo, string patente, int pisos )
-        {
-            //bool Resultado = false;
-            int result = 0;
-            this.cadenaConexion = (@"Data Source=PC_PRUEBA\SQLSERVER2008;Initial Catalog =GD1C2013; integrated security =true;User Id=gd;Password=gd2013;");
-            this.cnn = new SqlConnection(cadenaConexion);
-            this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[micros](
-    [micr_tipo_id],[micr_cant_butacas],[micr_kg_encomienda],[micr_marca],[micr_modelo],[micr_baja],[micr_baja_tecnica],[micro_creado],[micr_patente],[micr_pisos] )
-    (select tipo_id,{0},{1},'{2}','{3}',0,0,SYSDATETIME(),'{4}',{5}
-        from transportados.tipo_servicio where tipo_nombre = '(6)')"
-                ,cantButaca,kgCarga,marca,modelo,patente,pisos,tipoServ);
-            this.comandosSql = new SqlCommand(this.sql, this.cnn);
-            cnn.Open();
-
-            result = this.comandosSql.ExecuteNonQuery();
-            if (result > 0)
-            {
-                //Resultado = true;
-                this.mensaje = "Datos correctos";
-            }
-            else
-            {
-                //Resultado = false;
-                this.mensaje = "Mmmm Lo siento, no se pudo crear el micro";
-            }
-
-            this.cnn.Close();
-        }
-
+        
         private void MicroAlta_Load(object sender, EventArgs e)
         {
             llenacombobox();

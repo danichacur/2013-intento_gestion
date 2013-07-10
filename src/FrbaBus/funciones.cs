@@ -95,6 +95,36 @@ namespace FrbaBus
 
         }
 
+        public bool insertar_micro(string tipoServ, int cantButaca, int kgCarga, string marca, string modelo, string patente, int pisos)
+        {
+            bool Resultado = false;
+            int result = 0;
+
+            this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[micros](
+    [micr_tipo_id],[micr_cant_butacas],[micr_kg_encomienda],[micr_marca],[micr_modelo],[micr_baja],[micr_baja_tecnica],[micro_creado],[micr_patente],[micr_pisos] )
+    (select tipo_id,{0},{1},'{2}','{3}',0,0,SYSDATETIME(),'{4}',{5}
+        from transportados.tipo_servicio where tipo_nombre = '(6)')"
+                , cantButaca, kgCarga, marca, modelo, patente, pisos, tipoServ);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            cnn.Open();
+
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+                
+            }
+            else
+            {
+                Resultado = false;
+               
+            }
+
+            this.cnn.Close();
+            return Resultado;
+        }
+
+
         public int contarPasajesVendidos(DateTime inicio, DateTime fin, String patente)
         {
             int result = 0;

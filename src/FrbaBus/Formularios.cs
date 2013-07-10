@@ -92,6 +92,73 @@ namespace FrbaBus
             da.Fill(ds, "ID_recorrido");
             return ds;
         }
+        public DataSet MicroLista()
+        {
+            this.sql = string.Format(@"SELECT 
+	                  [micr_patente] AS Patente
+                      ,[micr_marca] AS Marca
+                      ,[micr_modelo] As Modelo
+                      ,T.tipo_nombre As 'Tipo de servicio'
+                      ,[micr_pisos] as 'Cantidad de pisos'
+                      ,[micr_cant_butacas] as 'Cantidad de butacas'
+                      ,[micr_kg_encomienda] as 'KG para encomienda'
+                      ,case [micr_baja] 
+                           when 0 then 'NO'
+	                        else 'SI' 
+                            end as 'Dado de Baja Permanente' 
+                    ,[micr_fecha_baja] as 'Fecha de baja'
+                      ,case [micr_baja_tecnica]
+                      when 0 then 'NO'
+	                        else 'SI' 
+                            end as 'Baja Tecnica' 
+                      ,[micr_fecha_baja_tecnica] as 'Fecha de baja tecnica'
+                      ,[micr_fecha_regreso] as 'Fecha de retorno'
+                      ,[micro_creado] as 'Fecha de creacion'
+                  FROM [GD1C2013].[transportados].[micros] M
+                  INNER JOIN transportados.tipo_servicio T ON T.tipo_id = M.micr_tipo_id");
+               //     where M.micr_patente = '(0)'", patente);
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            da.Fill(ds, "Patente");
+            return ds;
+
+        }
+
+        public DataSet ViajesLista()
+        {
+
+            this.sql = string.Format(@"SELECT 
+		                            c2.ciud_nombre as Ciudad_Origen,
+		                            c.ciud_nombre as Ciudad_Destino,
+	                               [viaj_fecha_salida]
+                                  ,[viaj_fecha_llegada]
+                                  ,[viaj_fecha_llegada_estimada]
+                                  ,M.micr_patente
+                                  , M.micr_marca
+                                  , M.micr_modelo
+                                  ,M.micr_pisos
+  	                              ,T.tipo_nombre
+                                  ,[viaj_creado]
+                                  ,[viaj_modificado]
+                                  ,[viaj_butacas_libres]
+                                  ,[viaj_KG_disponible]
+                              FROM [GD1C2013].[transportados].[viajes] V
+                              INNER JOIN transportados.micros M  ON M.micr_id = V.viaj_micro
+                              INNER JOIN transportados.recorrido R ON R.reco_id = V.viaj_recorrido
+                              INNER JOIN transportados.tipo_servicio T ON M.micr_tipo_id = T.tipo_id
+                              inner join transportados.ciudad c on c.ciud_id = r.reco_id_ciudad_destino
+                              inner join transportados.ciudad c2 on c2.ciud_id = r.reco_id_ciudad_origen");
+                               // where c2.ciud_nombre like '%(0)%'", viaje);
+           
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            da.Fill(ds, "Patente");
+            return ds;
+
+        }
+
         public DataSet listarCiudad(string ciudad)
         {
             this.sql = string.Format(@"select ciud_nombre as 'Nombre'
