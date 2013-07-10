@@ -87,6 +87,12 @@
     <Compile Include="Abm Micro\MicroFormModificacion.Designer.cs">
       <DependentUpon>MicroFormModificacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Abm Micro\MicroListar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Micro\MicroListar.Designer.cs">
+      <DependentUpon>MicroListar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Abm Micro\modificacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -252,6 +258,12 @@
     <Compile Include="GenerarViaje\Generar.Designer.cs">
       <DependentUpon>Generar.cs</DependentUpon>
     </Compile>
+    <Compile Include="GenerarViaje\ListarViajes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenerarViaje\ListarViajes.Designer.cs">
+      <DependentUpon>ListarViajes.cs</DependentUpon>
+    </Compile>
     <Compile Include="GenerarViaje\modificar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -283,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Micro\MicroFormModificacion.resx">
       <DependentUpon>MicroFormModificacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Abm Micro\MicroListar.resx">
+      <DependentUpon>MicroListar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Micro\modificacion.resx">
       <DependentUpon>modificacion.cs</DependentUpon>
@@ -355,6 +370,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GenerarViaje\Generar.resx">
       <DependentUpon>Generar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GenerarViaje\ListarViajes.resx">
+      <DependentUpon>ListarViajes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inicio.resx">
       <DependentUpon>Inicio.cs</DependentUpon>

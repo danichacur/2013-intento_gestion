@@ -36,37 +36,38 @@ namespace FrbaBus.Abm_Micro
             }
             else
             {
-                MessageBox.Show("Gracias!");
-
-                insertar_micro(Convert.ToInt32(servicioCombo.SelectedText), Convert.ToInt32(butacaCombo.Value), Convert.ToInt32(kgText.Text), marcaCombo.SelectedText, Convert.ToInt32(modeloBox.Text), patenteBox.Text, Convert.ToInt32(pisos.Text));
+                insertar_micro(servicioCombo.Text, Convert.ToInt32(butacaCombo.Value), Convert.ToInt32(kgText.Text), marcaCombo.Text, modeloBox.Text, patenteBox.Text, Convert.ToInt32(textBox1.Text));
+                MessageBox.Show(mensaje);
             }
 
         }
 
-        public void insertar_micro(int tipoServ,int cantButaca,int kgCarga, string marca, int modelo, string patente, int pisos )
+        public void insertar_micro(string tipoServ,int cantButaca,int kgCarga, string marca, string modelo, string patente, int pisos )
         {
-            //bool Resultado;
+            //bool Resultado = false;
+            int result = 0;
             this.cadenaConexion = (@"Data Source=PC_PRUEBA\SQLSERVER2008;Initial Catalog =GD1C2013; integrated security =true;User Id=gd;Password=gd2013;");
             this.cnn = new SqlConnection(cadenaConexion);
             this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[micros](
     [micr_tipo_id],[micr_cant_butacas],[micr_kg_encomienda],[micr_marca],[micr_modelo],[micr_baja],[micr_baja_tecnica],[micro_creado],[micr_patente],[micr_pisos] )
-    (select t.tipo_id, {0},{1},{2},{3},{4},0,0,SYSDATETIME(),'{5}',{6}
-        from transportados.tipo_servicio)"
-                ,tipoServ,cantButaca,kgCarga,marca,modelo,patente,pisos);
+    (select tipo_id,{0},{1},'{2}','{3}',0,0,SYSDATETIME(),'{4}',{5}
+        from transportados.tipo_servicio where tipo_nombre = '(6)')"
+                ,cantButaca,kgCarga,marca,modelo,patente,pisos,tipoServ);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             cnn.Open();
 
-            SqlDataReader Reg = null;
-            Reg = this.comandosSql.ExecuteReader();
-            if (Reg.Read())
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
             {
                 //Resultado = true;
                 this.mensaje = "Datos correctos";
             }
             else
             {
-                this.mensaje = "Mmmm Lo siento";
+                //Resultado = false;
+                this.mensaje = "Mmmm Lo siento, no se pudo crear el micro";
             }
+
             this.cnn.Close();
         }
 
@@ -95,5 +96,6 @@ namespace FrbaBus.Abm_Micro
             //MessageBox.Show(value.ToString());
 
         }
+
     }
 }

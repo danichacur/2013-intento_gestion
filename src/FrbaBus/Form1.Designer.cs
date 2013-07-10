@@ -90,7 +90,7 @@
             // crear_ciudad
             // 
             this.crear_ciudad.Name = "crear_ciudad";
-            this.crear_ciudad.Size = new System.Drawing.Size(152, 22);
+            this.crear_ciudad.Size = new System.Drawing.Size(128, 22);
             this.crear_ciudad.Text = "Crear";
             this.crear_ciudad.Visible = false;
             this.crear_ciudad.Click += new System.EventHandler(this.crearToolStripMenuItem_Click);
@@ -98,7 +98,7 @@
             // modificar_ciudad
             // 
             this.modificar_ciudad.Name = "modificar_ciudad";
-            this.modificar_ciudad.Size = new System.Drawing.Size(152, 22);
+            this.modificar_ciudad.Size = new System.Drawing.Size(128, 22);
             this.modificar_ciudad.Text = "Modificar";
             this.modificar_ciudad.Visible = false;
             this.modificar_ciudad.Click += new System.EventHandler(this.modificarToolStripMenuItem_Click);
@@ -106,7 +106,7 @@
             // listar_ciudad
             // 
             this.listar_ciudad.Name = "listar_ciudad";
-            this.listar_ciudad.Size = new System.Drawing.Size(152, 22);
+            this.listar_ciudad.Size = new System.Drawing.Size(128, 22);
             this.listar_ciudad.Text = "Listar";
             this.listar_ciudad.Visible = false;
             this.listar_ciudad.Click += new System.EventHandler(this.CiudadListarToolStripMenuItem_Click);
@@ -125,7 +125,7 @@
             // crear_recorrido
             // 
             this.crear_recorrido.Name = "crear_recorrido";
-            this.crear_recorrido.Size = new System.Drawing.Size(152, 22);
+            this.crear_recorrido.Size = new System.Drawing.Size(128, 22);
             this.crear_recorrido.Text = "Crear";
             this.crear_recorrido.Visible = false;
             this.crear_recorrido.Click += new System.EventHandler(this.crearToolStripMenuItem1_Click);
@@ -133,7 +133,7 @@
             // modificar_recorrido
             // 
             this.modificar_recorrido.Name = "modificar_recorrido";
-            this.modificar_recorrido.Size = new System.Drawing.Size(152, 22);
+            this.modificar_recorrido.Size = new System.Drawing.Size(128, 22);
             this.modificar_recorrido.Text = "Modificar";
             this.modificar_recorrido.Visible = false;
             this.modificar_recorrido.Click += new System.EventHandler(this.modificarToolStripMenuItem1_Click);
@@ -141,7 +141,7 @@
             // listar_recorrido
             // 
             this.listar_recorrido.Name = "listar_recorrido";
-            this.listar_recorrido.Size = new System.Drawing.Size(152, 22);
+            this.listar_recorrido.Size = new System.Drawing.Size(128, 22);
             this.listar_recorrido.Text = "Listar";
             this.listar_recorrido.Visible = false;
             this.listar_recorrido.Click += new System.EventHandler(this.listarToolStripMenuItem_Click);
@@ -180,6 +180,8 @@
             this.listar_micro.Size = new System.Drawing.Size(166, 22);
             this.listar_micro.Text = "Listar";
             this.listar_micro.Visible = false;
+            this.listar_micro.Click += new System.EventHandler(this.listar_micro_Click);
+
             // 
             // registrar_llegada
             // 
@@ -203,7 +205,7 @@
             // crear_viaje
             // 
             this.crear_viaje.Name = "crear_viaje";
-            this.crear_viaje.Size = new System.Drawing.Size(152, 22);
+            this.crear_viaje.Size = new System.Drawing.Size(128, 22);
             this.crear_viaje.Text = "Generar";
             this.crear_viaje.Visible = false;
             this.crear_viaje.Click += new System.EventHandler(this.generarToolStripMenuItem_Click);
@@ -211,7 +213,7 @@
             // listar_viaje
             // 
             this.listar_viaje.Name = "listar_viaje";
-            this.listar_viaje.Size = new System.Drawing.Size(152, 22);
+            this.listar_viaje.Size = new System.Drawing.Size(128, 22);
             this.listar_viaje.Text = "Listar";
             this.listar_viaje.Visible = false;
             this.listar_viaje.Click += new System.EventHandler(this.listarToolStripMenuItem2_Click);
@@ -219,7 +221,7 @@
             // modificar_viaje
             // 
             this.modificar_viaje.Name = "modificar_viaje";
-            this.modificar_viaje.Size = new System.Drawing.Size(152, 22);
+            this.modificar_viaje.Size = new System.Drawing.Size(128, 22);
             this.modificar_viaje.Text = "Modificar";
             this.modificar_viaje.Visible = false;
             this.modificar_viaje.Click += new System.EventHandler(this.modificadoToolStripMenuItem_Click);
@@ -237,7 +239,7 @@
             // pasaje_generar
             // 
             this.pasaje_generar.Name = "pasaje_generar";
-            this.pasaje_generar.Size = new System.Drawing.Size(152, 22);
+            this.pasaje_generar.Size = new System.Drawing.Size(131, 22);
             this.pasaje_generar.Text = "Compra";
             this.pasaje_generar.Visible = false;
             this.pasaje_generar.Click += new System.EventHandler(this.compraToolStripMenuItem_Click);
@@ -245,7 +247,7 @@
             // pasaje_anular
             // 
             this.pasaje_anular.Name = "pasaje_anular";
-            this.pasaje_anular.Size = new System.Drawing.Size(152, 22);
+            this.pasaje_anular.Size = new System.Drawing.Size(131, 22);
             this.pasaje_anular.Text = "Anulacion";
             this.pasaje_anular.Visible = false;
             this.pasaje_anular.Click += new System.EventHandler(this.anulacionToolStripMenuItem_Click);
@@ -262,7 +264,7 @@
             // consulta_puntos
             // 
             this.consulta_puntos.Name = "consulta_puntos";
-            this.consulta_puntos.Size = new System.Drawing.Size(152, 22);
+            this.consulta_puntos.Size = new System.Drawing.Size(127, 22);
             this.consulta_puntos.Text = "Consulta";
             this.consulta_puntos.Visible = false;
             // 

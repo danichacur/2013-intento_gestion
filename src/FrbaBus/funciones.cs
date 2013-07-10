@@ -76,7 +76,7 @@ namespace FrbaBus
             bool Resultado = false;
             int result = 0;
             object otro;
-            SqlCommand cmd = new SqlCommand("existe", this.cnn);
+            SqlCommand cmd = new SqlCommand("[transportados].[existe]", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@PATENTE", patente));
             this.cnn.Open();
@@ -99,7 +99,7 @@ namespace FrbaBus
         {
             int result = 0;
             object otro;
-            SqlCommand cmd = new SqlCommand("pasajesVendidos", this.cnn);
+            SqlCommand cmd = new SqlCommand("transportados.pasajesVendidos", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@PATENTE", patente));
             cmd.Parameters.Add(new SqlParameter("@FECHA_INI", inicio));
@@ -181,7 +181,7 @@ namespace FrbaBus
             int result = 0;
             Object otro;
 
-            SqlCommand cmd = new SqlCommand("microAlterno", this.cnn);
+            SqlCommand cmd = new SqlCommand("transportados.microAlterno", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@PATENTE", patente));
             cmd.Parameters.Add(new SqlParameter("@FECHA_INI", inicio));
@@ -199,7 +199,7 @@ namespace FrbaBus
         {
             int result = 0;
 
-            SqlCommand cmd = new SqlCommand("cargarMicro", this.cnn);
+            SqlCommand cmd = new SqlCommand("transportados.cargarMicro", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@patenteNueva", patenteNueva));
             cmd.Parameters.Add(new SqlParameter("@patenteVieja", patenteVieja));
@@ -215,7 +215,7 @@ namespace FrbaBus
         {
             int result = 0;
             Object otro;
-            SqlCommand cmd = new SqlCommand("idMicro", this.cnn);
+            SqlCommand cmd = new SqlCommand("transportados.idMicro", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@PATENTE", patente));
             this.cnn.Open();
@@ -259,7 +259,7 @@ namespace FrbaBus
             /*PROCESO TRANSPARENTE QUE DEVUELVE LOS PASAJES*/
             int result = 0;
 
-            SqlCommand cmd = new SqlCommand("devuelvePasajes", this.cnn);
+            SqlCommand cmd = new SqlCommand("transportados.devuelvePasajes", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@PATENTE", microViejo));
             cmd.Parameters.Add(new SqlParameter("@FECHA_INI", fecha));
@@ -285,7 +285,7 @@ namespace FrbaBus
             /*PROCESO TRANSPARENTE QUE DEVUELVE LOS PASAJES*/
             int result = 0;
             bool Resultado = false;
-            SqlCommand cmd = new SqlCommand("devolucionPersonal", this.cnn);
+            SqlCommand cmd = new SqlCommand("transportados.devolucionPersonal", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@VOUCHER", voucher));
             cmd.Parameters.Add(new SqlParameter("@PASAJE", codPasaje));

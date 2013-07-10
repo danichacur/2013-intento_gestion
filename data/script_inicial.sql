@@ -424,7 +424,7 @@ GO
     ,m.[Recorrido_Codigo]
     ,SYSDATETIME()
     ,SYSDATETIME()
-    ,isnull(mi.micr_cant_butacas,0) - COUNT(m.[Recorrido_Codigo])
+    ,0--isnull(mi.micr_cant_butacas,0) - COUNT(m.[Recorrido_Codigo])
     ,isnull(mi.micr_kg_encomienda,0) - SUM(m.Paquete_KG)
     FROM [GD1C2013].[gd_esquema].[Maestra] m
     left outer join  [GD1C2013].[transportados].[micros] mi on mi.micr_patente = m.Micro_Patente
@@ -622,7 +622,7 @@ CREATE TABLE [transportados].[pasajes](
       [pasa_voucher_id] [int] NOT NULL,
       [pasa_butaca_id] [int] NULL,
       [pasa_kg_encomienda] [int] NULL,
-      [pasa_butaca] [bit] NULL,
+      [pasa_butaca] [int] NULL,
       [pasa_bonificado] [bit] NULL,
       [pasa_creado] [datetime] NULL,
       [pasa_modificado] [datetime] NULL,
@@ -633,7 +633,7 @@ CREATE TABLE [transportados].[pasajes](
 ) ON [PRIMARY]
 
 GO
-/* creacion de los cupones de los pasajes*/
+/* creacion de los pasajes*/
   insert into [transportados].[pasajes](
 	  [pasa_id],
       [pasa_viaje_id] ,
@@ -646,12 +646,15 @@ GO
       [pasa_modificado] ,
       [pasa_precio])
 (    select 
-      Pasaje_Codigo
+       case Pasaje_Codigo 
+       when 0 then m.Paquete_Codigo
+       else Pasaje_Codigo
+       end
       ,vi.viaj_id
       ,vc.vouc_id
       ,b.buta_id
       ,m.Paquete_KG
-      ,Butaca_Nro
+      ,b.buta_numero
       ,0
       ,Pasaje_FechaCompra
       ,SYSDATETIME()
@@ -659,10 +662,10 @@ GO
       when Pasaje_Precio=0 then Paquete_Precio
       else pasaje_precio end 
     from [GD1C2013].[gd_esquema].[Maestra] m
-    left outer join transportados.clientes cli on cli.Cli_Dni=m.Cli_Dni,
+    inner join transportados.clientes cli on cli.Cli_Dni=m.Cli_Dni,
   [GD1C2013].[transportados].[viajes] vi
-  left outer join [GD1C2013].[transportados].[micros] mi on vi.viaj_micro=mi.micr_id
-  left outer join [GD1C2013].[transportados].[butaca] b on b.buta_micro_id=mi.micr_id,
+  inner join [GD1C2013].[transportados].[micros] mi on vi.viaj_micro=mi.micr_id
+  inner join [GD1C2013].[transportados].[butaca] b on b.buta_micro_id=mi.micr_id,
    [GD1C2013].[transportados].[voucher_de_compra] vc
   where vi.viaj_recorrido=m.Recorrido_Codigo
   and vi.viaj_fecha_salida=m.FechaSalida

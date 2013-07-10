@@ -57,6 +57,16 @@ namespace FrbaBus
             microMod01.Show();
         }
 
+        private void listar_micro_Click(object sender, EventArgs e)
+        {
+            // private void CiudadListarToolStripMenuItem_Click(object sender, EventArgs e)
+
+            Abm_Micro.MicroListar MicroListar = new Abm_Micro.MicroListar();
+            MicroListar.MdiParent = this;
+            MicroListar.Show();
+
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             funciones Func = new funciones();
@@ -149,7 +159,7 @@ namespace FrbaBus
 
         private void listarToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            GenerarViaje.Generar listViaj = new GenerarViaje.Generar();
+            GenerarViaje.ListarViajes listViaj = new GenerarViaje.ListarViajes();
             listViaj.MdiParent = this;
             listViaj.Show();
         }
@@ -233,5 +243,7 @@ namespace FrbaBus
                     break;
             }
         }
+
+
     }
 }
