@@ -26,8 +26,7 @@ namespace FrbaBus.Abm_Micro
         {
             funciones pasajes = new funciones();
             /*VER BIEN DONDE ENGANCHA EN EL PROCESO DE DEVOLVER LOS PASAJES*/
-            pasajes.devolverPasajes(modificacion.f1.TextBox1.Text, MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value);
-         //   MessageBox.Show("En proceso...");
+            pasajes.devolverPasajes(modificacion.f1.TextBox1.Text, MicroFormBaja.f1.tipo_baja, MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value);
             
         }
 
@@ -39,9 +38,8 @@ namespace FrbaBus.Abm_Micro
         private void button4_Click(object sender, EventArgs e)
         {
             /*VER BIEN DONDE ENGANCHA EN EL PROCESO DE ALTA DE MICRO.. 
-             * TENDRIA QUE TOMAR LOS DATOS DEL MICRO QUE SE DIO DE BAJA O
-             * QUE EL PROCESO DE ALTA SEA NORMAL COMO SI NADA?
-             DSP HAY QUE ASIGNAR A LOS PASAJES VENDIDOS ESTE NUEVO MICRO!! OJO*/
+             * TOMA LOS DATOS DEL MICRO QUE SE DIO DE BAJA 
+            */
 
             Abm_Micro.patenteNueva patenteNueva = new Abm_Micro.patenteNueva();
            patenteNueva.Show();

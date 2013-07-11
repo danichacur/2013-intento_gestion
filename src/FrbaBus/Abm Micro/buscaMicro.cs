@@ -34,7 +34,18 @@ namespace FrbaBus.Abm_Micro
               
             }else
             {
-                pasajes.reemplazarViajes(microAlterno, modificacion.f1.TextBox1.Text, MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value);
+                bool result = pasajes.reemplazarViajes(microAlterno, modificacion.f1.TextBox1.Text, MicroFormBaja.f1.tipo_baja, MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value);
+
+                if (result)
+                {
+                    MessageBox.Show("Proceso completado correctamente");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Ocurrió un error al reemplazar los viajes");
+                }
+            
             }
         }
 
@@ -42,8 +53,19 @@ namespace FrbaBus.Abm_Micro
         {
             funciones pasajes = new funciones();
             /*VER BIEN DONDE ENGANCHA EN EL PROCESO DE DEVOLVER LOS PASAJES*/
-            pasajes.devolverPasajes(modificacion.f1.TextBox1.Text, MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value);
-          //  MessageBox.Show("En proceso...");
+            bool result = pasajes.devolverPasajes(modificacion.f1.TextBox1.Text, MicroFormBaja.f1.tipo_baja, MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value);
+
+            if (result)
+            {
+                 MessageBox.Show("Devolución de pasajes completa");
+                 this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Ocurrió un error al devolver los pasajes");
+            }
+
+           
         }
     }
 }

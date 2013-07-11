@@ -20,7 +20,7 @@ namespace FrbaBus.Cancelar_Viaje
         {
             funciones pasajes = new funciones();
             bool ok;
-            ok = pasajes.devolucionPersonal(textBox2.Text, Convert.ToInt32(textBox1.Text), richTextBox1.Text);
+            ok = pasajes.devolucionPersonal(Convert.ToInt32(textBox2.Text), Convert.ToInt32(textBox1.Text), richTextBox1.Text);
             if (ok)
             {
                 MessageBox.Show("Devolucion completada correctamente");

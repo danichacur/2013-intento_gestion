@@ -1033,6 +1033,9 @@ INSERT INTO [GD1C2013].[transportados].[micros]
          from transportados.tipo_servicio t,
          transportados.micros m
          where m.micr_patente = @patenteVieja);
+         
+SELECT micr_id FROM micros
+WHERE micr_patente = @patenteNueva
 
 END
 GO
@@ -1115,18 +1118,28 @@ CREATE PROCEDURE [transportados].[devuelvePasajes]
 
 @PATENTE varchar (7),
 @FECHA_INI datetime,
-@FECHA_FIN datetime
+@FECHA_FIN datetime,
+@BAJA VARCHAR(20)
 AS
-BEGIN
-  
+DECLARE @DEVOLUCION INT
 
-UPDATE transportados.pasaje
+BEGIN
+
+IF(@BAJA = 'Fin vida útil')
+	BEGIN
+	SET @FECHA_FIN = '99/99/9999'
+	END
+
+SET @DEVOLUCION = 1 + (SELECT MAX(pasa_cod_devolucion) 
+					FROM transportados.pasajes)
+
+UPDATE transportados.pasajes
 SET pasa_fecha_devolucion = SYSDATETIME(),
-  pasa_desc_devolucion = 'Micro cancelado',
-  pasa_cod_devolucion = pasa_viaje_id
+  pasa_desc_devolucion = 'Micro dado de baja',
+  pasa_cod_devolucion = @DEVOLUCION
 WHERE PASA_VIAJE_ID in (select distinct V.VIAJ_ID from 
-      TRANSPORTADOS.VIAJES V,
-      TRANSPORTADOS.MICROS B
+				  TRANSPORTADOS.VIAJES V,
+				  TRANSPORTADOS.MICROS B
       where
        V.VIAJ_MICRO = B.MICR_ID
       AND B.MICR_PATENTE = @PATENTE
@@ -1167,13 +1180,16 @@ CREATE PROCEDURE [transportados].[microAlterno]
    @FECHA_INI DATETIME,
    @FECHA_FIN DATETIME
 AS
+	DECLARE @VALOR INT
+
 BEGIN
 
--- Y SI SON VARIOS LOS VIAJES? PUEDO ITERAR HASTA QUE NO HAYA NINGUNO?
-SELECT TOP 1 A.MICR_ID
+SET @VALOR =
+(SELECT TOP 1 A.MICR_ID
 FROM TRANSPORTADOS.MICROS A,
 TRANSPORTADOS.MICROS B,
 TRANSPORTADOS.VIAJES V
+
 /*BUSCO UN MICRO DE LAS MISMAS CARACTERISTICAS QUE NO ESTE INHABILITADO*/
 WHERE B.MICR_PATENTE = @PATENTE
 AND A.MICR_PATENTE <> @PATENTE
@@ -1184,31 +1200,20 @@ AND A.MICR_MODELO = B.MICR_MODELO
 AND A.MICR_BAJA = 0
 AND A.MICR_BAJA_TECNICA = 0
 AND A.MICR_TIPO_ID = B.MICR_TIPO_ID
---/*BUSCO QUE LOS ASIENTOS LIBRES (NO VENDIDOS) ALCANCEN*/
---AND (A.MICR_CANT_BUTACAS -
---  (SELECT SUM(PASA_CANTIDAD) FROM 
---  TRANSPORTADOS.PASAJE Q
---  WHERE Q.PASA_VIAJE_ID = V.VIAJ_ID
---  AND V.VIAJ_MICRO = A.MICR_ID)) 
---  > =
-----ESTOS SON LOS PASAJES VENDIDOS DEL MICRO DADO DE BAJA
---(SELECT SUM(PASA_CANTIDAD) FROM TRANSPORTADOS.PASAJE Q
---  WHERE Q.PASA_VIAJE_ID = V.VIAJ_ID
---  AND V.VIAJ_MICRO = B.MICR_ID)
-  
+
 /*BUSCO QUE NO TENGA VIAJES ASIGNADOS*/ 
 AND NOT EXISTS (SELECT 1 FROM TRANSPORTADOS.VIAJES C
-        WHERE V.VIAJ_MICRO = B.MICR_ID
-        AND C.VIAJ_MICRO = A.MICR_ID
-        --AND C.VIAJ_FECHA_LLEGADA = V.VIAJ_FECHA_LLEGADA
-        --AND C.VIAJ_FECHA_SALIDA = V.VIAJ_FECHA_SALIDA
-        AND C.VIAJ_RECORRIDO = V.VIAJ_RECORRIDO
-        --AND V.VIAJ_FECHA_SALIDA BETWEEN @FECHA_INI AND @FECHA_FIN
+        WHERE C.VIAJ_MICRO = A.MICR_ID
+         AND C.VIAJ_FECHA_SALIDA >= @FECHA_INI
         )
+)
+IF @VALOR IS NULL
+BEGIN
+	SET @VALOR = 0
+END	
 
+SELECT @VALOR
 
-
-   
 END
 
 GO
@@ -1225,17 +1230,46 @@ CREATE PROCEDURE [transportados].[pasajesVendidos]
 AS
 BEGIN
   
-  SELECT SUM(PASA_CANTIDAD) 
-                                        FROM TRANSPORTADOS.PASAJE Q,
-                                        TRANSPORTADOS.VIAJES V,
-                                        TRANSPORTADOS.MICROS B
-                                        WHERE Q.PASA_VIAJE_ID = V.VIAJ_ID
-                                          AND V.VIAJ_MICRO = B.MICR_ID
-                                          AND B.MICR_PATENTE = @PATENTE
-                                          AND V.VIAJ_FECHA_SALIDA BETWEEN @FECHA_INI AND @FECHA_FIN
+  SELECT COUNT(vouc_id) 
+    FROM transportados.voucher_de_compra Q,
+	TRANSPORTADOS.VIAJES V,
+	 TRANSPORTADOS.MICROS B
+     WHERE Q.vouc_viaje_id = V.VIAJ_ID
+       AND V.VIAJ_MICRO = B.MICR_ID
+       AND B.MICR_PATENTE = @PATENTE
+     AND V.VIAJ_FECHA_SALIDA BETWEEN @FECHA_INI AND @FECHA_FIN
   
   
 END
 
 GO
 
+Select 'Creo Procedure [reemplaza_micro]'
+
+GO
+
+CREATE PROCEDURE [transportados].[reemplaza_micro]
+		@id_micro INT,
+		@patente VARCHAR(7),
+		@inicio DATETIME,
+		@fin DATETIME,
+		@BAJA VARCHAR(20)
+
+AS
+BEGIN
+
+IF(@BAJA = 'Fin vida útil')
+	BEGIN
+	SET @fin = '99/99/9999'
+	END
+
+/*PROCESO TRANSPARENTE QUE CAMBIA EL MICRO ASIGNADO POR OTRO*/
+UPDATE TRANSPORTADOS.VIAJES
+SET VIAJ_MICRO = @id_micro
+
+WHERE VIAJ_MICRO = (SELECT MICR_ID FROM TRANSPORTADOS.MICROS
+			  WHERE MICR_PATENTE = @patente)
+AND VIAJ_FECHA_SALIDA BETWEEN @inicio AND @fin
+
+END
+GO

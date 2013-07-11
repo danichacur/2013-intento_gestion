@@ -45,21 +45,21 @@ namespace FrbaBus.Abm_Micro
             }
             else
             {
-                MessageBox.Show("Gracias!");
-
+             
                 funciones pasajes = new funciones();
                 int microAlterno = 0;
-                pasajes.cargameMicro(modificacion.f1.TextBox1.Text, textBox1.Text);
-                microAlterno = pasajes.buscarMicro(patenteNueva.nueva.text.Text);
-                pasajes.reemplazarViajes(microAlterno, modificacion.f1.TextBox1.Text, Abm_Micro.MicroFormBaja.f1.inicio.Value, Abm_Micro.MicroFormBaja.f1.fin.Value);
-
-                if (microAlterno == 0)
+                microAlterno = pasajes.cargameMicro(modificacion.f1.TextBox1.Text, textBox1.Text);
+                //microAlterno = pasajes.buscarMicro(patenteNueva.nueva.text.Text);
+                
+                if (microAlterno.Equals(null))
                 {
                     MessageBox.Show("Hubo un error, no se pudo dar de alta el micro");
                 }
                 else
                 {
                     MessageBox.Show("Micro dado de alta correctamente");
+                    pasajes.reemplazarViajes(microAlterno, modificacion.f1.TextBox1.Text, MicroFormBaja.f1.tipo_baja, Abm_Micro.MicroFormBaja.f1.inicio.Value, Abm_Micro.MicroFormBaja.f1.fin.Value);
+
                 }
 
                 this.Close();

@@ -156,13 +156,8 @@ namespace FrbaBus
             this.sql = string.Format(@"UPDATE transportados.micros
                                         SET
                                         micr_baja = 1,
-                                        micr_fecha_baja = (0) ,
-
-                                        micr_baja_tecnica
-                                        micr_fecha_baja_tecnica
-                                        micr_fecha_regreso
-
-                                        WHERE micr_patente = (1) ", inicio, patente);
+                                        micr_fecha_baja = '(0)'
+                                        WHERE micr_patente = '(1)' ", inicio, patente);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
@@ -187,8 +182,8 @@ namespace FrbaBus
             this.sql = string.Format(@"UPDATE transportados.micros
                                         SET
                                         micr_baja_tecnica = 1,
-                                        micr_fecha_baja_tecnica = (0) ,
-                                        micr_fecha_regreso = (1)
+                                        micr_fecha_baja_tecnica = '(0)' ,
+                                        micr_fecha_regreso = '(1)'
                                         WHERE micr_patente = '(2)' ", inicio, fin, patente);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
@@ -225,20 +220,20 @@ namespace FrbaBus
             return result;
         }
 
-        public void cargameMicro(String patenteVieja, string patenteNueva)
+        public int cargameMicro(String patenteVieja, string patenteNueva)
         {
             int result = 0;
-
+            Object otro;
             SqlCommand cmd = new SqlCommand("transportados.cargarMicro", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@patenteNueva", patenteNueva));
             cmd.Parameters.Add(new SqlParameter("@patenteVieja", patenteVieja));
 
             this.cnn.Open();
-            result = cmd.ExecuteNonQuery();
-
+            otro = cmd.ExecuteScalar();
+            result = Convert.ToInt32(otro);
             this.cnn.Close();
-            //return result;
+            return result;
         }
 
         public int buscarMicro(String patente)
@@ -259,58 +254,66 @@ namespace FrbaBus
 
 
 
-        public void reemplazarViajes(int microAlterno, string microViejo, DateTime fecha, DateTime fechalleg)
+        public bool reemplazarViajes(int microAlterno, string microViejo, string tipo_baja,DateTime fecha, DateTime fechalleg)
         {
             /*PROCESO TRANSPARENTE QUE CAMBIA EL MICRO ASIGNADO POR OTRO*/
 
             int result = 0;
-            this.sql = string.Format(@"UPDATE TRANSPORTADOS.VIAJES
-                SET VIAJ_MICRO = @id_micro
-                WHERE VIAJ_MICRO = (SELECT MICR_ID FROM TRANSPORTADOS.MICROS
-				                WHERE MICR_PATENTE = @patente)
-                AND VIAJ_FECHA_SALIDA BETWEEN @inicio AND @fin");
-
+            bool Resultado = false;
+            SqlCommand cmd = new SqlCommand("transportados.reemplaza_micro", this.cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.comandosSql.Parameters.Add(new SqlParameter("@id_micro", microAlterno));
             this.comandosSql.Parameters.Add(new SqlParameter("@patente", microViejo));
             this.comandosSql.Parameters.Add(new SqlParameter("@inicio", fecha));
             this.comandosSql.Parameters.Add(new SqlParameter("@fin", fechalleg));
-
+            this.comandosSql.Parameters.Add(new SqlParameter("@BAJA", tipo_baja));
 
             this.cnn.Open();
-            result = this.comandosSql.ExecuteNonQuery();
+            result = cmd.ExecuteNonQuery();
+
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
 
             this.cnn.Close();
-
+            return Resultado;
         }
 
-        public void devolverPasajes(string microViejo, DateTime fecha, DateTime fechalleg)
+        public bool devolverPasajes(string microViejo, string tipo_baja, DateTime fecha, DateTime fechalleg)
         {
             /*PROCESO TRANSPARENTE QUE DEVUELVE LOS PASAJES*/
             int result = 0;
-
+            bool Resultado = false;
             SqlCommand cmd = new SqlCommand("transportados.devuelvePasajes", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@PATENTE", microViejo));
             cmd.Parameters.Add(new SqlParameter("@FECHA_INI", fecha));
             cmd.Parameters.Add(new SqlParameter("@FECHA_FIN ", fechalleg));
+            cmd.Parameters.Add(new SqlParameter("@BAJA", tipo_baja));
 
             this.cnn.Open();
             result = cmd.ExecuteNonQuery();
 
-
             if (result > 0)
             {
-                MessageBox.Show("Devolución de pasajes completa");
+                Resultado = true;
             }
             else
             {
-                MessageBox.Show("Ocurrió un error al devolver los pasajes");
+                Resultado = false;
             }
 
+            this.cnn.Close();
+            return Resultado;
         }
 
-        public bool devolucionPersonal(string voucher, int codPasaje, string motivo)
+        public bool devolucionPersonal(int voucher, int codPasaje, string motivo)
         {
             /*PROCESO TRANSPARENTE QUE DEVUELVE LOS PASAJES*/
             int result = 0;
@@ -327,12 +330,10 @@ namespace FrbaBus
             if (result > 0)
             {
                 Resultado = true;
-                MessageBox.Show("Devolución de pasajes completa");
             }
             else
             {
                 Resultado = false;
-                MessageBox.Show("Ocurrió un error al devolver los pasajes");
             }
 
             this.cnn.Close();

@@ -34,6 +34,15 @@ namespace FrbaBus.Abm_Micro
             }
         }
 
+        public string tipo_baja
+        {
+            get
+            {
+                return comboBox1.Text;
+            }
+        
+        }
+        
         private void MicroFormBaja_Load(object sender, EventArgs e)
         {
             llenacombobox();
@@ -71,8 +80,8 @@ namespace FrbaBus.Abm_Micro
                 Abm_Micro.buscaMicro buscarMicro = new Abm_Micro.buscaMicro();
                 buscarMicro.Show();
             }
-                        
-            if (comboBox1.SelectedText == "Fuera de servicio")
+
+            if (comboBox1.Text == "Fin vida útil")
                 pasajes.bajaServicioMicro(dateTimePicker1.Value, this.textBox1.Text);
             else
                 pasajes.bajaTecnicaMicro(dateTimePicker1.Value, dateTimePicker2.Value, this.textBox1.Text);
