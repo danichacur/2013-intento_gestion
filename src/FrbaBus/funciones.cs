@@ -103,7 +103,7 @@ namespace FrbaBus
             this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[micros](
     [micr_tipo_id],[micr_cant_butacas],[micr_kg_encomienda],[micr_marca],[micr_modelo],[micr_baja],[micr_baja_tecnica],[micro_creado],[micr_patente],[micr_pisos] )
     (select tipo_id,{0},{1},'{2}','{3}',0,0,SYSDATETIME(),'{4}',{5}
-        from transportados.tipo_servicio where tipo_nombre = '(6)')"
+        from transportados.tipo_servicio where tipo_nombre = '{6}')"
                 , cantButaca, kgCarga, marca, modelo, patente, pisos, tipoServ);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             cnn.Open();

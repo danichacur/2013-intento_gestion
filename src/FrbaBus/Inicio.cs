@@ -19,7 +19,7 @@ namespace FrbaBus
         private void Inicio_Load(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Maximized;
-            Compra_de_Pasajes.Form1 Comprar = new Compra_de_Pasajes.Form1();
+            Compra_de_Pasajes.Buscar_viaje Comprar = new Compra_de_Pasajes.Buscar_viaje();
             Comprar.MdiParent = this;
             Comprar.Show();
         }

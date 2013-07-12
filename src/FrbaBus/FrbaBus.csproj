@@ -165,6 +165,36 @@
     <Compile Include="ciudades\CiudadModificar.Designer.cs">
       <DependentUpon>CiudadModificar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Compra de Pasajes\BuscarButaca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Compra de Pasajes\BuscarButaca.Designer.cs">
+      <DependentUpon>BuscarButaca.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Compra de Pasajes\Buscar_viaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Compra de Pasajes\Buscar_viaje.Designer.cs">
+      <DependentUpon>Buscar_viaje.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Compra de Pasajes\Butacas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Compra de Pasajes\Butacas.designer.cs">
+      <DependentUpon>Butacas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Compra de Pasajes\cant_butaca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Compra de Pasajes\cant_butaca.Designer.cs">
+      <DependentUpon>cant_butaca.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Compra de Pasajes\Select_viaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Compra de Pasajes\Select_viaje.Designer.cs">
+      <DependentUpon>Select_viaje.cs</DependentUpon>
+    </Compile>
     <Compile Include="Devolucion pasaje\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -331,6 +361,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ciudades\CiudadModificar.resx">
       <DependentUpon>CiudadModificar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compra de Pasajes\BuscarButaca.resx">
+      <DependentUpon>BuscarButaca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compra de Pasajes\Buscar_viaje.resx">
+      <DependentUpon>Buscar_viaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compra de Pasajes\Butacas.resx">
+      <DependentUpon>Butacas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compra de Pasajes\cant_butaca.resx">
+      <DependentUpon>cant_butaca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compra de Pasajes\Select_viaje.resx">
+      <DependentUpon>Select_viaje.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Devolucion pasaje\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

@@ -158,6 +158,37 @@ namespace FrbaBus
             return ds;
 
         }
+        public DataSet ViajesListaBusqueda(int ciud_origen,int ciud_destino,string fecha)
+        {
+
+            this.sql = string.Format(@"SELECT 
+                                    v.viaj_id as Viaje_id,
+		                            c2.ciud_nombre as Ciudad_Origen,
+		                            c.ciud_nombre as Ciudad_Destino,
+	                               [viaj_fecha_salida]
+                                  ,[viaj_fecha_llegada_estimada]
+  	                              ,T.tipo_nombre
+                                    ,viaj_butacas_libres
+                                  ,viaj_KG_disponible
+                              FROM [GD1C2013].[transportados].[viajes] V
+                              INNER JOIN transportados.micros M  ON M.micr_id = V.viaj_micro
+                              INNER JOIN transportados.recorrido R ON R.reco_id = V.viaj_recorrido
+                              INNER JOIN transportados.tipo_servicio T ON M.micr_tipo_id = T.tipo_id
+                              inner join transportados.ciudad c on c.ciud_id = r.reco_id_ciudad_destino
+                              inner join transportados.ciudad c2 on c2.ciud_id = r.reco_id_ciudad_origen
+                              where c2.ciud_id={0}
+                              and c.ciud_id={1}
+                              and cast(viaj_fecha_salida As Date) = cast(CONVERT(datetime,'{2}',103)As Date)
+                              ", ciud_origen, ciud_destino, fecha);
+            // where c2.ciud_nombre like '%(0)%'", viaje);
+
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            da.Fill(ds, "Ciudad_Origen");
+            return ds;
+
+        }
 
         public DataSet listarCiudad(string ciudad)
         {
