@@ -424,7 +424,7 @@ GO
     ,m.[Recorrido_Codigo]
     ,SYSDATETIME()
     ,SYSDATETIME()
-    ,0--isnull(mi.micr_cant_butacas,0) - COUNT(m.[Recorrido_Codigo])
+    ,isnull(mi.micr_cant_butacas,0) - COUNT(distinct m.[Pasaje_Codigo])
     ,isnull(mi.micr_kg_encomienda,0) - SUM(m.Paquete_KG)
     FROM [GD1C2013].[gd_esquema].[Maestra] m
     left outer join  [GD1C2013].[transportados].[micros] mi on mi.micr_patente = m.Micro_Patente
