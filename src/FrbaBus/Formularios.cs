@@ -290,5 +290,36 @@ where rol_nombre ={0})", rol);
           
             return ds;
         }
+
+        public SqlDataReader datos_user(int numero)
+        {
+            
+            this.sql = string.Format(@"SELECT [Cli_id]
+                                      ,[Cli_Nombre]
+                                      ,[Cli_Apellido]
+                                      ,[Cli_Dni]
+                                      ,[Cli_Dir]
+                                      ,[Cli_Telefono]
+                                      ,[Cli_Mail]
+                                      ,[Cli_Fecha_Nac]
+                                  FROM [GD1C2013].[transportados].[clientes]
+                                    where Cli_Dni = {0}", numero);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            SqlDataReader Reg = null;
+            Reg = this.comandosSql.ExecuteReader();
+            if (Reg.HasRows )
+            {
+                return Reg;
+            }
+            else
+            {
+                return null;
+            }
+
+            
+        }
+
+
     }
 }

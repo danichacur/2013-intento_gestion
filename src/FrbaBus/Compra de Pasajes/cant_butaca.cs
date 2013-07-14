@@ -56,7 +56,9 @@ namespace FrbaBus.Compra_de_Pasajes
             }
             else
             {
-
+                Usuario_datos data = new Usuario_datos();
+                data.Show();
+                this.Hide();
             }
 
         }
