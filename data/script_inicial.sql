@@ -1028,10 +1028,9 @@ INSERT INTO [GD1C2013].[transportados].[micros]
         [micr_cant_butacas],[micr_kg_encomienda],[micr_marca],[micr_modelo],
         [micr_baja],[micr_baja_tecnica],[micro_creado],[micr_patente],[micr_pisos])
         
-        (select distinct t.tipo_id,  m.micr_cant_butacas, m.micr_kg_encomienda, m.micr_marca,
+        (select distinct m.micr_tipo_id,  m.micr_cant_butacas, m.micr_kg_encomienda, m.micr_marca,
          m.micr_modelo, 0, 0, SYSDATETIME(), @patenteNueva , m.micr_pisos
-         from transportados.tipo_servicio t,
-         transportados.micros m
+         from transportados.micros m
          where m.micr_patente = @patenteVieja);
          
 SELECT micr_id FROM micros

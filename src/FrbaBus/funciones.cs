@@ -182,8 +182,8 @@ namespace FrbaBus
             this.sql = string.Format(@"UPDATE transportados.micros
                                         SET
                                         micr_baja_tecnica = 1,
-                                        micr_fecha_baja_tecnica = '(0)' ,
-                                        micr_fecha_regreso = '(1)'
+                                        micr_fecha_baja_tecnica = (0) ,
+                                        micr_fecha_regreso = (1)
                                         WHERE micr_patente = '(2)' ", inicio, fin, patente);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
@@ -262,12 +262,11 @@ namespace FrbaBus
             bool Resultado = false;
             SqlCommand cmd = new SqlCommand("transportados.reemplaza_micro", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
-            this.comandosSql = new SqlCommand(this.sql, this.cnn);
-            this.comandosSql.Parameters.Add(new SqlParameter("@id_micro", microAlterno));
-            this.comandosSql.Parameters.Add(new SqlParameter("@patente", microViejo));
-            this.comandosSql.Parameters.Add(new SqlParameter("@inicio", fecha));
-            this.comandosSql.Parameters.Add(new SqlParameter("@fin", fechalleg));
-            this.comandosSql.Parameters.Add(new SqlParameter("@BAJA", tipo_baja));
+            cmd.Parameters.Add(new SqlParameter("@id_micro", microAlterno));
+            cmd.Parameters.Add(new SqlParameter("@patente", microViejo));
+            cmd.Parameters.Add(new SqlParameter("@inicio", fecha));
+            cmd.Parameters.Add(new SqlParameter("@fin", fechalleg));
+            cmd.Parameters.Add(new SqlParameter("@BAJA", tipo_baja));
 
             this.cnn.Open();
             result = cmd.ExecuteNonQuery();
