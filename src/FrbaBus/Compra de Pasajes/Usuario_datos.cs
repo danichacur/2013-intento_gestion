@@ -19,6 +19,8 @@ namespace FrbaBus.Compra_de_Pasajes
         public int cant_kg=0;
         public bool has_kg = false;
         List<string> pasaje_cli_id = new List<string>();
+        public int viaje_id;
+        public bool admin;
 
         public Usuario_datos()
         {
@@ -94,6 +96,8 @@ namespace FrbaBus.Compra_de_Pasajes
                 busq.cantidad = add_psj;
                 busq.kg = cant_kg;
                 busq.pasaje_cli_id = this.pasaje_cli_id;
+                busq.viaje_id = this.viaje_id;
+                busq.admin = this.admin;
                 busq.Show();
                 this.Hide();
             }
@@ -112,8 +116,36 @@ namespace FrbaBus.Compra_de_Pasajes
 
         private void Usuario_datos_Load()
         {
+            this.maskedTextBox1.Text = string.Empty;
+            this.textBox1.Text = string.Empty;
+            this.textBox2.Text = string.Empty;
+            this.textBox3.Text = string.Empty;
+            this.maskedTextBox2.Text = string.Empty;
+            this.textBox4.Text = string.Empty;
+            this.dateTimePicker1.Value = DateTime.Now;
+            this.is_client = false;
         
         }
+        /*private bool check_dup(string cliente)
+        {
+            bool result;
+            int valor;
+            if (this.cant_kg > 0) 
+            {
+                valor=1;
+            }
+            else
+            {
+                valor=0;
+            }
+
+            for (int i= valor ; i <= pasaje_cli_id.Count; i++)
+            {
+                if (pasaje_cli_id[i-1] ==pasaje_cli_id[i-1])
+                {;
+                }
+            }*/
+
 
         
     }

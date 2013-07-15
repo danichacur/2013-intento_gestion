@@ -20,7 +20,7 @@ namespace FrbaBus.Compra_de_Pasajes
         public string tipo_nombre;
         public int buta_libre;
         public int kg_libre;
-        public Form padre;
+        public bool admin;
 
 
         public cant_butaca()
@@ -40,7 +40,7 @@ namespace FrbaBus.Compra_de_Pasajes
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.padre.Close();
+            
             this.Close();
         }
 
@@ -59,6 +59,8 @@ namespace FrbaBus.Compra_de_Pasajes
                 Usuario_datos data = new Usuario_datos();
                 data.cant_kg = Convert.ToInt32(maskedTextBox1.Text);
                 data.cant_pasj = Convert.ToInt32(maskedTextBox1.Text);
+                data.viaje_id = this.viaje_id;
+                data.admin = this.admin;
                 if (data.cant_kg > 0)
                 { 
                     data.has_kg = true;

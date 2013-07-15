@@ -215,7 +215,11 @@ namespace FrbaBus
 
         private void compraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            this.WindowState = FormWindowState.Maximized;
+            Compra_de_Pasajes.Buscar_viaje Comprar = new Compra_de_Pasajes.Buscar_viaje();
+            Comprar.MdiParent = this;
+            Comprar.admin = true;
+            Comprar.Show();
         }
 
         private void CiudadToolStripMenuItem_Click(object sender, EventArgs e)

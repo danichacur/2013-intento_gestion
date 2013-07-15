@@ -21,6 +21,7 @@ namespace FrbaBus
             this.WindowState = FormWindowState.Maximized;
             Compra_de_Pasajes.Buscar_viaje Comprar = new Compra_de_Pasajes.Buscar_viaje();
             Comprar.MdiParent = this;
+            Comprar.admin = false;
             Comprar.Show();
         }
 

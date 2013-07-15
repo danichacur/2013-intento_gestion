@@ -11,6 +11,8 @@ namespace FrbaBus.Compra_de_Pasajes
 {
     public partial class Buscar_viaje : Form
     {
+        public bool admin;
+
         public Buscar_viaje()
         {
             InitializeComponent();
@@ -55,6 +57,7 @@ namespace FrbaBus.Compra_de_Pasajes
                 form_viaje.ciud_origen = Convert.ToInt32(comboBox1.SelectedValue);
                 form_viaje.ciud_destino = Convert.ToInt32(comboBox2.SelectedValue);
                 form_viaje.fecha = Convert.ToString(dateTimePicker1.Value);
+                form_viaje.admin = this.admin;
                 form_viaje.Show();
             }
         }

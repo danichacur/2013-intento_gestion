@@ -318,7 +318,19 @@ namespace FrbaBus
 
             
         }
-
+        public DataSet llenarComboButaca(int viaje_id)
+        {
+            this.sql = string.Format(@"  select buta_numero,'butaca: ' +  CAST(buta_numero AS VARCHAR(10)) + ' piso: ' + CAST(buta_piso AS VARCHAR(10)) as 'Descripcion' from transportados.viajes
+                                      left outer join transportados.butaca on buta_micro_id=viaj_micro
+                                      where viaj_id={0}
+                                      and buta_id not in (select pasa_butaca_id from transportados.pasajes where pasa_viaje_id=viaj_id)", viaje_id);
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "Descripcion");
+            return ds;
+        }
 
     }
 }

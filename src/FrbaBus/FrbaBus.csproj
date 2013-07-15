@@ -189,6 +189,12 @@
     <Compile Include="Compra de Pasajes\cant_butaca.Designer.cs">
       <DependentUpon>cant_butaca.cs</DependentUpon>
     </Compile>
+    <Compile Include="Compra de Pasajes\selectMedioP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Compra de Pasajes\selectMedioP.Designer.cs">
+      <DependentUpon>selectMedioP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Compra de Pasajes\Select_viaje.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -379,6 +385,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Compra de Pasajes\cant_butaca.resx">
       <DependentUpon>cant_butaca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compra de Pasajes\selectMedioP.resx">
+      <DependentUpon>selectMedioP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Compra de Pasajes\Select_viaje.resx">
       <DependentUpon>Select_viaje.cs</DependentUpon>

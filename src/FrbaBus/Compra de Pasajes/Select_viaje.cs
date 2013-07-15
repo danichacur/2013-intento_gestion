@@ -14,6 +14,7 @@ namespace FrbaBus.Compra_de_Pasajes
         public int ciud_origen;
         public int ciud_destino;
         public string fecha;
+        public bool admin;
         
 
         public Select_viaje()
@@ -42,7 +43,7 @@ namespace FrbaBus.Compra_de_Pasajes
             butaca.tipo_nombre=dataGridView1.CurrentRow.Cells["tipo_nombre"].Value.ToString();
             butaca.buta_libre = Convert.ToInt32(dataGridView1.CurrentRow.Cells["viaj_butacas_libres"].Value.ToString());
             butaca.kg_libre = Convert.ToInt32(dataGridView1.CurrentRow.Cells["viaj_KG_disponible"].Value.ToString());
-            butaca.padre = this;
+            butaca.admin = this.admin;
             butaca.Show();
             this.Hide();
             
