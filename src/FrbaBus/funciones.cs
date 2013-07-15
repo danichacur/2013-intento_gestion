@@ -16,7 +16,6 @@ namespace FrbaBus
             int result = 0;
             //this.sql = string.Format(@"select tipo_id,tipo_nombre from transportados.tipo_servicio");
             this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[recorrido](
-                                            [reco_id],
                                             [reco_id_ciudad_origen],
                                             [reco_id_ciudad_destino],
                                             [reco_tipo_id],
@@ -25,7 +24,7 @@ namespace FrbaBus
                                             [reco_creado],
                                             [reco_modificado])
                                             values
-                                            ('ajbfkasafbksdf',{0},{1},{2},{3},{4},SYSDATETIME(),SYSDATETIME())", ciudOrigen, ciudDestino, tipoServ, basePasaje, baseEncomienda);
+                                            ({0},{1},{2},{3},{4},SYSDATETIME(),SYSDATETIME())", ciudOrigen, ciudDestino, tipoServ, basePasaje, baseEncomienda);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
             //SqlDataReader Reg = null;
@@ -445,6 +444,67 @@ order by rf.rolf_func_id desc", user_id);
             return Resultado;
 
 
+        }
+
+        public bool modClient(Int32 id, Int32 dni, string nombre, string apellido, string direccion, Int32 telefono, string mail, DateTime fecha_nac)
+        {
+            bool Resultado = false;
+            int result = 0;
+
+            this.sql = string.Format(@"update [GD1C2013].[transportados].[clientes]
+                                        set [Cli_Nombre]={1}
+                                      ,[Cli_Apellido]={2}
+                                      ,[Cli_Dni]={3}
+                                      ,[Cli_Dir]={4}
+                                      ,[Cli_Telefono]={5}
+                                      ,[Cli_Mail]={6}
+                                      ,[Cli_Fecha_Nac]=CONVERT(datetime,'{7}',103)
+                                      ,[cli_modificado]=SYSDATETIME()
+                                        where [Cli_id]={0}", id, dni, nombre, apellido, direccion, telefono, mail, fecha_nac.ToString());
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
+            this.cnn.Close();
+            return Resultado;
+        }
+        public bool newClient(Int32 dni, string nombre, string apellido, string direccion, Int32 telefono, string mail, DateTime fecha_nac)
+        {
+            bool Resultado = false;
+            int result = 0;
+
+            this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[clientes]
+                                       (Cli_Nombre]
+                                      ,[Cli_Apellido]
+                                      ,[Cli_Dni]
+                                      ,[Cli_Dir]
+                                      ,[Cli_Telefono]
+                                      ,[Cli_Mail]
+                                      ,[Cli_Fecha_Nac]
+                                      ,[cli_creado]
+                                      ,[cli_modificado])
+                                       VALUES
+                                        ({0},{1},{2},{3},{4},{5},{6},SYSDATETIME(),SYSDATETIME())", nombre, apellido, dni, direccion, telefono, mail, fecha_nac.ToString());
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
+            this.cnn.Close();
+            return Resultado;
         }
     }
 }

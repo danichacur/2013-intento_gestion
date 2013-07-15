@@ -57,6 +57,12 @@ namespace FrbaBus.Compra_de_Pasajes
             else
             {
                 Usuario_datos data = new Usuario_datos();
+                data.cant_kg = Convert.ToInt32(maskedTextBox1.Text);
+                data.cant_pasj = Convert.ToInt32(maskedTextBox1.Text);
+                if (data.cant_kg > 0)
+                { 
+                    data.has_kg = true;
+                }
                 data.Show();
                 this.Hide();
             }

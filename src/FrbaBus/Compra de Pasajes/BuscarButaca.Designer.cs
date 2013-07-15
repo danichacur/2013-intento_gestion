@@ -49,7 +49,7 @@
             this.label2.Size = new System.Drawing.Size(109, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Ubicacion en el micro";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+           
             // 
             // comboBox1
             // 
@@ -63,12 +63,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 266);
+            this.ClientSize = new System.Drawing.Size(292, 149);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "BuscarButaca";
             this.Text = "Asignar Butaca";
+            this.Load += new System.EventHandler(this.BuscarButaca_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

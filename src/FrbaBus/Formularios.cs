@@ -180,8 +180,7 @@ namespace FrbaBus
                               and c.ciud_id={1}
                               and cast(viaj_fecha_salida As Date) = cast(CONVERT(datetime,'{2}',103)As Date)
                               ", ciud_origen, ciud_destino, fecha);
-            // where c2.ciud_nombre like '%(0)%'", viaje);
-
+            
             DataSet ds = new DataSet();
             //indicamos la consulta en SQL
             SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
@@ -212,10 +211,10 @@ namespace FrbaBus
         public DataSet listarFuncion (string funcion)
         {
             this.sql = string.Format(@"SELECT  [func_name] as 'Nombre'
-      ,[func_creado] as 'Creado'
-      ,[func_modificado] as 'Modificado'
-  FROM [GD1C2013].[transportados].[funcionalidad]
-  where func_name like '%{0}%'", funcion);
+                                      ,[func_creado] as 'Creado'
+                                      ,[func_modificado] as 'Modificado'
+                                      FROM [GD1C2013].[transportados].[funcionalidad]
+                                      where func_name like '%{0}%'", funcion);
             DataSet ds = new DataSet();
             //indicamos la consulta en SQL
             SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
@@ -226,11 +225,11 @@ namespace FrbaBus
         public DataSet listarRol(string rol)
         {
             this.sql = string.Format(@"SELECT [rol_nombre] as 'Nombre'
-      ,[rol_creado] as 'Creado'
-      ,[rol_modificado] as 'Modificado'
-      ,[rol_borrado] as 'Borrado'
-  FROM [GD1C2013].[transportados].[Rol]
-  where rol_nombre like '%{0}%'", rol);
+                                      ,[rol_creado] as 'Creado'
+                                      ,[rol_modificado] as 'Modificado'
+                                      ,[rol_borrado] as 'Borrado'
+                                      FROM [GD1C2013].[transportados].[Rol]
+                                      where rol_nombre like '%{0}%'", rol);
             DataSet ds = new DataSet();
             //indicamos la consulta en SQL
             SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
@@ -241,11 +240,11 @@ namespace FrbaBus
         public DataSet RolxFunc(string rol_func)
         {
             this.sql = string.Format(@"SELECT [rol_nombre] as 'Rol'
-      ,func_name as 'Funcionalidad'
-  FROM [GD1C2013].[transportados].[Rol]
-  left outer join transportados.Rol_funcionalidad on rol_id=rolf_rol_id
-  left outer join transportados.funcionalidad on rolf_func_id=func_id
-  where rol_nombre like '%{0}%'", rol_func);
+                              ,func_name as 'Funcionalidad'
+                              FROM [GD1C2013].[transportados].[Rol]
+                              left outer join transportados.Rol_funcionalidad on rol_id=rolf_rol_id
+                              left outer join transportados.funcionalidad on rolf_func_id=func_id
+                              where rol_nombre like '%{0}%'", rol_func);
             DataSet ds = new DataSet();
             //indicamos la consulta en SQL
             SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
@@ -256,13 +255,13 @@ namespace FrbaBus
         public DataSet ListarUser (string user)
         {
             this.sql = string.Format(@"SELECT TOP 1000 [usua_username] as 'Usuario'
-      ,isnull(rol_nombre,'No Creado') as 'Rol'
-      ,rolu_creado as 'Creacion'
-      ,rolu_modificado as 'Modificacion'
-  FROM [GD1C2013].[transportados].[usuario]
-  left outer join [GD1C2013].[transportados].rol_usuario on rolu_user_id=usua_id
-  left outer join [GD1C2013].[transportados].Rol on rol_id =rolu_rol_id
-  where usua_username like '%{0}%'", user);
+                                        ,isnull(rol_nombre,'No Creado') as 'Rol'
+                                        ,rolu_creado as 'Creacion'
+                                        ,rolu_modificado as 'Modificacion'
+                                          FROM [GD1C2013].[transportados].[usuario]
+                                          left outer join [GD1C2013].[transportados].rol_usuario on rolu_user_id=usua_id
+                                          left outer join [GD1C2013].[transportados].Rol on rol_id =rolu_rol_id
+                                          where usua_username like '%{0}%'", user);
             DataSet ds = new DataSet();
             //indicamos la consulta en SQL
             SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
@@ -274,11 +273,11 @@ namespace FrbaBus
         public DataSet llenaComboboxFunc(string rol)
         {
             this.sql = string.Format(@"select func_id,func_nombre
-from transportados.funcionalidad
-where func_id not in (select rolf_func_id
-from transportados.Rol_funcionalidad
-left outer join transportados.Rol on rolf_rol_id=rol_id
-where rol_nombre ={0})", rol);
+                                        from transportados.funcionalidad
+                                        where func_id not in (select rolf_func_id
+                                        from transportados.Rol_funcionalidad
+                                        left outer join transportados.Rol on rolf_rol_id=rol_id
+                                        where rol_nombre ={0})", rol);
             DataSet ds = new DataSet();
             //indicamos la consulta en SQL
             SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);

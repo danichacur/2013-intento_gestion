@@ -32,8 +32,9 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[devolucionPersonal]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [transportados].[devolucionPersonal]
 GO
-
-
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[reemplaza_micro]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [transportados].[reemplaza_micro]
+GO
 /****** Object:  Table [transportados].[puntos_pas_frecuente]    Script Date: 05/21/2013 22:23:12 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[puntos_pas_frecuente]') AND type in (N'U'))
 DROP TABLE [transportados].[puntos_pas_frecuente]
@@ -293,7 +294,7 @@ GO
 
 
 CREATE TABLE [transportados].[recorrido](
-      [reco_id] [nvarchar](255) NOT NULL,
+      reco_id [int] IDENTITY(77774546,1) NOT NULL ,
       [reco_id_ciudad_origen] [int] NOT NULL,
       [reco_id_ciudad_destino] [int] NOT NULL,
       [reco_tipo_id] [int] NOT NULL,
@@ -304,6 +305,9 @@ CREATE TABLE [transportados].[recorrido](
       [reco_baja] [bit] DEFAULT ((0)) NOT NULL, 
 ) ON [PRIMARY]
 
+GO
+
+SET IDENTITY_INSERT  [transportados].[recorrido] ON
 GO
 
 /* crear recorridos */
@@ -336,6 +340,8 @@ GO
       ,ts.tipo_id);
   GO
 
+SET IDENTITY_INSERT  [transportados].[recorrido] OFF
+GO
 
 /****** Object:  Table [transportados].[butaca]    Script Date: 05/21/2013 22:14:00 ******/
 

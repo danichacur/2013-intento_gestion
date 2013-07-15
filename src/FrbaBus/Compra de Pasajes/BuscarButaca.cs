@@ -11,12 +11,17 @@ namespace FrbaBus.Compra_de_Pasajes
 {
     public partial class BuscarButaca : Form
     {
+        public int cantidad;
+        public int kg;
+        public List<string> pasaje_cli_id = new List<string>();
         public BuscarButaca()
         {
             InitializeComponent();
         }
 
-        private void label2_Click(object sender, EventArgs e)
+
+
+        private void BuscarButaca_Load(object sender, EventArgs e)
         {
 
         }
