@@ -40,20 +40,25 @@ namespace FrbaBus.Compra_de_Pasajes
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-                if (this.butaca_cli_id.Count > 0)
+
+            if (this.butaca_cli_id.Count > 0)
+            {
+                foreach (Int32 butacas in this.butaca_cli_id)
                 {
-                    foreach (Int32 butacas in this.butaca_cli_id)
+                    if (butacas == Convert.ToInt32(comboBox1.SelectedValue))
                     {
-                        if (butacas == Convert.ToInt32(comboBox1.SelectedValue))
-                        {
-                            MessageBox.Show("Ya has elegido esta butaca", "Error");
-                            return;
-                        }
+                        MessageBox.Show("Ya has elegido esta butaca", "Error");
+                        return;
                     }
-                    this.butaca_cli_id.Add(Convert.ToInt32(comboBox1.SelectedValue));
-                    this.cantidad_act = this.cantidad_act + 1;
                 }
+                this.butaca_cli_id.Add(Convert.ToInt32(comboBox1.SelectedValue));
+                this.cantidad_act = this.cantidad_act + 1;
+            }
+            else
+            {
+                this.butaca_cli_id.Add(Convert.ToInt32(comboBox1.SelectedValue));
+                this.cantidad_act = this.cantidad_act + 1;
+            }
                 if (this.cantidad_act == this.cantidad)
                 {
                     selectMedioP medioDePago = new selectMedioP();
@@ -66,12 +71,7 @@ namespace FrbaBus.Compra_de_Pasajes
                     this.Hide();
 
                 }
-            
-            
-            if (this.cantidad_act == this.cantidad)
-            {
-
-            }
+                
         }
     }
 }

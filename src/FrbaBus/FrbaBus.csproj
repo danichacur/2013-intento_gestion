@@ -201,6 +201,12 @@
     <Compile Include="Compra de Pasajes\Select_viaje.Designer.cs">
       <DependentUpon>Select_viaje.cs</DependentUpon>
     </Compile>
+    <Compile Include="Compra de Pasajes\User_Compra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Compra de Pasajes\User_Compra.Designer.cs">
+      <DependentUpon>User_Compra.cs</DependentUpon>
+    </Compile>
     <Compile Include="Compra de Pasajes\Usuario_datos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -391,6 +397,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Compra de Pasajes\Select_viaje.resx">
       <DependentUpon>Select_viaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Compra de Pasajes\User_Compra.resx">
+      <DependentUpon>User_Compra.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Compra de Pasajes\Usuario_datos.resx">
       <DependentUpon>Usuario_datos.cs</DependentUpon>

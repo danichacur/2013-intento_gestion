@@ -37,12 +37,19 @@ namespace FrbaBus.Compra_de_Pasajes
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedText == "Tarjeta De Credito")
+            if (comboBox1.SelectedItem != string.Empty)
             {
+                User_Compra compra = new User_Compra();
+                compra.opcion = comboBox1.SelectedText;
+                compra.pasaje_cli_id = this.pasaje_cli_id;
+                compra.butaca_cli_id = this.butaca_cli_id;
+                compra.viaje_id = this.viaje_id;
+                compra.kg = this.kg;
+                compra.Show();
+                this.Hide();
+
             }
-            else
-            {
-            }
+           
         }
     }
 }

@@ -13,7 +13,7 @@ namespace FrbaBus.Compra_de_Pasajes
     public partial class Usuario_datos : Form
     {
         private SqlDataReader lectura;
-        private bool is_client;
+        private bool is_client=false;
         public int cant_pasj=0;
         private int add_psj = 0;
         public int cant_kg=0;
