@@ -39,7 +39,7 @@ namespace FrbaBus.Compra_de_Pasajes
             comboBox1.DataSource = ds_origen.Tables[0].DefaultView;
             //se especifica el campo de la tabla
             comboBox1.DisplayMember = "descripcion";
-            comboBox1.ValueMember = "buta_numero";
+            comboBox1.ValueMember = "buta_id";
             if (this.kg > 0)
             {
                 this.lectura = databutaca.getButacaEncomienda(this.viaje_id);
@@ -79,6 +79,7 @@ namespace FrbaBus.Compra_de_Pasajes
                     medioDePago.admin = this.admin;
                     medioDePago.discapacitado = this.discapacitado;
                     medioDePago.cant_65 = this.cant_65;
+                    medioDePago.cant_psj = this.cantidad;
                     medioDePago.Show();
                     this.Hide();
 

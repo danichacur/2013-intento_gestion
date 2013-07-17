@@ -1,10 +1,6 @@
 USE [GD1C2013]
 GO
 
-
-
-
-
 Select 'Creo el esquema'
 
 GO
@@ -87,7 +83,13 @@ CREATE TABLE [transportados].[tipo_servicio](
       [tipo_creado] [datetime] NULL,
       [tipo_modificado] [datetime] NULL,
       [tipo_porcentaje] real
+      CONSTRAINT [PK_transportados.tipo_servicio] PRIMARY KEY CLUSTERED 
+(
+  [tipo_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+
 
 GO
 
@@ -111,7 +113,7 @@ GO
 
 CREATE TABLE [transportados].[micros](
       [micr_id] [int] IDENTITY(1,1) NOT NULL,
-      [micr_tipo_id] [int] NOT NULL,
+      [micr_tipo_id] [int] NOT NULL REFERENCES transportados.tipo_servicio (tipo_id),
       [micr_cant_butacas] [int] NULL,
       [micr_kg_encomienda] [int] NULL,
       [micr_marca] [nvarchar](255) NOT NULL,
@@ -216,7 +218,7 @@ GO
       [reco_id] [int] IDENTITY(77774546,1) NOT NULL ,
       [reco_id_ciudad_origen] [int] NOT NULL REFERENCES transportados.ciudad (ciud_id),
       [reco_id_ciudad_destino] [int] NOT NULL REFERENCES transportados.ciudad (ciud_id),
-      [reco_tipo_id] [int] NOT NULL,
+      [reco_tipo_id] [int] NOT NULL REFERENCES transportados.tipo_servicio (tipo_id),
       [reco_precio_base] [int] NOT NULL,
       [reco_precio_encomienda] [int] NOT NULL,
       [reco_creado] [datetime] NULL,

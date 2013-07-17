@@ -519,7 +519,7 @@ order by rf.rolf_func_id desc", user_id);
             cmd.Parameters.Add(new SqlParameter("@VIAJE_ID",viaje_id));
             cmd.Parameters.Add(new SqlParameter("@CANT_BUTACA",cant_butaca));
             cmd.Parameters.Add(new SqlParameter("@CANT_KG",kg));
-            cmd.Parameters.Add(new SqlParameter("@discount", discount));
+            cmd.Parameters.Add(new SqlParameter("@discount", Convert.ToDouble(discount)));
             cmd.Parameters.Add(new SqlParameter("@compra",salida));
 
             this.cnn.Open();

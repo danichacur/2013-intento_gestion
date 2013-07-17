@@ -340,6 +340,8 @@ namespace FrbaBus
                                       left outer join transportados.butaca on buta_micro_id=viaj_micro
                                       where viaj_id={0}
                                       and buta_piso=0", viaje_id);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
             SqlDataReader Reg = null;
             Reg = this.comandosSql.ExecuteReader();
             return Reg;

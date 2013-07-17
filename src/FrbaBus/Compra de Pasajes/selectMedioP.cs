@@ -19,6 +19,7 @@ namespace FrbaBus.Compra_de_Pasajes
         public Int32 viaje_id;
         public bool discapacitado;
         public Int32 cant_65;
+        public int cant_psj;
 
         public selectMedioP()
         {
@@ -49,6 +50,7 @@ namespace FrbaBus.Compra_de_Pasajes
                 compra.kg = this.kg;
                 compra.discapacitado = this.discapacitado;
                 compra.cant_65 = this.cant_65;
+                compra.cant_psj = this.cant_psj;
                 compra.Show();
                 this.Hide();
 

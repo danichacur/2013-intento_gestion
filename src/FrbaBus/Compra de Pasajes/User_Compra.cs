@@ -22,6 +22,7 @@ namespace FrbaBus.Compra_de_Pasajes
         public bool discapacitado;
         public Int32 cant_65;
         private decimal discount=0m;
+        public int cant_psj;
 
         public User_Compra()
         {
@@ -101,7 +102,7 @@ namespace FrbaBus.Compra_de_Pasajes
 
             if (this.discapacitado)
             {
-                if (this.butaca_cli_id.Count > 2)
+                if (this.cant_psj > 2)
                 {
                     if ((this.cant_65 - 2) > 0)
                     {
@@ -116,16 +117,25 @@ namespace FrbaBus.Compra_de_Pasajes
                 this.discount = 0.5m * Convert.ToDecimal(this.cant_65 - 2);
             }
 
-            voucher_id= func.realizar_compra(Convert.ToInt32(this.lectura["Cli_id"]), this.kg, this.viaje_id, butaca_cli_id.Count, this.discount);
+            voucher_id= func.realizar_compra(Convert.ToInt32(this.lectura["Cli_id"]), this.kg, this.viaje_id, this.cant_psj, this.discount);
 
             if (this.kg > 0)
             {
-                func.insertar_butaca(this.viaje_id, voucher_id, butaca_cli_id[0],Convert.ToInt32(pasaje_cli_id[0]),this.kg, 0);
+                func.insertar_butaca(this.viaje_id, voucher_id, butaca_cli_id[0], Convert.ToInt32(pasaje_cli_id[0]), this.kg, 0);
+
+                for (Int32 i = 1; i < butaca_cli_id.Count; i++)
+                {
+                    func.insertar_butaca(this.viaje_id, voucher_id, butaca_cli_id[i], Convert.ToInt32(pasaje_cli_id[i]), this.kg, 0);
+                }
             }
-            for (Int32 i = 1; i < butaca_cli_id.Count; i++)
+            else
             {
-                func.insertar_butaca(this.viaje_id, voucher_id, butaca_cli_id[i],Convert.ToInt32(pasaje_cli_id[i]), this.kg, 0);
+                for (Int32 i = 0; i < butaca_cli_id.Count; i++)
+                {
+                    func.insertar_butaca(this.viaje_id, voucher_id, butaca_cli_id[i], Convert.ToInt32(pasaje_cli_id[i]), this.kg, 0);
+                }
             }
+
 
         }
     }
