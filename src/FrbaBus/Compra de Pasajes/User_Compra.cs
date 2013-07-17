@@ -21,7 +21,7 @@ namespace FrbaBus.Compra_de_Pasajes
         private bool is_client=false;
         public bool discapacitado;
         public Int32 cant_65;
-        private decimal discount=0m;
+        private Int32 discount=0;
         public int cant_psj;
 
         public User_Compra()
@@ -106,33 +106,33 @@ namespace FrbaBus.Compra_de_Pasajes
                 {
                     if ((this.cant_65 - 2) > 0)
                     {
-                        this.discount = 2m + 0.5m * Convert.ToDecimal(this.cant_65 - 2);
+                        this.discount = 4 + (this.cant_65 - 2);
                     }
                 }
-                else { this.discount = 2m; }
+                else { this.discount = 4; }
 
             }
             else
             {
-                this.discount = 0.5m * Convert.ToDecimal(this.cant_65 - 2);
+                this.discount = this.cant_65;
             }
 
             voucher_id= func.realizar_compra(Convert.ToInt32(this.lectura["Cli_id"]), this.kg, this.viaje_id, this.cant_psj, this.discount);
 
             if (this.kg > 0)
             {
-                func.insertar_butaca(this.viaje_id, voucher_id, butaca_cli_id[0], Convert.ToInt32(pasaje_cli_id[0]), this.kg, 0);
+                func.crear_pasaje(this.viaje_id, voucher_id, butaca_cli_id[0], Convert.ToInt32(pasaje_cli_id[0]), this.kg, 0);
 
                 for (Int32 i = 1; i < butaca_cli_id.Count; i++)
                 {
-                    func.insertar_butaca(this.viaje_id, voucher_id, butaca_cli_id[i], Convert.ToInt32(pasaje_cli_id[i]), this.kg, 0);
+                    func.crear_pasaje(this.viaje_id, voucher_id, butaca_cli_id[i], Convert.ToInt32(pasaje_cli_id[i]), 0, 0);
                 }
             }
             else
             {
                 for (Int32 i = 0; i < butaca_cli_id.Count; i++)
                 {
-                    func.insertar_butaca(this.viaje_id, voucher_id, butaca_cli_id[i], Convert.ToInt32(pasaje_cli_id[i]), this.kg, 0);
+                    func.crear_pasaje(this.viaje_id, voucher_id, butaca_cli_id[i], Convert.ToInt32(pasaje_cli_id[i]), 0, 0);
                 }
             }
 

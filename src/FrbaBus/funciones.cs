@@ -508,7 +508,7 @@ order by rf.rolf_func_id desc", user_id);
         }
 
 
-        public Int32 realizar_compra (Int32 cli_id, Int32 kg, Int32 viaje_id, Int32 cant_butaca,decimal discount)
+        public Int32 realizar_compra (Int32 cli_id, Int32 kg, Int32 viaje_id, Int32 cant_butaca,Int32 discount)
         {
             Int32 result = 0;
             Int32 salida=0;
@@ -519,12 +519,12 @@ order by rf.rolf_func_id desc", user_id);
             cmd.Parameters.Add(new SqlParameter("@VIAJE_ID",viaje_id));
             cmd.Parameters.Add(new SqlParameter("@CANT_BUTACA",cant_butaca));
             cmd.Parameters.Add(new SqlParameter("@CANT_KG",kg));
-            cmd.Parameters.Add(new SqlParameter("@discount", Convert.ToDouble(discount)));
-            cmd.Parameters.Add(new SqlParameter("@compra",salida));
+            cmd.Parameters.Add(new SqlParameter("@CANT_DISCOUNT", discount));
+            cmd.Parameters.Add("@compra", SqlDbType.Int).Direction = ParameterDirection.Output;
 
             this.cnn.Open();
             result = cmd.ExecuteNonQuery();
-
+            salida = int.Parse(cmd.Parameters["@compra"].Value.ToString());
             if (result > 0)
             {
                 
@@ -542,35 +542,84 @@ order by rf.rolf_func_id desc", user_id);
 
         }
 
-        public bool insertar_butaca(Int32 viaje_id, Int32 voucher_id, Int32 butaca_id, Int32 cli_id,Int32 kg, Int32 bonificado)
+        public void crear_pasaje(Int32 viaje_id, Int32 voucher_id, Int32 butaca_id, Int32 cli_id,Int32 kg, Int32 bonificado)
         {
-            bool Resultado = false;
             Int32 result = 0;
+            Int32 salida=0;
+            SqlCommand cmd = new SqlCommand("transportados.compra", this.cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
 
-            this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[pasajes]
-                                       ([pasa_viaje_id]
-                                        ,[pasa_voucher_id]
-                                        ,[pasa_butaca_id]
-                                        ,[pasa_kg_encomienda]
-                                        ,[pasa_bonificado]
-                                        ,[pasa_creado]
-                                        ,[pasa_modificado]
-                                       VALUES
-                                        ({0},{1},{2},{3},{4},{5},{6},SYSDATETIME(),SYSDATETIME())", viaje_id, voucher_id, butaca_id, kg, bonificado);
-            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            cmd.Parameters.Add(new SqlParameter("@VOUCHER_ID", voucher_id));
+            cmd.Parameters.Add(new SqlParameter("@VIAJE_ID",viaje_id));
+            cmd.Parameters.Add(new SqlParameter("@BUTACA_ID", butaca_id));
+            cmd.Parameters.Add(new SqlParameter("@CANT_KG",kg));
+            cmd.Parameters.Add(new SqlParameter("@BONIFICADO", bonificado));
+            cmd.Parameters.Add(new SqlParameter("@CLIENTE_ID", cli_id));
+            cmd.Parameters.Add("@PASAJE", SqlDbType.Int).Direction = ParameterDirection.Output;
+
             this.cnn.Open();
-            result = this.comandosSql.ExecuteNonQuery();
+            result = cmd.ExecuteNonQuery();
+            salida = int.Parse(cmd.Parameters["@PASAJE"].Value.ToString());
             if (result > 0)
             {
-                Resultado = true;
+
+                MessageBox.Show("Se genero el pasaje  " + Convert.ToString(salida), "Resultado operacion");
             }
             else
             {
+
+                MessageBox.Show("Ocurrió un error al generar el pasaje", "Error");
+            }
+
+            this.cnn.Close();
+  
+        }
+
+        public bool check_is_traveling (Int32 clie_id, Int32 viaj_id)
+        {
+            bool Resultado = true;
+            this.sql = string.Format(@"select * from transportados.pasajes
+                inner join transportados.viajes v1 on v1.viaj_id=pasa_viaje_id,
+                transportados.viajes v2
+                where pasa_clie_id={0}
+                and v2.viaj_id = {1}
+                and (((v2.viaj_fecha_salida < v1.viaj_fecha_llegada or    v2.viaj_fecha_salida < v1.viaj_fecha_llegada_estimada) 
+		                and v2.viaj_fecha_salida > v1.viaj_fecha_salida) or
+                      ((v2.viaj_fecha_llegada > v1.viaj_fecha_salida or  v2.viaj_fecha_llegada_estimada > v1.viaj_fecha_salida) 
+                      and  v2.viaj_fecha_salida < v1.viaj_fecha_salida))", clie_id, viaj_id);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+
+            this.cnn.Open();
+            SqlDataReader Reg = this.comandosSql.ExecuteReader();
+            if (Reg.HasRows)
+            {
                 Resultado = false;
             }
+
             this.cnn.Close();
             return Resultado;
         }
+
+        public bool check_viaje_dup (Int32 clie_id, Int32 viaj_id)
+        {
+            bool Resultado = true;
+            this.sql = string.Format(@"select * from transportados.pasajes
+                where pasa_clie_id={0}
+                and pasa_viaje_id = {1}
+                ", clie_id, viaj_id);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+
+            this.cnn.Open();
+            SqlDataReader Reg = this.comandosSql.ExecuteReader();
+            if (Reg.HasRows)
+            {
+                Resultado = false;
+            }
+
+            this.cnn.Close();
+            return Resultado;
+        }
+
     }
 }
 

@@ -574,7 +574,7 @@ Select 'Creo tabla pasajes'
 GO
 
 CREATE TABLE [transportados].[pasajes](
-      [pasa_id] [int] NOT NULL,
+      [pasa_id] [int] NOT NULL IDENTITY(77774546,1),
       [pasa_viaje_id] [int] NOT NULL REFERENCES transportados.viajes (viaj_id),
       [pasa_voucher_id] [int] NOT NULL REFERENCES transportados.voucher_de_compra (vouc_id),
       [pasa_butaca_id] [int] NULL REFERENCES transportados.butaca (buta_id),
@@ -593,6 +593,10 @@ CREATE TABLE [transportados].[pasajes](
 ) ON [PRIMARY]
 
 GO
+
+SET IDENTITY_INSERT  [transportados].[pasajes] ON
+GO
+
 /* creacion de los pasajes*/
   insert into [transportados].[pasajes](
 	  [pasa_id],
@@ -630,6 +634,9 @@ GO
   and vi.viaj_micro=mi.micr_id )
 
  GO
+
+ SET IDENTITY_INSERT  [transportados].[pasajes] OFF
+GO
 
 /****** Object:  Table [transportados].[funcionalidad]    Script Date: 05/21/2013 22:22:38 ******/
 
@@ -945,6 +952,7 @@ GO
 
 CREATE TABLE [transportados].[puntos_pas_frecuente](
 	[punt_id] [int] IDENTITY(1,1) NOT NULL,
+  [punt_clie_id] [int] REFERENCES transportados.clientes (Cli_id),
 	[punt_fecha] [date] NULL,
 	[punt_puntos] [int] NOT NULL,
 	[punt_id_viaje] [int] NOT NULL,
@@ -968,8 +976,9 @@ GO
 
 CREATE TABLE [transportados].[premios_obtenidos](
 	[obte_id] [int] IDENTITY(1,1) NOT NULL,
+  [obte_clie_id] [int] REFERENCES transportados.clientes (Cli_id),
 	[obte_fecha] [date] NULL,
-	[obte_id_premio] [int] NOT NULL,
+	[obte_id_premio] [int] NOT NULL REFERENCES transportados.premios (prem_id),
 	[obte_cantidad] [int] NULL
  CONSTRAINT [PK_premios_obtenidos] PRIMARY KEY CLUSTERED 
 (
@@ -1250,17 +1259,17 @@ CREATE PROCEDURE [transportados].[compra]
 @VIAJE_ID int,
 @CANT_BUTACA int,
 @CANT_KG int,
-@discount numeric (5,2),
+@CANT_DISCOUNT int,
 @compra  int out
 AS
 BEGIN
-  declare @PRECIO numeric (5,2)
+  declare @PRECIO real
   declare @creado datetime
   
   set @PRECIO =(select reco_precio_base*(1+tipo_porcentaje) from transportados.viajes
     left outer join transportados.recorrido on viaj_recorrido=reco_id
     left outer join transportados.tipo_servicio on reco_tipo_id=tipo_id
-    where viaj_id=@VIAJE_ID)* (@CANT_BUTACA - @discount)
+    where viaj_id=@VIAJE_ID)* (@CANT_BUTACA - (@CANT_DISCOUNT * 0.5))
   set @PRECIO=@PRECIO + ((select reco_precio_encomienda*(1+tipo_porcentaje) from transportados.viajes
     left outer join transportados.recorrido on viaj_recorrido=reco_id
     left outer join transportados.tipo_servicio on reco_tipo_id=tipo_id
@@ -1279,3 +1288,52 @@ BEGIN
   (@CLI_ID,SYSDATETIME(),@compra)
   
 END
+
+
+CREATE PROCEDURE [transportados].[Compra_pasaje]
+  -- Add the parameters for the stored procedure here
+  -- Add the parameters for the stored procedure here
+@VOUCHER_ID int,
+@VIAJE_ID int,
+@BUTACA_ID int,
+@CANT_KG int,
+@BONIFICADO int,
+@CLIENTE_ID  int,
+@PASAJE int out
+
+AS
+BEGIN
+if exists (SELECT DATEDIFF(year, Cli_Fecha_Nac, SYSDATETIME()) from transportados.clientes where Cli_id=@CLIENTE_ID and @BONIFICADO=0)
+begin
+set @BONIFICADO=1
+end
+
+IF NOT EXISTS (SELECT PASA_ID FROM transportados.pasajes where pasa_viaje_id=@VIAJE_ID and pasa_clie_id=@CLIENTE_ID )
+begin
+INSERT INTO [GD1C2013].[transportados].[pasajes]
+                                       ([pasa_viaje_id]
+                                        ,[pasa_voucher_id]
+                                        ,[pasa_butaca_id]
+                                        ,[pasa_kg_encomienda]
+                                        ,[pasa_bonificado]
+                                        ,[pasa_clie_id]
+                                        ,[pasa_creado]
+                                        ,[pasa_modificado])
+                                       VALUES
+                                        (@VIAJE_ID,@VOUCHER_ID,@BUTACA_ID,@CANT_KG,@BONIFICADO,@CLIENTE_ID,SYSDATETIME(),SYSDATETIME())
+set @PASAJE = (select pasa_id from transportados.pasajes where pasa_clie_id=@CLIENTE_ID and pasa_viaje_id=@VIAJE_ID)
+
+  if @CANT_KG >0
+  begin
+    update [GD1C2013].[transportados].viajes
+    set viaj_KG_disponible = viaj_KG_disponible-@CANT_KG
+    where viaj_id=@VIAJE_ID
+  end
+  else
+  begin 
+    update [GD1C2013].[transportados].viajes
+    set viaj_butacas_libres = viaj_butacas_libres-1
+    where viaj_id=@VIAJE_ID
+  end
+end
+end

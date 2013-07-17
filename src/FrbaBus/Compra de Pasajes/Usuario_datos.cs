@@ -44,14 +44,7 @@ namespace FrbaBus.Compra_de_Pasajes
             }
             else
             {
-                this.lectura.Read();
-                this.textBox1.Text = this.lectura["Cli_Nombre"].ToString();
-                this.textBox2.Text = this.lectura["Cli_Apellido"].ToString();
-                this.textBox3.Text = this.lectura["Cli_Dir"].ToString();
-                this.maskedTextBox2.Text = this.lectura["Cli_Telefono"].ToString();
-                this.textBox4.Text = this.lectura["Cli_Mail"].ToString();
-                this.dateTimePicker1.Value = Convert.ToDateTime(this.lectura["Cli_Fecha_Nac"].ToString());
-                this.is_client = true;
+                complete_textbox();
             }
         }
 
@@ -60,6 +53,9 @@ namespace FrbaBus.Compra_de_Pasajes
             funciones func_user = new funciones();
             Formularios datos = new Formularios();
              SqlDataReader lectura_new;
+             string cliente;
+             
+
             if (is_client)
             {
                 if (this.textBox1.Text != this.lectura["Cli_Nombre"].ToString() ||
@@ -71,47 +67,68 @@ namespace FrbaBus.Compra_de_Pasajes
                 {
                     func_user.modClient(Convert.ToInt32(this.lectura["Cli_id"].ToString()),Convert.ToInt32( this.maskedTextBox1.Text), this.textBox1.Text, this.textBox2.Text, this.textBox3.Text, Convert.ToInt32(this.maskedTextBox2.Text), this.textBox4.Text, this.dateTimePicker1.Value);
                 }
-                this.pasaje_cli_id.Add(this.lectura["Cli_id"].ToString());
+                cliente= this.lectura["Cli_id"].ToString();
                 
             }
             else
             {
-                func_user.newClient(Convert.ToInt32(this.maskedTextBox1.Text), this.textBox1.Text, this.textBox2.Text, this.textBox3.Text, Convert.ToInt32(this.maskedTextBox2.Text), this.textBox4.Text, this.dateTimePicker1.Value);
-                lectura_new = datos.datos_user(Convert.ToInt32(maskedTextBox1.Text));
-                lectura_new.Read();
-                this.pasaje_cli_id.Add(lectura_new["Cli_id"].ToString());
+                this.lectura = datos.datos_user(Convert.ToInt32(maskedTextBox1.Text));
+
+                if (this.lectura == null)
+                {
+                    func_user.newClient(Convert.ToInt32(this.maskedTextBox1.Text), this.textBox1.Text, this.textBox2.Text, this.textBox3.Text, Convert.ToInt32(this.maskedTextBox2.Text), this.textBox4.Text, this.dateTimePicker1.Value);
+                    lectura_new = datos.datos_user(Convert.ToInt32(maskedTextBox1.Text));
+                    lectura_new.Read();
+                    cliente=lectura_new["Cli_id"].ToString();
+
+                }
+                else
+                {
+                    complete_textbox();
+                    cliente = this.lectura["Cli_id"].ToString();
+                }
+                
 
             }
-            if (checkBox1.Checked) this.discapacitado = true;
-            if (has_kg)
+            if (func_user.check_viaje_dup(Convert.ToInt32(cliente), this.viaje_id) && func_user.check_is_traveling(Convert.ToInt32(cliente), this.viaje_id))
             {
-                this.has_kg = false;
+                this.pasaje_cli_id.Add(cliente);
+                if (checkBox1.Checked) this.discapacitado = true;
+                if (has_kg)
+                {
+                    this.has_kg = false;
+
+                }
+                else
+                {
+                    this.add_psj = this.add_psj + 1;
+                    if ((Convert.ToDateTime(this.lectura["Cli_Fecha_Nac"].ToString()) - DateTime.Now).TotalHours > 64) cant_65 = cant_65 + 1;
+                }
+
+                if (this.cant_pasj == this.add_psj && this.has_kg == false)
+                {
+                    BuscarButaca busq = new BuscarButaca();
+                    this.Hide();
+                    busq.cantidad = add_psj;
+                    busq.kg = cant_kg;
+                    busq.pasaje_cli_id = this.pasaje_cli_id;
+                    busq.viaje_id = this.viaje_id;
+                    busq.admin = this.admin;
+                    busq.discapacitado = this.discapacitado;
+                    busq.cant_65 = this.cant_65;
+                    busq.Show();
+                }
+                else
+                {
+                    Usuario_datos_Load();
+                }
 
             }
             else
             {
-                this.add_psj = this.add_psj + 1;
-                if ((Convert.ToDateTime(this.lectura["Cli_Fecha_Nac"].ToString()) - DateTime.Now).TotalHours > 64) cant_65 = cant_65 + 1;
-            }
-
-            if (this.cant_pasj == this.add_psj && this.has_kg == false)
-            {
-                BuscarButaca busq = new BuscarButaca();
-                busq.cantidad = add_psj;
-                busq.kg = cant_kg;
-                busq.pasaje_cli_id = this.pasaje_cli_id;
-                busq.viaje_id = this.viaje_id;
-                busq.admin = this.admin;
-                busq.discapacitado = this.discapacitado;
-                busq.cant_65 = this.cant_65;
-                busq.Show();
-                this.Hide();
-            }
-            else
-            {
+                MessageBox.Show("El usuario ya posee pasajes o esta en viaje en esa fecha", "Error operacion");
                 Usuario_datos_Load();
             }
-
 
         }
 
@@ -134,7 +151,19 @@ namespace FrbaBus.Compra_de_Pasajes
         
         }
 
-       
+
+        private void complete_textbox()
+        {
+            this.lectura.Read();
+            this.textBox1.Text = this.lectura["Cli_Nombre"].ToString();
+            this.textBox2.Text = this.lectura["Cli_Apellido"].ToString();
+            this.textBox3.Text = this.lectura["Cli_Dir"].ToString();
+            this.maskedTextBox2.Text = this.lectura["Cli_Telefono"].ToString();
+            this.textBox4.Text = this.lectura["Cli_Mail"].ToString();
+            this.dateTimePicker1.Value = Convert.ToDateTime(this.lectura["Cli_Fecha_Nac"].ToString());
+            this.is_client = true;
+        }
+
         /*private bool check_dup(string cliente)
         {
             bool result;
@@ -154,6 +183,9 @@ namespace FrbaBus.Compra_de_Pasajes
                 {;
                 }
             }*/
+
+ 
+
 
 
         
