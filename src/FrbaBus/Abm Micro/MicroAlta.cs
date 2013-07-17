@@ -14,7 +14,7 @@ namespace FrbaBus.Abm_Micro
     {
         public string cadenaConexion;
         protected string sql;
-        protected int resultado;
+        protected Int32 resultado;
         protected SqlConnection cnn;
         protected SqlCommand comandosSql;
         protected string mensaje;
@@ -69,7 +69,7 @@ namespace FrbaBus.Abm_Micro
             //se especifica el campo de la tabla
             servicioCombo.DisplayMember = "tipo_nombre";
             servicioCombo.ValueMember = "tipo_id";
-            //int value = ((KeyValuePair<string, int>)comboBox1.SelectedItem).Value;
+            //Int32 value = ((KeyValuePair<string, int>)comboBox1.SelectedItem).Value;
             //MessageBox.Show(value.ToString());
 
         }

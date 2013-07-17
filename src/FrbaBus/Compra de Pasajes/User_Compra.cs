@@ -14,11 +14,14 @@ namespace FrbaBus.Compra_de_Pasajes
     {
         public List<string> pasaje_cli_id = new List<string>();
         public List<Int32> butaca_cli_id = new List<Int32>();
-        public int kg;
-        public int viaje_id;
+        public Int32 kg;
+        public Int32 viaje_id;
         public string opcion;
         private SqlDataReader lectura;
         private bool is_client=false;
+        public bool discapacitado;
+        public Int32 cant_65;
+        private decimal discount=0m;
 
         public User_Compra()
         {
@@ -54,7 +57,7 @@ namespace FrbaBus.Compra_de_Pasajes
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedValue.ToString() == "Visa")
+            if (comboBox1.SelectedItem.ToString() == "Visa")
             {
                 comboBox2.Items.Add("1");
                 comboBox2.Items.Add("3");
@@ -89,6 +92,41 @@ namespace FrbaBus.Compra_de_Pasajes
                 this.dateTimePicker1.Value = Convert.ToDateTime(this.lectura["Cli_Fecha_Nac"].ToString());
                 this.is_client = true;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            funciones func = new funciones();
+            Int32 voucher_id;
+
+            if (this.discapacitado)
+            {
+                if (this.butaca_cli_id.Count > 2)
+                {
+                    if ((this.cant_65 - 2) > 0)
+                    {
+                        this.discount = 2m + 0.5m * Convert.ToDecimal(this.cant_65 - 2);
+                    }
+                }
+                else { this.discount = 2m; }
+
+            }
+            else
+            {
+                this.discount = 0.5m * Convert.ToDecimal(this.cant_65 - 2);
+            }
+
+            voucher_id= func.realizar_compra(Convert.ToInt32(this.lectura["Cli_id"]), this.kg, this.viaje_id, butaca_cli_id.Count, this.discount);
+
+            if (this.kg > 0)
+            {
+                func.insertar_butaca(this.viaje_id, voucher_id, butaca_cli_id[0],Convert.ToInt32(pasaje_cli_id[0]),this.kg, 0);
+            }
+            for (Int32 i = 1; i < butaca_cli_id.Count; i++)
+            {
+                func.insertar_butaca(this.viaje_id, voucher_id, butaca_cli_id[i],Convert.ToInt32(pasaje_cli_id[i]), this.kg, 0);
+            }
+
         }
     }
 }

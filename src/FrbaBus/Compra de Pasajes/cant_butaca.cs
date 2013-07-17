@@ -11,15 +11,15 @@ namespace FrbaBus.Compra_de_Pasajes
 {
     public partial class cant_butaca : Form
     {
-        public int viaje_id;
+        public Int32 viaje_id;
         public string fecha;
         public string ciud_orig_nombre;
-        public int ciud_orig_id;
+        public Int32 ciud_orig_id;
         public string ciud_dest_nombre;
-        public int ciud_dest_id;
+        public Int32 ciud_dest_id;
         public string tipo_nombre;
-        public int buta_libre;
-        public int kg_libre;
+        public Int32 buta_libre;
+        public Int32 kg_libre;
         public bool admin;
 
 

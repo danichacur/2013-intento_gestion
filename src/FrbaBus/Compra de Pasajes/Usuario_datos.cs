@@ -14,13 +14,15 @@ namespace FrbaBus.Compra_de_Pasajes
     {
         private SqlDataReader lectura;
         private bool is_client=false;
-        public int cant_pasj=0;
-        private int add_psj = 0;
-        public int cant_kg=0;
+        public Int32 cant_pasj=0;
+        private Int32 add_psj = 0;
+        public Int32 cant_kg=0;
         public bool has_kg = false;
         List<string> pasaje_cli_id = new List<string>();
-        public int viaje_id;
+        public Int32 viaje_id;
+        private Int32 cant_65=0;
         public bool admin;
+        private bool discapacitado = false;
 
         public Usuario_datos()
         {
@@ -80,6 +82,7 @@ namespace FrbaBus.Compra_de_Pasajes
                 this.pasaje_cli_id.Add(lectura_new["Cli_id"].ToString());
 
             }
+            if (checkBox1.Checked) this.discapacitado = true;
             if (has_kg)
             {
                 this.has_kg = false;
@@ -88,6 +91,7 @@ namespace FrbaBus.Compra_de_Pasajes
             else
             {
                 this.add_psj = this.add_psj + 1;
+                if ((Convert.ToDateTime(this.lectura["Cli_Fecha_Nac"].ToString()) - DateTime.Now).TotalHours > 64) cant_65 = cant_65 + 1;
             }
 
             if (this.cant_pasj == this.add_psj && this.has_kg == false)
@@ -98,6 +102,8 @@ namespace FrbaBus.Compra_de_Pasajes
                 busq.pasaje_cli_id = this.pasaje_cli_id;
                 busq.viaje_id = this.viaje_id;
                 busq.admin = this.admin;
+                busq.discapacitado = this.discapacitado;
+                busq.cant_65 = this.cant_65;
                 busq.Show();
                 this.Hide();
             }
@@ -123,13 +129,16 @@ namespace FrbaBus.Compra_de_Pasajes
             this.maskedTextBox2.Text = string.Empty;
             this.textBox4.Text = string.Empty;
             this.dateTimePicker1.Value = DateTime.Now;
+            if (this.discapacitado || this.has_kg) this.checkBox1.Visible = false;
             this.is_client = false;
         
         }
+
+       
         /*private bool check_dup(string cliente)
         {
             bool result;
-            int valor;
+            Int32 valor;
             if (this.cant_kg > 0) 
             {
                 valor=1;
@@ -139,7 +148,7 @@ namespace FrbaBus.Compra_de_Pasajes
                 valor=0;
             }
 
-            for (int i= valor ; i <= pasaje_cli_id.Count; i++)
+            for (Int32 i= valor ; i <= pasaje_cli_id.Count; i++)
             {
                 if (pasaje_cli_id[i-1] ==pasaje_cli_id[i-1])
                 {;

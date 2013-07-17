@@ -24,7 +24,7 @@ namespace FrbaBus.Abm_Micro
         private void button3_Click(object sender, EventArgs e)
         {
             funciones pasajes = new funciones();
-            int microAlterno = 0;
+            Int32 microAlterno = 0;
             microAlterno = pasajes.buscarMicroAlternativo(MicroFormBaja.f1.inicio.Value, MicroFormBaja.f1.fin.Value, modificacion.f1.TextBox1.Text);
             if (microAlterno == 0)
             {

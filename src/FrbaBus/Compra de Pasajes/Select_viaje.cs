@@ -11,8 +11,8 @@ namespace FrbaBus.Compra_de_Pasajes
 {
     public partial class Select_viaje : Form
     {
-        public int ciud_origen;
-        public int ciud_destino;
+        public Int32 ciud_origen;
+        public Int32 ciud_destino;
         public string fecha;
         public bool admin;
         

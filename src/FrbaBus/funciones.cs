@@ -10,10 +10,10 @@ namespace FrbaBus
     class funciones : conexion
     {
 
-        public bool insertarRecorrido(int ciudOrigen, int ciudDestino, int tipoServ, int basePasaje, int baseEncomienda)
+        public bool insertarRecorrido(Int32 ciudOrigen, Int32 ciudDestino, Int32 tipoServ, Int32 basePasaje, Int32 baseEncomienda)
         {
             bool Resultado = false;
-            int result = 0;
+            Int32 result = 0;
             //this.sql = string.Format(@"select tipo_id,tipo_nombre from transportados.tipo_servicio");
             this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[recorrido](
                                             [reco_id_ciudad_origen],
@@ -45,7 +45,7 @@ namespace FrbaBus
         public bool insertarCiudad(string ciudad)
         {
             bool Resultado = false;
-            int result = 0;
+            Int32 result = 0;
             //this.sql = string.Format(@"select tipo_id,tipo_nombre from transportados.tipo_servicio");
             this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[ciudad](
                                             [ciud_nombre]
@@ -73,7 +73,7 @@ namespace FrbaBus
         public bool noExistePatente(String patente)
         {
             bool Resultado = false;
-            int result = 0;
+            Int32 result = 0;
             object otro;
             SqlCommand cmd = new SqlCommand("[transportados].[existe]", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -94,10 +94,10 @@ namespace FrbaBus
 
         }
 
-        public bool insertar_micro(string tipoServ, int cantButaca, int kgCarga, string marca, string modelo, string patente, int pisos)
+        public bool insertar_micro(string tipoServ, Int32 cantButaca, Int32 kgCarga, string marca, string modelo, string patente, Int32 pisos)
         {
             bool Resultado = false;
-            int result = 0;
+            Int32 result = 0;
 
             this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[micros](
     [micr_tipo_id],[micr_cant_butacas],[micr_kg_encomienda],[micr_marca],[micr_modelo],[micr_baja],[micr_baja_tecnica],[micro_creado],[micr_patente],[micr_pisos] )
@@ -124,9 +124,9 @@ namespace FrbaBus
         }
 
 
-        public int contarPasajesVendidos(DateTime inicio, DateTime fin, String patente)
+        public Int32 contarPasajesVendidos(DateTime inicio, DateTime fin, String patente)
         {
-            int result = 0;
+            Int32 result = 0;
             object otro;
             SqlCommand cmd = new SqlCommand("transportados.pasajesVendidos", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -151,7 +151,7 @@ namespace FrbaBus
         public bool bajaServicioMicro(DateTime inicio, String patente)
         {
             bool Resultado = false;
-            int result = 0;
+            Int32 result = 0;
             this.sql = string.Format(@"UPDATE transportados.micros
                                         SET
                                         micr_baja = 1,
@@ -177,7 +177,7 @@ namespace FrbaBus
         public bool bajaTecnicaMicro(DateTime inicio, DateTime fin, String patente)
         {
             bool Resultado = false;
-            int result = 0;
+            Int32 result = 0;
             this.sql = string.Format(@"UPDATE transportados.micros
                                         SET
                                         micr_baja_tecnica = 1,
@@ -199,10 +199,10 @@ namespace FrbaBus
             return Resultado;
         }
 
-        public int buscarMicroAlternativo(DateTime inicio, DateTime fin, String patente)
+        public Int32 buscarMicroAlternativo(DateTime inicio, DateTime fin, String patente)
         {
 
-            int result = 0;
+            Int32 result = 0;
             Object otro;
 
             SqlCommand cmd = new SqlCommand("transportados.microAlterno", this.cnn);
@@ -219,9 +219,9 @@ namespace FrbaBus
             return result;
         }
 
-        public int cargameMicro(String patenteVieja, string patenteNueva)
+        public Int32 cargameMicro(String patenteVieja, string patenteNueva)
         {
-            int result = 0;
+            Int32 result = 0;
             Object otro;
             SqlCommand cmd = new SqlCommand("transportados.cargarMicro", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -235,9 +235,9 @@ namespace FrbaBus
             return result;
         }
 
-        public int buscarMicro(String patente)
+        public Int32 buscarMicro(String patente)
         {
-            int result = 0;
+            Int32 result = 0;
             Object otro;
             SqlCommand cmd = new SqlCommand("transportados.idMicro", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -253,11 +253,11 @@ namespace FrbaBus
 
 
 
-        public bool reemplazarViajes(int microAlterno, string microViejo, string tipo_baja,DateTime fecha, DateTime fechalleg)
+        public bool reemplazarViajes(Int32 microAlterno, string microViejo, string tipo_baja,DateTime fecha, DateTime fechalleg)
         {
             /*PROCESO TRANSPARENTE QUE CAMBIA EL MICRO ASIGNADO POR OTRO*/
 
-            int result = 0;
+            Int32 result = 0;
             bool Resultado = false;
             SqlCommand cmd = new SqlCommand("transportados.reemplaza_micro", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -286,7 +286,7 @@ namespace FrbaBus
         public bool devolverPasajes(string microViejo, string tipo_baja, DateTime fecha, DateTime fechalleg)
         {
             /*PROCESO TRANSPARENTE QUE DEVUELVE LOS PASAJES*/
-            int result = 0;
+            Int32 result = 0;
             bool Resultado = false;
             SqlCommand cmd = new SqlCommand("transportados.devuelvePasajes", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -311,10 +311,10 @@ namespace FrbaBus
             return Resultado;
         }
 
-        public bool devolucionPersonal(int voucher, int codPasaje, string motivo)
+        public bool devolucionPersonal(Int32 voucher, Int32 codPasaje, string motivo)
         {
             /*PROCESO TRANSPARENTE QUE DEVUELVE LOS PASAJES*/
-            int result = 0;
+            Int32 result = 0;
             bool Resultado = false;
             SqlCommand cmd = new SqlCommand("transportados.devolucionPersonal", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -419,8 +419,8 @@ order by rf.rolf_func_id desc", user_id);
         }
         public bool BajaRol(String Rol)
         {
-            /*PROCESO TRANSPARENTE QUE DEVUELVE LOS PASAJES*/
-            int result = 0;
+            
+            Int32 result = 0;
             bool Resultado = false;
             SqlCommand cmd = new SqlCommand("transportados.bajaRol", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -449,7 +449,7 @@ order by rf.rolf_func_id desc", user_id);
         public bool modClient(Int32 id, Int32 dni, string nombre, string apellido, string direccion, Int32 telefono, string mail, DateTime fecha_nac)
         {
             bool Resultado = false;
-            int result = 0;
+            Int32 result = 0;
 
             this.sql = string.Format(@"update [GD1C2013].[transportados].[clientes]
                                         set [Cli_Nombre]={1}
@@ -478,10 +478,10 @@ order by rf.rolf_func_id desc", user_id);
         public bool newClient(Int32 dni, string nombre, string apellido, string direccion, Int32 telefono, string mail, DateTime fecha_nac)
         {
             bool Resultado = false;
-            int result = 0;
+            Int32 result = 0;
 
             this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[clientes]
-                                       (Cli_Nombre]
+                                       ([Cli_Nombre]
                                       ,[Cli_Apellido]
                                       ,[Cli_Dni]
                                       ,[Cli_Dir]
@@ -492,6 +492,71 @@ order by rf.rolf_func_id desc", user_id);
                                       ,[cli_modificado])
                                        VALUES
                                         ({0},{1},{2},{3},{4},{5},{6},SYSDATETIME(),SYSDATETIME())", nombre, apellido, dni, direccion, telefono, mail, fecha_nac.ToString());
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
+            this.cnn.Close();
+            return Resultado;
+        }
+
+
+        public Int32 realizar_compra (Int32 cli_id, Int32 kg, Int32 viaje_id, Int32 cant_butaca,decimal discount)
+        {
+            Int32 result = 0;
+            Int32 salida=0;
+            SqlCommand cmd = new SqlCommand("transportados.compra", this.cnn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add(new SqlParameter("@CLI_ID",cli_id));
+            cmd.Parameters.Add(new SqlParameter("@VIAJE_ID",viaje_id));
+            cmd.Parameters.Add(new SqlParameter("@CANT_BUTACA",cant_butaca));
+            cmd.Parameters.Add(new SqlParameter("@CANT_KG",kg));
+            cmd.Parameters.Add(new SqlParameter("@discount", discount));
+            cmd.Parameters.Add(new SqlParameter("@compra",salida));
+
+            this.cnn.Open();
+            result = cmd.ExecuteNonQuery();
+
+            if (result > 0)
+            {
+                
+                MessageBox.Show("Compra realizada con id " + Convert.ToString(salida), "Resultado operacion");
+            }
+            else
+            {
+                
+                MessageBox.Show("Ocurrió un error al realizar la compra", "Error");
+            }
+
+            this.cnn.Close();
+            return salida;
+
+
+        }
+
+        public bool insertar_butaca(Int32 viaje_id, Int32 voucher_id, Int32 butaca_id, Int32 cli_id,Int32 kg, Int32 bonificado)
+        {
+            bool Resultado = false;
+            Int32 result = 0;
+
+            this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[pasajes]
+                                       ([pasa_viaje_id]
+                                        ,[pasa_voucher_id]
+                                        ,[pasa_butaca_id]
+                                        ,[pasa_kg_encomienda]
+                                        ,[pasa_bonificado]
+                                        ,[pasa_creado]
+                                        ,[pasa_modificado]
+                                       VALUES
+                                        ({0},{1},{2},{3},{4},{5},{6},SYSDATETIME(),SYSDATETIME())", viaje_id, voucher_id, butaca_id, kg, bonificado);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();

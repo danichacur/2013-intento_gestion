@@ -72,7 +72,7 @@ namespace FrbaBus
         public bool fail_login()
         {
             bool Resultado = false;
-            int result = 0;
+            Int32 result = 0;
             this.sql = string.Format(@"update transportados.usuario
                                        set usua_logins=usua_logins+1
                                            where usua_username= '{0}'", this.usuario);
@@ -93,7 +93,7 @@ namespace FrbaBus
         public bool reset_login()
         {
             bool Resultado = false;
-            int result = 0;
+            Int32 result = 0;
             this.sql = string.Format(@"update transportados.usuario
                                        set usua_logins=0
                                            where usua_username= '{0}'", this.usuario);

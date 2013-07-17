@@ -47,7 +47,7 @@ namespace FrbaBus.Abm_Micro
             {
              
                 funciones pasajes = new funciones();
-                int microAlterno = 0;
+                Int32 microAlterno = 0;
                 microAlterno = pasajes.cargameMicro(modificacion.f1.TextBox1.Text, textBox1.Text);
                 //microAlterno = pasajes.buscarMicro(patenteNueva.nueva.text.Text);
                 

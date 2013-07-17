@@ -15,8 +15,10 @@ namespace FrbaBus.Compra_de_Pasajes
         public bool admin ;
         public List<string> pasaje_cli_id = new List<string>();
         public List<Int32> butaca_cli_id = new List<Int32>();
-        public int kg;
-        public int viaje_id;
+        public Int32 kg;
+        public Int32 viaje_id;
+        public bool discapacitado;
+        public Int32 cant_65;
 
         public selectMedioP()
         {
@@ -45,6 +47,8 @@ namespace FrbaBus.Compra_de_Pasajes
                 compra.butaca_cli_id = this.butaca_cli_id;
                 compra.viaje_id = this.viaje_id;
                 compra.kg = this.kg;
+                compra.discapacitado = this.discapacitado;
+                compra.cant_65 = this.cant_65;
                 compra.Show();
                 this.Hide();
 

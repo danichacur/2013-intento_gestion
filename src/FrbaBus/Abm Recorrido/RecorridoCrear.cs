@@ -14,7 +14,7 @@ namespace FrbaBus.Abm_Recorrido
     {
         public string cadenaConexion;
         protected string sql;
-        protected int resultado;
+        protected Int32 resultado;
         protected SqlConnection cnn;
         protected SqlCommand comandosSql;
 
@@ -47,7 +47,7 @@ namespace FrbaBus.Abm_Recorrido
             //se especifica el campo de la tabla
             comboBox3.DisplayMember = "tipo_nombre";
             comboBox3.ValueMember = "tipo_id";
-            //int value = ((KeyValuePair<string, int>)comboBox1.SelectedItem).Value;
+            //Int32 value = ((KeyValuePair<string, int>)comboBox1.SelectedItem).Value;
             //MessageBox.Show(value.ToString());
 
         }

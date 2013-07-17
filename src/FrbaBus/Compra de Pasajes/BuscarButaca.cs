@@ -6,18 +6,22 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace FrbaBus.Compra_de_Pasajes
 {
     public partial class BuscarButaca : Form
     {
-        public int cantidad;
-        public int cantidad_act=0;
-        public int kg;
+        public Int32 cantidad;
+        public Int32 cantidad_act=0;
+        public Int32 kg;
         public List<string> pasaje_cli_id = new List<string>();
         public List<Int32> butaca_cli_id = new List<Int32>();
-        public int viaje_id;
+        public Int32 viaje_id;
         public bool admin;
+        public Int32 cant_65;
+        public bool discapacitado;
+        private SqlDataReader lectura;
 
         public BuscarButaca()
         {
@@ -36,6 +40,12 @@ namespace FrbaBus.Compra_de_Pasajes
             //se especifica el campo de la tabla
             comboBox1.DisplayMember = "descripcion";
             comboBox1.ValueMember = "buta_numero";
+            if (this.kg > 0)
+            {
+                this.lectura = databutaca.getButacaEncomienda(this.viaje_id);
+                this.lectura.Read();
+                this.butaca_cli_id.Add(Convert.ToInt32(this.lectura["buta_id"].ToString()));
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -67,6 +77,8 @@ namespace FrbaBus.Compra_de_Pasajes
                     medioDePago.butaca_cli_id = this.butaca_cli_id;
                     medioDePago.kg = this.kg;
                     medioDePago.admin = this.admin;
+                    medioDePago.discapacitado = this.discapacitado;
+                    medioDePago.cant_65 = this.cant_65;
                     medioDePago.Show();
                     this.Hide();
 

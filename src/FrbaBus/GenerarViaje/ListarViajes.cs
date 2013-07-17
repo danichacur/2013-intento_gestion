@@ -14,7 +14,7 @@ namespace FrbaBus.GenerarViaje
     {
         public string cadenaConexion;
         protected string sql;
-        protected int resultado;
+        protected Int32 resultado;
         protected SqlConnection cnn;
         protected SqlCommand comandosSql;
 

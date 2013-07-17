@@ -14,7 +14,7 @@ namespace FrbaBus.Ciudades
     {
         public string cadenaConexion;
         protected string sql;
-        protected int resultado;
+        protected Int32 resultado;
         protected SqlConnection cnn;
         protected SqlCommand comandosSql;
         public Form1()
@@ -38,7 +38,7 @@ namespace FrbaBus.Ciudades
 
             SqlDataReader leer = this.comandosSql.ExecuteReader();
 
-            int renglon = 0;
+            Int32 renglon = 0;
 
             while(leer.Read())
             {

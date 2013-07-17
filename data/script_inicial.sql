@@ -1,99 +1,7 @@
 USE [GD1C2013]
 GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[bajaRol]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [transportados].[bajaRol]
-GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[devuelvePasajes]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [transportados].[devuelvePasajes]
-GO
-
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[cargarMicro]') AND type in (N'P', N'PC'))
-DROP PROCEDURE  [transportados].[cargarMicro]
-GO
-
-
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[buscaViajes]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [transportados].[buscaViajes]
-GO
-
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[existe]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [transportados].[existe]
-GO
-
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[microAlterno]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [transportados].[microAlterno]
-GO
-
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[pasajesVendidos]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [transportados].[pasajesVendidos]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[devolucionPersonal]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [transportados].[devolucionPersonal]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[reemplaza_micro]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [transportados].[reemplaza_micro]
-GO
-/****** Object:  Table [transportados].[puntos_pas_frecuente]    Script Date: 05/21/2013 22:23:12 ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[puntos_pas_frecuente]') AND type in (N'U'))
-DROP TABLE [transportados].[puntos_pas_frecuente]
-GO
-
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[clientes]') AND type in (N'U'))
-DROP TABLE [transportados].[clientes]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[tipo_servicio]') AND type in (N'U'))
-DROP TABLE [transportados].[tipo_servicio]
-GO
-
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[ciudad]') AND type in (N'U'))
-DROP TABLE [transportados].[ciudad]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[recorrido]') AND type in (N'U'))
-DROP TABLE [transportados].[recorrido]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[butaca]') AND type in (N'U'))
-DROP TABLE [transportados].[butaca]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[viajes]') AND type in (N'U'))
-DROP TABLE [transportados].[viajes]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[voucher_de_compra]') AND type in (N'U'))
-DROP TABLE [transportados].[voucher_de_compra]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[pasajes]') AND type in (N'U'))
-DROP TABLE [transportados].[pasajes]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[funcionalidad]') AND type in (N'U'))
-DROP TABLE [transportados].[funcionalidad]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[Rol]') AND type in (N'U'))
-DROP TABLE [transportados].[Rol]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[Rol_funcionalidad]') AND type in (N'U'))
-DROP TABLE [transportados].[Rol_funcionalidad]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[usuario]') AND type in (N'U'))
-DROP TABLE [transportados].[usuario]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[rol_usuario]') AND type in (N'U'))
-DROP TABLE [transportados].[rol_usuario]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[facturas]') AND type in (N'U'))
-DROP TABLE [transportados].[facturas]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[premios]') AND type in (N'U'))
-DROP TABLE [transportados].[premios]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[micros]') AND type in (N'U'))
-DROP TABLE [transportados].[micros]
-GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[premios_obtenidos]') AND type in (N'U'))
-DROP TABLE [transportados].[premios_obtenidos]
-GO
-
-drop schema transportados
 
 
 
@@ -114,16 +22,19 @@ CREATE TABLE [transportados].[clientes](
       [Cli_id] [int] IDENTITY(1,1) NOT NULL,
       [Cli_Nombre] [nvarchar](255) NULL,
       [Cli_Apellido] [nvarchar](255) NULL,
-      [Cli_Dni] [numeric](18, 0) NULL,
+      [Cli_Dni] [numeric](18, 0) NULL unique,
       [Cli_Dir] [nvarchar](255) NULL,
       [Cli_Telefono] [numeric](18, 0) NULL,
-      [Cli_Mail] [nvarchar](255) NULL,
+      [Cli_Mail] [nvarchar](255) not NULL,
       [Cli_Fecha_Nac] [datetime] NULL
       ,[cli_creado] [datetime] NULL
       ,[cli_modificado][datetime] NULL
       ,[cli_id_pasa_frecuente] [int] NULL
+CONSTRAINT [PK_transportados.clientes] PRIMARY KEY CLUSTERED 
+(
+  [Cli_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
-
 GO
 
 Select 'Migro la tabla clientes'
@@ -211,8 +122,12 @@ CREATE TABLE [transportados].[micros](
       [micr_fecha_baja_tecnica] [datetime] NULL,
       [micr_fecha_regreso] [datetime] NULL,
       [micro_creado] [datetime] NULL,
-      [micr_patente] [nvarchar](7) NOT NULL,
+      [micr_patente] [nvarchar](7) NOT NULL unique,
       [micr_pisos] [int] NOT NULL
+       CONSTRAINT [PK_transportados.micros] PRIMARY KEY CLUSTERED 
+(
+  [micr_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
@@ -264,10 +179,14 @@ GO
 
 CREATE TABLE [transportados].[ciudad](
       [ciud_id] [int] IDENTITY(1,1) NOT NULL,
-      [ciud_nombre] [nvarchar](255) NOT NULL,
+      [ciud_nombre] [nvarchar](255) NOT NULL unique,
       [ciud_creado] [datetime] NULL,
       [ciud_modificado] [datetime] NULL,
       [ciud_baja] [bit] NULL
+      CONSTRAINT [PK_transportados.ciudad] PRIMARY KEY CLUSTERED 
+(
+  [ciud_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
@@ -293,18 +212,21 @@ Select 'Creo tabla Recorrido'
 GO
 
 
-CREATE TABLE [transportados].[recorrido](
-      reco_id [int] IDENTITY(77774546,1) NOT NULL ,
-      [reco_id_ciudad_origen] [int] NOT NULL,
-      [reco_id_ciudad_destino] [int] NOT NULL,
+  CREATE TABLE [transportados].[recorrido](
+      [reco_id] [int] IDENTITY(77774546,1) NOT NULL ,
+      [reco_id_ciudad_origen] [int] NOT NULL REFERENCES transportados.ciudad (ciud_id),
+      [reco_id_ciudad_destino] [int] NOT NULL REFERENCES transportados.ciudad (ciud_id),
       [reco_tipo_id] [int] NOT NULL,
       [reco_precio_base] [int] NOT NULL,
       [reco_precio_encomienda] [int] NOT NULL,
       [reco_creado] [datetime] NULL,
       [reco_modificado] [datetime] NULL,
-      [reco_baja] [bit] DEFAULT ((0)) NOT NULL, 
+      [reco_baja] [bit] DEFAULT ((0)) NOT NULL
+      CONSTRAINT [PK_transportados.recorrido] PRIMARY KEY CLUSTERED 
+(
+  [reco_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
-
 GO
 
 SET IDENTITY_INSERT  [transportados].[recorrido] ON
@@ -352,10 +274,16 @@ GO
 CREATE TABLE [transportados].[butaca](
       [buta_id] [int] IDENTITY(1,1) NOT NULL,
       [buta_numero] [int] NOT NULL,
-      [buta_micro_id] [int] NOT NULL,
+      [buta_micro_id] [int] NOT NULL REFERENCES transportados.micros (micr_id),
       [buta_piso][int] NOT NULL,
       [buta_pasillo] [bit] NULL
+      CONSTRAINT [PK_transportados.butacas] PRIMARY KEY CLUSTERED 
+(
+  [buta_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+;
+
 
 GO
 
@@ -399,12 +327,16 @@ CREATE TABLE [transportados].[viajes](
       [viaj_fecha_salida] [datetime] NULL,
       [viaj_fecha_llegada] [datetime] NULL,
       [viaj_fecha_llegada_estimada] [datetime] NULL,
-      [viaj_micro] [int] NOT NULL,
-      [viaj_recorrido] [nvarchar](18) NULL,
+      [viaj_micro] [int] NOT NULL REFERENCES transportados.micros (micr_id),
+      [viaj_recorrido] [int] NOT  NULL REFERENCES transportados.recorrido (reco_id),
       [viaj_creado] [datetime] NULL,
       [viaj_modificado] [datetime] NULL,
       [viaj_butacas_libres] [int] NOT NULL,
       [viaj_KG_disponible] [int]
+      CONSTRAINT [PK_transportados.viajes] PRIMARY KEY CLUSTERED 
+(
+  [viaj_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
@@ -568,21 +500,25 @@ GO
 
 CREATE TABLE [transportados].[voucher_de_compra](
       [vouc_id] [int] IDENTITY(1,1) NOT NULL,
-      [vouc_cliente_id][int] NOT NULL,
+      [vouc_cliente_id][int] NOT NULL REFERENCES transportados.clientes (Cli_id),
       [vouc_creado] [datetime] NULL,
       [vouc_modificado] [datetime] NULL,
       [vouc_cantidad] [int] NOT NULL,
       [vouc_KG] [int] NOT NULL,
-      [vouc_viaje_id] [int],
+      [vouc_viaje_id] [int] REFERENCES transportados.viajes (viaj_id),
       [vouc_precio_total] [int] NULL
 --    [vouc_precio_bonificado] [int] NULL,
-
+CONSTRAINT [PK_transportados.voucher_de_compra] PRIMARY KEY CLUSTERED 
+(
+  [vouc_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
 
 GO
 
 /* creacion del voucher */
-  INSERT INTO [GD1C2013].[transportados].[voucher_de_compra] (
+   INSERT INTO [GD1C2013].[transportados].[voucher_de_compra] (
       [vouc_cliente_id],
       [vouc_creado],
       [vouc_modificado],
@@ -591,13 +527,14 @@ GO
       [vouc_viaje_id],
       [vouc_precio_total])
  --     [vouc_precio_bonificado] )
-  (select a.Cli_id
+  (
+  select a.Cli_id
   ,a.Pasaje_FechaCompra
-  ,SYSDATETIME()
-  ,COUNT(*)
-  ,sum(a.Paquete_KG)
+  ,SYSDATETIME() as 'fecha'
+  ,COUNT(*) as 'cantidad'
+  ,sum(a.Paquete_KG) as 'pakete'
   ,a.viaj_id
-  ,sum(a.precio)
+  ,sum(a.precio) as 'precio'
 --  ,0
   from (
   select cli.Cli_id,case 
@@ -606,16 +543,28 @@ GO
   else Pasaje_Precio+Paquete_Precio
   end precio,Paquete_KG,Pasaje_FechaCompra,vi.viaj_id
   from [GD1C2013].[gd_esquema].[Maestra] m
-  left outer join transportados.clientes cli on cli.Cli_Dni=m.Cli_Dni,
+  left outer join transportados.clientes cli on cli.Cli_Dni=m.Cli_Dni
+  inner join [transportados].[micros] mi on mi.micr_patente=m.Micro_Patente,
   [GD1C2013].[transportados].[viajes] vi
-  where vi.viaj_recorrido=m.Recorrido_Codigo
+  where 1=1
+  and vi.viaj_recorrido=m.Recorrido_Codigo
   and vi.viaj_fecha_salida=m.FechaSalida
+  and vi.viaj_fecha_llegada = m.FechaLLegada
+  and vi.viaj_fecha_llegada_estimada=m.Fecha_LLegada_Estimada
+  and vi.viaj_micro=mi.micr_id
   ) a
   group by a.Cli_id,a.Pasaje_FechaCompra,a.viaj_id);
   GO
 
 
+CREATE NONCLUSTERED INDEX [voucher_index]
+ON [transportados].[voucher_de_compra] ([vouc_cliente_id],[vouc_viaje_id])
 
+GO
+CREATE NONCLUSTERED INDEX [prueba_maestra]
+ON [gd_esquema].[Maestra] ([Butaca_Piso])
+INCLUDE ([Cli_Dni],[Butaca_Nro],[FechaSalida],[Fecha_LLegada_Estimada],[FechaLLegada],[Recorrido_Codigo],[Micro_Patente])
+GO
 /****** Object:  Table [transportados].[pasajes]    Script Date: 05/21/2013 22:23:12 ******/
 
 Select 'Creo tabla pasajes'
@@ -624,18 +573,21 @@ GO
 
 CREATE TABLE [transportados].[pasajes](
       [pasa_id] [int] NOT NULL,
-      [pasa_viaje_id] [int] NOT NULL,
-      [pasa_voucher_id] [int] NOT NULL,
-      [pasa_butaca_id] [int] NULL,
+      [pasa_viaje_id] [int] NOT NULL REFERENCES transportados.viajes (viaj_id),
+      [pasa_voucher_id] [int] NOT NULL REFERENCES transportados.voucher_de_compra (vouc_id),
+      [pasa_butaca_id] [int] NULL REFERENCES transportados.butaca (buta_id),
+      [pasa_clie_id] [int] NULL REFERENCES transportados.clientes (Cli_id),
       [pasa_kg_encomienda] [int] NULL,
-      [pasa_butaca] [int] NULL,
       [pasa_bonificado] [bit] NULL,
       [pasa_creado] [datetime] NULL,
       [pasa_modificado] [datetime] NULL,
-      [pasa_precio] [int] DEFAULT ((0)) NOT NULL,
       [pasa_cod_devolucion] [int] NULL,
 	  [pasa_fecha_devolucion] [datetime] NULL,
 	  [pasa_desc_devolucion] [varchar](100) NULL
+    CONSTRAINT [PK_transportados.pasajes] PRIMARY KEY CLUSTERED 
+(
+  [pasa_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
@@ -646,12 +598,11 @@ GO
       [pasa_voucher_id] ,
       [pasa_butaca_id] ,
       [pasa_kg_encomienda] ,
-      [pasa_butaca] ,
       [pasa_bonificado] ,
       [pasa_creado],
       [pasa_modificado] ,
-      [pasa_precio])
-(    select 
+      [pasa_clie_id])
+(select 
        case Pasaje_Codigo 
        when 0 then m.Paquete_Codigo
        else Pasaje_Codigo
@@ -660,25 +611,21 @@ GO
       ,vc.vouc_id
       ,b.buta_id
       ,m.Paquete_KG
-      ,b.buta_numero
       ,0
       ,Pasaje_FechaCompra
       ,SYSDATETIME()
-      ,case 
-      when Pasaje_Precio=0 then Paquete_Precio
-      else pasaje_precio end 
+      ,cli.Cli_id
     from [GD1C2013].[gd_esquema].[Maestra] m
-    inner join transportados.clientes cli on cli.Cli_Dni=m.Cli_Dni,
-  [GD1C2013].[transportados].[viajes] vi
-  inner join [GD1C2013].[transportados].[micros] mi on vi.viaj_micro=mi.micr_id
-  inner join [GD1C2013].[transportados].[butaca] b on b.buta_micro_id=mi.micr_id,
-   [GD1C2013].[transportados].[voucher_de_compra] vc
-  where vi.viaj_recorrido=m.Recorrido_Codigo
+   inner join transportados.clientes cli on cli.Cli_Dni=m.Cli_Dni
+   inner join [transportados].[micros] mi on mi.micr_patente=m.Micro_Patente
+   inner join [GD1C2013].[transportados].[butaca] b on  b.buta_numero=m.Butaca_Nro  and b.buta_piso=m.Butaca_Piso and b.buta_micro_id=mi.micr_id 
+  left outer join [GD1C2013].[transportados].[viajes] vi on  vi.viaj_recorrido=m.Recorrido_Codigo
+  left outer join [GD1C2013].[transportados].[voucher_de_compra] vc on vc.vouc_cliente_id=cli.Cli_id and vc.vouc_viaje_id=vi.viaj_id and m.Pasaje_FechaCompra=vc.vouc_creado
+  where 1=1
   and vi.viaj_fecha_salida=m.FechaSalida
-  and vc.vouc_cliente_id=cli.Cli_id
-  and vc.vouc_viaje_id=vi.viaj_id
-  and m.Pasaje_FechaCompra=vc.vouc_creado
-  and b.buta_numero=m.Butaca_Nro)
+  and vi.viaj_fecha_llegada = m.FechaLLegada
+  and vi.viaj_fecha_llegada_estimada=m.Fecha_LLegada_Estimada
+  and vi.viaj_micro=mi.micr_id )
 
  GO
 
@@ -693,7 +640,44 @@ CREATE TABLE [transportados].[funcionalidad](
       [func_name] [nvarchar](255) NULL,
       [func_creado] [datetime] NULL,
       [func_modificado] [datetime] NULL
+      CONSTRAINT [PK_transportados.funcionalidad] PRIMARY KEY CLUSTERED 
+(
+  [func_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
+
+GO
+
+INSERT INTO [GD1C2013].[transportados].[funcionalidad]([func_name],[func_creado],[func_modificado])
+  VALUES
+('crear_recorrido',SYSDATETIME(),SYSDATETIME()) ,
+('listar_recorrido',SYSDATETIME(),SYSDATETIME()) ,
+('modificar_recorrido',SYSDATETIME(),SYSDATETIME()), 
+('crear_ciudad',SYSDATETIME(),SYSDATETIME()) ,
+('listar_ciudad',SYSDATETIME(),SYSDATETIME()) ,
+('modificar_ciudad',SYSDATETIME(),SYSDATETIME()), 
+('crear_micro',SYSDATETIME(),SYSDATETIME()) ,
+('listar_micro',SYSDATETIME(),SYSDATETIME()) ,
+('modificar_micro',SYSDATETIME(),SYSDATETIME()), 
+('registrar_llegada',SYSDATETIME(),SYSDATETIME()), 
+('crear_viaje',SYSDATETIME(),SYSDATETIME()) ,
+('modificar_viaje',SYSDATETIME(),SYSDATETIME()), 
+('listar_viaje',SYSDATETIME(),SYSDATETIME()) ,
+('pasaje_generar',SYSDATETIME(),SYSDATETIME()), 
+('pasaje_anular',SYSDATETIME(),SYSDATETIME()) ,
+('consulta_puntos',SYSDATETIME(),SYSDATETIME()), 
+('listar_roles',SYSDATETIME(),SYSDATETIME()) ,
+('listar_funcionalidades',SYSDATETIME(),SYSDATETIME()) ,
+('modificar_usuario',SYSDATETIME(),SYSDATETIME()) ,
+('Ciudad',SYSDATETIME(),SYSDATETIME()) ,
+('Recorrido',SYSDATETIME(),SYSDATETIME()), 
+('Micros',SYSDATETIME(),SYSDATETIME()) ,
+('Viaje',SYSDATETIME(),SYSDATETIME()), 
+('Pasaje',SYSDATETIME(),SYSDATETIME()) ,
+('Puntos',SYSDATETIME(),SYSDATETIME()), 
+('Usuarios',SYSDATETIME(),SYSDATETIME()) 
+
 
 GO
 
@@ -711,7 +695,17 @@ CREATE TABLE [transportados].[Rol](
       [rol_creado] [datetime] NULL,
       [rol_modificado] [datetime] NULL,
       [rol_borrado] [bit] NULL
+      CONSTRAINT [PK_transportados.Rol] PRIMARY KEY CLUSTERED 
+(
+  [rol_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
+GO
+
+insert into transportados.Rol (rol_nombre,rol_creado,rol_modificado,rol_borrado)
+values
+('FULL_ACCESS',SYSDATETIME(),SYSDATETIME(),0)
 
 GO
 
@@ -724,15 +718,49 @@ GO
 
 CREATE TABLE [transportados].[Rol_funcionalidad](
       [rolf_id] [int] IDENTITY(1,1) NOT NULL,
-      [rolf_rol_id] [int] NOT NULL,
-      [rolf_func_id] [int] NOT NULL,
+      [rolf_rol_id] [int] NOT NULL REFERENCES transportados.rol (rol_id),
+      [rolf_func_id] [int] NOT NULL REFERENCES transportados.funcionalidad (func_id),
       [rolf_creado] [datetime] NULL,
       [rolf_modificado] [datetime] NULL
+CONSTRAINT [PK_transportados.Rol_funcionalidad] PRIMARY KEY CLUSTERED 
+(
+  [rolf_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
 
+insert into [GD1C2013].[transportados].[Rol_funcionalidad]
+ ([rolf_rol_id],[rolf_func_id],[rolf_creado],[rolf_modificado])
+ values
+(1,1,SYSDATETIME(),SYSDATETIME()),
+(1,2,SYSDATETIME(),SYSDATETIME()),
+(1,3,SYSDATETIME(),SYSDATETIME()),
+(1,4,SYSDATETIME(),SYSDATETIME()),
+(1,5,SYSDATETIME(),SYSDATETIME()),
+(1,6,SYSDATETIME(),SYSDATETIME()),
+(1,7,SYSDATETIME(),SYSDATETIME()),
+(1,8,SYSDATETIME(),SYSDATETIME()),
+(1,9,SYSDATETIME(),SYSDATETIME()),
+(1,10,SYSDATETIME(),SYSDATETIME()),
+(1,11,SYSDATETIME(),SYSDATETIME()),
+(1,12,SYSDATETIME(),SYSDATETIME()),
+(1,13,SYSDATETIME(),SYSDATETIME()),
+(1,14,SYSDATETIME(),SYSDATETIME()),
+(1,15,SYSDATETIME(),SYSDATETIME()),
+(1,16,SYSDATETIME(),SYSDATETIME()),
+(1,17,SYSDATETIME(),SYSDATETIME()),
+(1,18,SYSDATETIME(),SYSDATETIME()),
+(1,19,SYSDATETIME(),SYSDATETIME()),
+(1,20,SYSDATETIME(),SYSDATETIME()),
+(1,21,SYSDATETIME(),SYSDATETIME()),
+(1,22,SYSDATETIME(),SYSDATETIME()),
+(1,23,SYSDATETIME(),SYSDATETIME()),
+(1,24,SYSDATETIME(),SYSDATETIME()),
+(1,25,SYSDATETIME(),SYSDATETIME()),
+(1,26,SYSDATETIME(),SYSDATETIME())
 
+GO
 
 
 /****** Object:  Table [transportados].[usuario]    Script Date: 05/21/2013 22:24:19 ******/
@@ -750,6 +778,10 @@ CREATE TABLE [transportados].[usuario](
   [usua_modificado] [datetime] NULL,
   [usua_habilitado] [bit] NULL,
   [usua_logins] [smallint] NULL
+CONSTRAINT [PK_transportados.usuario] PRIMARY KEY CLUSTERED 
+(
+  [usua_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
@@ -797,76 +829,6 @@ INSERT INTO [GD1C2013].[transportados].[usuario]
 GO
 
 
-GO
-INSERT INTO [GD1C2013].[transportados].[funcionalidad]([func_name],[func_creado],[func_modificado])
-  VALUES
-('crear_recorrido',SYSDATETIME(),SYSDATETIME()) ,
-('listar_recorrido',SYSDATETIME(),SYSDATETIME()) ,
-('modificar_recorrido',SYSDATETIME(),SYSDATETIME()), 
-('crear_ciudad',SYSDATETIME(),SYSDATETIME()) ,
-('listar_ciudad',SYSDATETIME(),SYSDATETIME()) ,
-('modificar_ciudad',SYSDATETIME(),SYSDATETIME()), 
-('crear_micro',SYSDATETIME(),SYSDATETIME()) ,
-('listar_micro',SYSDATETIME(),SYSDATETIME()) ,
-('modificar_micro',SYSDATETIME(),SYSDATETIME()), 
-('registrar_llegada',SYSDATETIME(),SYSDATETIME()), 
-('crear_viaje',SYSDATETIME(),SYSDATETIME()) ,
-('modificar_viaje',SYSDATETIME(),SYSDATETIME()), 
-('listar_viaje',SYSDATETIME(),SYSDATETIME()) ,
-('pasaje_generar',SYSDATETIME(),SYSDATETIME()), 
-('pasaje_anular',SYSDATETIME(),SYSDATETIME()) ,
-('consulta_puntos',SYSDATETIME(),SYSDATETIME()), 
-('listar_roles',SYSDATETIME(),SYSDATETIME()) ,
-('listar_funcionalidades',SYSDATETIME(),SYSDATETIME()) ,
-('modificar_usuario',SYSDATETIME(),SYSDATETIME()) ,
-('Ciudad',SYSDATETIME(),SYSDATETIME()) ,
-('Recorrido',SYSDATETIME(),SYSDATETIME()), 
-('Micros',SYSDATETIME(),SYSDATETIME()) ,
-('Viaje',SYSDATETIME(),SYSDATETIME()), 
-('Pasaje',SYSDATETIME(),SYSDATETIME()) ,
-('Puntos',SYSDATETIME(),SYSDATETIME()), 
-('Usuarios',SYSDATETIME(),SYSDATETIME()) 
-
-
-GO
-
-
-
-GO
-insert into [GD1C2013].[transportados].[Rol_funcionalidad]
- ([rolf_rol_id],[rolf_func_id],[rolf_creado],[rolf_modificado])
- values
-(1,1,SYSDATETIME(),SYSDATETIME()),
-(1,2,SYSDATETIME(),SYSDATETIME()),
-(1,3,SYSDATETIME(),SYSDATETIME()),
-(1,4,SYSDATETIME(),SYSDATETIME()),
-(1,5,SYSDATETIME(),SYSDATETIME()),
-(1,6,SYSDATETIME(),SYSDATETIME()),
-(1,7,SYSDATETIME(),SYSDATETIME()),
-(1,8,SYSDATETIME(),SYSDATETIME()),
-(1,9,SYSDATETIME(),SYSDATETIME()),
-(1,10,SYSDATETIME(),SYSDATETIME()),
-(1,11,SYSDATETIME(),SYSDATETIME()),
-(1,12,SYSDATETIME(),SYSDATETIME()),
-(1,13,SYSDATETIME(),SYSDATETIME()),
-(1,14,SYSDATETIME(),SYSDATETIME()),
-(1,15,SYSDATETIME(),SYSDATETIME()),
-(1,16,SYSDATETIME(),SYSDATETIME()),
-(1,17,SYSDATETIME(),SYSDATETIME()),
-(1,18,SYSDATETIME(),SYSDATETIME()),
-(1,19,SYSDATETIME(),SYSDATETIME()),
-(1,20,SYSDATETIME(),SYSDATETIME()),
-(1,21,SYSDATETIME(),SYSDATETIME()),
-(1,22,SYSDATETIME(),SYSDATETIME()),
-(1,23,SYSDATETIME(),SYSDATETIME()),
-(1,24,SYSDATETIME(),SYSDATETIME()),
-(1,25,SYSDATETIME(),SYSDATETIME()),
-(1,26,SYSDATETIME(),SYSDATETIME())
-
-
-GO
-
-
 /****** Object:  Table [transportados].[rol_usuario]    Script Date: 05/21/2013 22:23:54 ******/
 
 Select 'Creo tabla Relacion rol usuario'
@@ -876,8 +838,8 @@ GO
 
 CREATE TABLE [transportados].[rol_usuario](
       [rolu_id] [int] IDENTITY(1,1) NOT NULL,
-      [rolu_user_id] [int] NOT NULL,
-      [rolu_rol_id] [int] NOT NULL,
+      [rolu_user_id] [int] NOT NULL REFERENCES transportados.usuario (usua_id),
+      [rolu_rol_id] [int] NOT NULL REFERENCES transportados.rol (rol_id),
       [rolu_creado] [datetime] NULL,
       [rolu_modificado] [datetime] NULL
 ) ON [PRIMARY]
@@ -889,7 +851,7 @@ GO
   ([rolu_user_id],[rolu_rol_id],[rolu_creado],[rolu_modificado])
   values
   (1,1,SYSDATETIME(),SYSDATETIME()),
-  (2,2,SYSDATETIME(),SYSDATETIME())
+  (2,1,SYSDATETIME(),SYSDATETIME())
 
   GO
   
@@ -903,8 +865,8 @@ GO
 
 CREATE TABLE [transportados].[facturas] (
 	[fact_nro_compra] [int] IDENTITY(1,1) NOT NULL,
-	[fact_voucher_id] [int] NOT NULL,
-	[fact_cliente_id] [int] NOT NULL,
+	[fact_voucher_id] [int] NOT NULL REFERENCES transportados.voucher_de_compra (vouc_id),
+	[fact_cliente_id] [int] NOT NULL REFERENCES transportados.clientes (Cli_id),
 	[fact_fecha_de_compra] [date] NOT NULL,
  CONSTRAINT [PK_transportados.facturas] PRIMARY KEY CLUSTERED 
 (
@@ -1278,3 +1240,40 @@ AND VIAJ_FECHA_SALIDA BETWEEN @inicio AND @fin
 
 END
 GO
+
+/* proceso para generar la compra*/
+CREATE PROCEDURE [transportados].[compra]
+  -- Add the parameters for the stored procedure here
+@CLI_ID int,
+@VIAJE_ID int,
+@CANT_BUTACA int,
+@CANT_KG int,
+@discount numeric (5,2),
+@compra  int out
+AS
+BEGIN
+  declare @PRECIO numeric (5,2)
+  declare @creado datetime
+  
+  set @PRECIO =(select reco_precio_base*(1+tipo_porcentaje) from transportados.viajes
+    left outer join transportados.recorrido on viaj_recorrido=reco_id
+    left outer join transportados.tipo_servicio on reco_tipo_id=tipo_id
+    where viaj_id=@VIAJE_ID)* (@CANT_BUTACA - @discount)
+  set @PRECIO=@PRECIO + ((select reco_precio_encomienda*(1+tipo_porcentaje) from transportados.viajes
+    left outer join transportados.recorrido on viaj_recorrido=reco_id
+    left outer join transportados.tipo_servicio on reco_tipo_id=tipo_id
+    where viaj_id=@VIAJE_ID) * @CANT_KG)
+
+ set @creado=SYSDATETIME()
+  insert into [transportados].[voucher_de_compra]
+  ([vouc_cliente_id],[vouc_creado],[vouc_modificado],[vouc_cantidad],[vouc_KG],[vouc_viaje_id],[vouc_precio_total])
+  values
+  (@CLI_ID,@creado,SYSDATETIME(),@CANT_BUTACA,@CANT_KG,@VIAJE_ID,@PRECIO)
+  
+ set @compra= (select top 1 vouc_id from [transportados].[voucher_de_compra] where vouc_creado=@creado)
+  
+  insert into facturas (fact_cliente_id,fact_fecha_de_compra,fact_voucher_id)
+  values
+  (@CLI_ID,SYSDATETIME(),@compra)
+  
+END
