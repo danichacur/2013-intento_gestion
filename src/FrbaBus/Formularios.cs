@@ -94,7 +94,7 @@ namespace FrbaBus
         }
         public DataSet MicroLista()
         {
-            this.sql = string.Format(@"SELECT 
+            this.sql = string.Format(@"SELECT DISTINCT
 	                  [micr_patente] AS Patente
                       ,[micr_marca] AS Marca
                       ,[micr_modelo] As Modelo
@@ -129,21 +129,21 @@ namespace FrbaBus
         public DataSet ViajesLista()
         {
 
-            this.sql = string.Format(@"SELECT 
-		                            c2.ciud_nombre as Ciudad_Origen,
-		                            c.ciud_nombre as Ciudad_Destino,
-	                               [viaj_fecha_salida]
-                                  ,[viaj_fecha_llegada]
-                                  ,[viaj_fecha_llegada_estimada]
-                                  ,M.micr_patente
-                                  , M.micr_marca
-                                  , M.micr_modelo
-                                  ,M.micr_pisos
-  	                              ,T.tipo_nombre
-                                  ,[viaj_creado]
-                                  ,[viaj_modificado]
-                                  ,[viaj_butacas_libres]
-                                  ,[viaj_KG_disponible]
+            this.sql = string.Format(@"SELECT DISTINCT
+		                            c2.ciud_nombre as 'Ciudad Origen',
+		                            c.ciud_nombre as 'Ciudad Destino',
+	                               [viaj_fecha_salida] as 'Fecha de salida'
+                                  ,[viaj_fecha_llegada] as 'Fecha de llegada'
+                                  ,[viaj_fecha_llegada_estimada] as 'Fecha estimada de llegada'
+                                  ,M.micr_patente as 'Patente del micro'
+                                  , M.micr_marca as 'Empresa del micro'
+                                  , M.micr_modelo as 'Modelo del micro'
+                                  ,M.micr_pisos as 'Cantidad de pisos'
+  	                              ,T.tipo_nombre as 'Tipo de servicio'
+                                  ,[viaj_creado] as 'Fecha de creacion'
+                                  ,[viaj_modificado] as 'Fecha de modificacion'
+                                  ,[viaj_butacas_libres] as 'Cantidad de butacas libres'
+                                  ,[viaj_KG_disponible] as 'Cantidad de KG disponibles'
                               FROM [GD1C2013].[transportados].[viajes] V
                               INNER JOIN transportados.micros M  ON M.micr_id = V.viaj_micro
                               INNER JOIN transportados.recorrido R ON R.reco_id = V.viaj_recorrido
@@ -189,6 +189,35 @@ namespace FrbaBus
             return ds;
 
         }
+
+        public DataSet ListarDatosMicro()
+        {
+
+            this.sql = string.Format(@"SELECT DISTINCT
+                                     M.micr_patente as 'Patente del micro',       
+	                               [viaj_fecha_salida] as 'Fecha de salida',
+		                            c2.ciud_nombre as 'Ciudad Origen',
+		                            c.ciud_nombre as 'Ciudad Destino'
+  	                              ,T.tipo_nombre as 'Tipo de servicio'
+                                  , M.micr_marca as 'Empresa del micro'
+                                  , M.micr_modelo as 'Modelo del micro'
+                                  ,M.micr_pisos as 'Cantidad de pisos'
+                              FROM [GD1C2013].[transportados].[viajes] V
+                              INNER JOIN transportados.micros M  ON M.micr_id = V.viaj_micro
+                              INNER JOIN transportados.recorrido R ON R.reco_id = V.viaj_recorrido
+                              INNER JOIN transportados.tipo_servicio T ON M.micr_tipo_id = T.tipo_id
+                              inner join transportados.ciudad c on c.ciud_id = r.reco_id_ciudad_destino
+                              inner join transportados.ciudad c2 on c2.ciud_id = r.reco_id_ciudad_origen");
+            // where c2.ciud_nombre like '%(0)%'", viaje);
+
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            da.Fill(ds, "Patente");
+            return ds;
+
+        }
+
 
         public DataSet listarCiudad(string ciudad)
         {

@@ -94,6 +94,67 @@ namespace FrbaBus
 
         }
 
+        public int validar_terminal_arribo(string patente, string destino, string origen, DateTime salida)
+        {
+            //bool Resultado = false;
+            Object otro;
+            int result;
+
+            this.sql = string.Format(@"SELECT viaj_id
+                                    FROM transportados.ciudad C,
+                                    transportados.ciudad C2,
+                                    transportados.recorrido R,
+                                    transportados.viajes V,
+                                    transportados.micros M
+                                    WHERE 
+                                    C.ciud_id = R.reco_id_ciudad_destino
+                                    C2.ciud_id = R.reco_id_ciudad_origen
+                                    AND V.viaj_recorrido = R.reco_id
+                                    AND V.viaj_micro = M.micr_id
+                                    AND M.micr_patente = @PATENTE
+                                    and c2.ciud_nombre = @ORIGEN
+                                    and c.ciud_nombre = @DESTINO
+                                    AND V.viaj_fecha_salida = @FECHA");
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@PATENTE", patente));
+            this.comandosSql.Parameters.Add(new SqlParameter("@ORIGEN", origen));
+            this.comandosSql.Parameters.Add(new SqlParameter("@DESTINO", destino));
+            this.comandosSql.Parameters.Add(new SqlParameter("@FECHA", salida));
+            this.cnn.Open();
+            otro = this.comandosSql.ExecuteScalar();
+            result = Convert.ToInt32(otro);
+            this.cnn.Close();
+
+            return result;
+        }
+
+        public bool registrar_micro(int id_viaje, DateTime fecha_arribo)
+        {
+            bool Resultado = false;
+            int result;
+
+            this.sql = string.Format(@"UPDATE transportados.viajes 
+                                    SET viaj_fecha_llegada = @FECHA,
+                                    viaj_modificado = SYSDATETIME()
+                                    WHERE viaj_id = @VIAJE");
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@VIAJE", id_viaje));
+            this.comandosSql.Parameters.Add(new SqlParameter("@FECHA", fecha_arribo));
+             this.cnn.Open();
+             result = this.comandosSql.ExecuteNonQuery();
+             if (result > 0)
+             {
+                 Resultado = true;
+             }
+             else
+             {
+                 Resultado = false;
+             }
+
+             this.cnn.Close();
+             return Resultado;
+        }
+
         public bool insertar_micro(string tipoServ, Int32 cantButaca, Int32 kgCarga, string marca, string modelo, string patente, Int32 pisos)
         {
             bool Resultado = false;
@@ -656,6 +717,29 @@ order by rf.rolf_func_id desc", user_id);
             this.cnn.Open();
             SqlDataReader Reg = this.comandosSql.ExecuteReader();
             if (Reg.HasRows)
+            {
+                Resultado = false;
+            }
+
+            this.cnn.Close();
+            return Resultado;
+        }
+
+        public bool actualizar_y_validar_puntos(int id_viaje)
+        {
+            bool Resultado = false;
+            int result;
+
+            this.comandosSql = new SqlCommand("transportados.actualiza_puntos", this.cnn);
+            this.comandosSql.CommandType = CommandType.StoredProcedure;
+            this.comandosSql.Parameters.Add(new SqlParameter("@VIAJE", id_viaje));
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
             {
                 Resultado = false;
             }
