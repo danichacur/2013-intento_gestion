@@ -114,6 +114,7 @@ namespace FrbaBus
                       ,[micr_fecha_baja_tecnica] as 'Fecha de baja tecnica'
                       ,[micr_fecha_regreso] as 'Fecha de retorno'
                       ,[micro_creado] as 'Fecha de creacion'
+                      ,[micr_fecha_modificacion] as 'Fecha de modificación'
                   FROM [GD1C2013].[transportados].[micros] M
                   INNER JOIN transportados.tipo_servicio T ON T.tipo_id = M.micr_tipo_id");
                //     where M.micr_patente = '(0)'", patente);

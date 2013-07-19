@@ -124,8 +124,10 @@ CREATE TABLE [transportados].[micros](
       [micr_fecha_baja_tecnica] [datetime] NULL,
       [micr_fecha_regreso] [datetime] NULL,
       [micro_creado] [datetime] NULL,
+      [micr_fecha_modificacion] [datetime] NULL,
       [micr_patente] [nvarchar](7) NOT NULL unique,
       [micr_pisos] [int] NOT NULL
+      
        CONSTRAINT [PK_transportados.micros] PRIMARY KEY CLUSTERED 
 (
   [micr_id] ASC
@@ -147,6 +149,7 @@ GO
       ,[micr_fecha_baja_tecnica]
       ,[micr_fecha_regreso]
       ,[micro_creado]
+      ,[micr_fecha_modificacion]
       ,[micr_patente]
       ,[micr_pisos] )
   (SELECT ts.tipo_id
@@ -159,6 +162,7 @@ GO
       ,null
       ,null
       ,null
+      ,SYSDATETIME()
       ,SYSDATETIME()
       ,[Micro_Patente]
       ,0
