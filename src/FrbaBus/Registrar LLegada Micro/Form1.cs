@@ -98,7 +98,8 @@ namespace FrbaBus.Registrar_LLegada_Micro
             comboBox2.DisplayMember = "ciud_nombre";
             comboBox2.ValueMember = "ciud_id";
         }
-
+            }
+}
       /*  private void InitializeDateTimePicker()
         {
             // Construct the DateTimePicker.
@@ -121,6 +122,5 @@ namespace FrbaBus.Registrar_LLegada_Micro
             // Add the DateTimePicker to the form.
             this.Controls.Add(this.DateTimePicker2);
         }
-       * /
-    }
-}
+       */
+
