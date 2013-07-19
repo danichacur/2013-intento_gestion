@@ -82,9 +82,16 @@ namespace FrbaBus.Abm_Micro
             }
 
             if (comboBox1.Text == "Fin vida útil")
-                pasajes.bajaServicioMicro(dateTimePicker1.Value, this.textBox1.Text);
+                if(pasajes.bajaServicioMicro(dateTimePicker1.Value, this.textBox1.Text))
+                {MessageBox.Show("Micro dado de baja correctamente");}
+                else
+                {MessageBox.Show("Ocurrió un error al modificar el micro, intente mas tarde");}
             else
-                pasajes.bajaTecnicaMicro(dateTimePicker1.Value, dateTimePicker2.Value, this.textBox1.Text);
+                if(pasajes.bajaTecnicaMicro(dateTimePicker1.Value, dateTimePicker2.Value, this.textBox1.Text))
+                { MessageBox.Show("Micro dado de baja correctamente"); }
+                else
+                { MessageBox.Show("Ocurrió un error al modificar el micro, intente mas tarde"); }
+ 
             this.Close();
         }
 

@@ -155,7 +155,8 @@ namespace FrbaBus
             this.sql = string.Format(@"UPDATE transportados.micros
                                         SET
                                         micr_baja = 1,
-                                        micr_fecha_baja = '(0)'
+                                        micr_fecha_baja = '(0)',
+                                        micr_fecha_modificacion = SYSDATETIME()
                                         WHERE micr_patente = '(1)' ", inicio, patente);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
@@ -182,7 +183,8 @@ namespace FrbaBus
                                         SET
                                         micr_baja_tecnica = 1,
                                         micr_fecha_baja_tecnica = (0) ,
-                                        micr_fecha_regreso = (1)
+                                        micr_fecha_regreso = (1),
+                                        micr_fecha_modificacion = SYSDATETIME()
                                         WHERE micr_patente = '(2)' ", inicio, fin, patente);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
@@ -252,6 +254,48 @@ namespace FrbaBus
         }
 
 
+        public string buscaEmpresaActual(string patente)
+        {
+            Object otro;
+            string result;
+
+            this.sql = string.Format(@"SELECT micr_marca
+                                        from transportados.micros
+                                        where micr_patente =@PATENTE");
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@PATENTE", patente));
+            this.cnn.Open();
+            otro = this.comandosSql.ExecuteScalar();
+            result = Convert.ToString(otro);
+            this.cnn.Close();
+            return result;
+        }
+
+        public bool modificar_micro(string patente, string marca)
+        {
+            bool Resultado = false;
+            Int32 result = 0;
+            this.sql = string.Format(@"UPDATE transportados.micros
+                                        SET
+                                        micr_marca = @MARCA,
+                                        micr_fecha_modificacion = SYSDATETIME()
+                                        WHERE micr_patente = @PATENTE");
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@PATENTE", patente));
+            this.comandosSql.Parameters.Add(new SqlParameter("@MARCA", marca));
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
+            this.cnn.Close();
+            return Resultado;
+        }
 
         public bool reemplazarViajes(Int32 microAlterno, string microViejo, string tipo_baja,DateTime fecha, DateTime fechalleg)
         {
