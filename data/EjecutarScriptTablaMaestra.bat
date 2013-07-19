@@ -1,1 +1,0 @@
-sqlcmd -S localhost\SQLSERVER2008 -U gd -P gd2013 -i script_inicial.sql  -a 32767 
