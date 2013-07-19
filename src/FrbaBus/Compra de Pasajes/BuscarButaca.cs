@@ -19,7 +19,8 @@ namespace FrbaBus.Compra_de_Pasajes
         public List<Int32> butaca_cli_id = new List<Int32>();
         public Int32 viaje_id;
         public bool admin;
-        public Int32 cant_65;
+        public List<Int32> pasaje_65 = new List<Int32>();
+        public int has_discapacitado = 0;
         public bool discapacitado;
         private SqlDataReader lectura;
 
@@ -78,7 +79,8 @@ namespace FrbaBus.Compra_de_Pasajes
                     medioDePago.kg = this.kg;
                     medioDePago.admin = this.admin;
                     medioDePago.discapacitado = this.discapacitado;
-                    medioDePago.cant_65 = this.cant_65;
+                    medioDePago.pasaje_65 = this.pasaje_65;
+                    medioDePago.has_discapacitado = this.has_discapacitado;
                     medioDePago.cant_psj = this.cantidad;
                     medioDePago.Show();
                     this.Hide();

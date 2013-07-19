@@ -617,6 +617,7 @@ order by rf.rolf_func_id desc", user_id);
         {
             Int32 result = 0;
             Int32 salida=0;
+            float total = 0;
             SqlCommand cmd = new SqlCommand("transportados.compra", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -626,13 +627,15 @@ order by rf.rolf_func_id desc", user_id);
             cmd.Parameters.Add(new SqlParameter("@CANT_KG",kg));
             cmd.Parameters.Add(new SqlParameter("@CANT_DISCOUNT", discount));
             cmd.Parameters.Add("@compra", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add("@TOTAL", SqlDbType.Real).Direction = ParameterDirection.Output;
 
             this.cnn.Open();
             result = cmd.ExecuteNonQuery();
             salida = int.Parse(cmd.Parameters["@compra"].Value.ToString());
+            total = float.Parse(cmd.Parameters["@TOTAL"].Value.ToString());
             if (result > 0)
             {
-                
+                MessageBox.Show("El total de su compra es " + Convert.ToString(total), "Resultado operacion");
                 MessageBox.Show("Compra realizada con id " + Convert.ToString(salida), "Resultado operacion");
             }
             else
@@ -647,10 +650,11 @@ order by rf.rolf_func_id desc", user_id);
 
         }
 
-        public void crear_pasaje(Int32 viaje_id, Int32 voucher_id, Int32 butaca_id, Int32 cli_id,Int32 kg, Int32 bonificado)
+        public void crear_pasaje(Int32 viaje_id, Int32 voucher_id, Int32 butaca_id, Int32 cli_id,Int32 kg, Int32 bonificado,double precio)
         {
             Int32 result = 0;
             Int32 salida=0;
+            
             SqlCommand cmd = new SqlCommand("transportados.Compra_pasaje", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -660,14 +664,17 @@ order by rf.rolf_func_id desc", user_id);
             cmd.Parameters.Add(new SqlParameter("@CANT_KG",kg));
             cmd.Parameters.Add(new SqlParameter("@BONIFICADO", bonificado));
             cmd.Parameters.Add(new SqlParameter("@CLIENTE_ID", cli_id));
+            cmd.Parameters.Add(new SqlParameter("@PRECIO", precio));
             cmd.Parameters.Add("@PASAJE", SqlDbType.Int).Direction = ParameterDirection.Output;
+            
 
             this.cnn.Open();
             result = cmd.ExecuteNonQuery();
             salida = int.Parse(cmd.Parameters["@PASAJE"].Value.ToString());
+           
             if (result > 0)
             {
-
+                
                 MessageBox.Show("Se genero el pasaje  " + Convert.ToString(salida), "Resultado operacion");
             }
             else
@@ -742,6 +749,53 @@ order by rf.rolf_func_id desc", user_id);
             else
             {
                 Resultado = false;
+            }
+
+            this.cnn.Close();
+            return Resultado;
+        }
+
+        public double getPasjasjePrecio (Int32 viaje_id)
+        {
+            double Resultado = 0;
+            this.sql = string.Format(@"
+                select reco_precio_base*tipo_porcentaje as 'Precio'
+                from transportados.viajes 
+                inner join transportados.recorrido on viaj_recorrido=reco_id
+                inner join transportados.tipo_servicio on reco_tipo_id=tipo_id
+                where viaj_id={0};
+                ", viaje_id);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+
+            this.cnn.Open();
+            SqlDataReader Reg = this.comandosSql.ExecuteReader();
+            if (Reg.HasRows)
+            {
+                Reg.Read();
+                Resultado = Convert.ToDouble(Reg["Precio"].ToString());
+            }
+
+            this.cnn.Close();
+            return Resultado;
+        }
+        public double getEncomiendaPrecio(Int32 viaje_id)
+        {
+            double Resultado = 0;
+            this.sql = string.Format(@"
+                select reco_precio_encomienda*tipo_porcentaje as 'Precio'
+                from transportados.viajes 
+                inner join transportados.recorrido on viaj_recorrido=reco_id
+                inner join transportados.tipo_servicio on reco_tipo_id=tipo_id
+                where viaj_id={0};
+                ", viaje_id);
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+
+            this.cnn.Open();
+            SqlDataReader Reg = this.comandosSql.ExecuteReader();
+            if (Reg.HasRows)
+            {
+                Reg.Read();
+                Resultado = Convert.ToDouble(Reg["Precio"].ToString());
             }
 
             this.cnn.Close();

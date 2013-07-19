@@ -13,14 +13,15 @@ namespace FrbaBus.Compra_de_Pasajes
     public partial class Usuario_datos : Form
     {
         private SqlDataReader lectura;
-        private bool is_client=false;
-        public Int32 cant_pasj=0;
+        private bool is_client = false;
+        public Int32 cant_pasj = 0;
         private Int32 add_psj = 0;
-        public Int32 cant_kg=0;
+        public Int32 cant_kg = 0;
         public bool has_kg = false;
         List<string> pasaje_cli_id = new List<string>();
         public Int32 viaje_id;
-        private Int32 cant_65=0;
+        List<Int32> pasaje_65 = new List<Int32>();
+        int has_discapacitado = 0;
         public bool admin;
         private bool discapacitado = false;
 
@@ -34,7 +35,7 @@ namespace FrbaBus.Compra_de_Pasajes
         {
 
             Formularios datos = new Formularios();
-            
+
             this.lectura = datos.datos_user(Convert.ToInt32(maskedTextBox1.Text));
 
             if (this.lectura == null)
@@ -52,84 +53,104 @@ namespace FrbaBus.Compra_de_Pasajes
         {
             funciones func_user = new funciones();
             Formularios datos = new Formularios();
-             SqlDataReader lectura_new;
-             string cliente;
-             
-
-            if (is_client)
+            Formularios datos_new = new Formularios();
+            SqlDataReader lectura_new;
+            string cliente;
+            if (this.textBox1.Text != string.Empty ||
+                this.textBox2.Text != string.Empty ||
+                this.textBox3.Text != string.Empty ||
+                this.textBox4.Text != string.Empty ||
+                this.maskedTextBox1.Text != string.Empty ||
+                this.maskedTextBox2.Text != string.Empty
+                )
             {
-                if (this.textBox1.Text != this.lectura["Cli_Nombre"].ToString() ||
-                    this.textBox2.Text != this.lectura["Cli_Apellido"].ToString() ||
-                    this.textBox3.Text != this.lectura["Cli_Dir"].ToString() ||
-                    this.maskedTextBox2.Text != this.lectura["Cli_Telefono"].ToString() ||
-                    this.textBox4.Text != this.lectura["Cli_Mail"].ToString() ||
-                    this.dateTimePicker1.Value != Convert.ToDateTime(this.lectura["Cli_Fecha_Nac"].ToString()))
-                {
-                    func_user.modClient(Convert.ToInt32(this.lectura["Cli_id"].ToString()),Convert.ToInt32( this.maskedTextBox1.Text), this.textBox1.Text, this.textBox2.Text, this.textBox3.Text, Convert.ToInt32(this.maskedTextBox2.Text), this.textBox4.Text, this.dateTimePicker1.Value);
-                }
-                cliente= this.lectura["Cli_id"].ToString();
-                
-            }
-            else
-            {
-                this.lectura = datos.datos_user(Convert.ToInt32(maskedTextBox1.Text));
 
-                if (this.lectura == null)
+                if (is_client)
                 {
-                    func_user.newClient(Convert.ToInt32(this.maskedTextBox1.Text), this.textBox1.Text, this.textBox2.Text, this.textBox3.Text, Convert.ToInt32(this.maskedTextBox2.Text), this.textBox4.Text, this.dateTimePicker1.Value);
-                    lectura_new = datos.datos_user(Convert.ToInt32(maskedTextBox1.Text));
-                    lectura_new.Read();
-                    cliente=lectura_new["Cli_id"].ToString();
-
-                }
-                else
-                {
-                    complete_textbox();
+                    if (this.textBox1.Text != this.lectura["Cli_Nombre"].ToString() ||
+                        this.textBox2.Text != this.lectura["Cli_Apellido"].ToString() ||
+                        this.textBox3.Text != this.lectura["Cli_Dir"].ToString() ||
+                        this.maskedTextBox2.Text != this.lectura["Cli_Telefono"].ToString() ||
+                        this.textBox4.Text != this.lectura["Cli_Mail"].ToString() ||
+                        this.dateTimePicker1.Value != Convert.ToDateTime(this.lectura["Cli_Fecha_Nac"].ToString()))
+                    {
+                        func_user.modClient(Convert.ToInt32(this.lectura["Cli_id"].ToString()), Convert.ToInt32(this.maskedTextBox1.Text), this.textBox1.Text, this.textBox2.Text, this.textBox3.Text, Convert.ToInt32(this.maskedTextBox2.Text), this.textBox4.Text, this.dateTimePicker1.Value);
+                    }
                     cliente = this.lectura["Cli_id"].ToString();
-                }
-                
-
-            }
-            if (func_user.check_viaje_dup(Convert.ToInt32(cliente), this.viaje_id) && func_user.check_is_traveling(Convert.ToInt32(cliente), this.viaje_id))
-            {
-                this.pasaje_cli_id.Add(cliente);
-                if (checkBox1.Checked) this.discapacitado = true;
-                if (has_kg)
-                {
-                    this.has_kg = false;
 
                 }
                 else
                 {
-                    this.add_psj = this.add_psj + 1;
-                    if ((Convert.ToDateTime(this.lectura["Cli_Fecha_Nac"].ToString()) - DateTime.Now).TotalHours > 64) cant_65 = cant_65 + 1;
-                }
+                    this.lectura = datos.datos_user(Convert.ToInt32(maskedTextBox1.Text));
 
-                if (this.cant_pasj == this.add_psj && this.has_kg == false)
+                    if (this.lectura == null)
+                    {
+                        func_user.newClient(Convert.ToInt32(this.maskedTextBox1.Text), this.textBox1.Text, this.textBox2.Text, this.textBox3.Text, Convert.ToInt32(this.maskedTextBox2.Text), this.textBox4.Text, this.dateTimePicker1.Value);
+                        lectura_new = datos_new.datos_user(Convert.ToInt32(maskedTextBox1.Text));
+                        lectura_new.Read();
+                        cliente = lectura_new["Cli_id"].ToString();
+
+                    }
+                    else
+                    {
+                        complete_textbox();
+                        cliente = this.lectura["Cli_id"].ToString();
+                    }
+
+
+                }
+                if (func_user.check_viaje_dup(Convert.ToInt32(cliente), this.viaje_id) && func_user.check_is_traveling(Convert.ToInt32(cliente), this.viaje_id))
                 {
-                    BuscarButaca busq = new BuscarButaca();
-                    this.Hide();
-                    busq.cantidad = add_psj;
-                    busq.kg = cant_kg;
-                    busq.pasaje_cli_id = this.pasaje_cli_id;
-                    busq.viaje_id = this.viaje_id;
-                    busq.admin = this.admin;
-                    busq.discapacitado = this.discapacitado;
-                    busq.cant_65 = this.cant_65;
-                    busq.Show();
+                    this.pasaje_cli_id.Add(cliente);
+                    if (checkBox1.Checked)
+                    {
+                        this.discapacitado = true;
+                        this.has_discapacitado = Convert.ToInt32(cliente);
+                    }
+                    if (has_kg)
+                    {
+                        this.has_kg = false;
+                        MessageBox.Show("Ya ha ingresado la encomienda", "Ingreso de Encomienda");
+
+                    }
+                    else
+                    {
+                        this.add_psj = this.add_psj + 1;
+                        if ((DateTime.Now - this.dateTimePicker1.Value).TotalDays > 23360) this.pasaje_65.Add(Convert.ToInt32(cliente));
+                        MessageBox.Show("Gracias, ya ha ingresado un nuevo pasaje", "Ingreso de pasajeros");
+                    }
+
+                    if (this.cant_pasj == this.add_psj && this.has_kg == false)
+                    {
+                        BuscarButaca busq = new BuscarButaca();
+                        this.Hide();
+                        busq.cantidad = add_psj;
+                        busq.kg = cant_kg;
+                        busq.pasaje_cli_id = this.pasaje_cli_id;
+                        busq.viaje_id = this.viaje_id;
+                        busq.admin = this.admin;
+                        busq.discapacitado = this.discapacitado;
+                        busq.pasaje_65 = this.pasaje_65;
+                        busq.has_discapacitado = this.has_discapacitado;
+                        busq.Show();
+                    }
+                    else
+                    {
+                        Usuario_datos_Load();
+                    }
+
                 }
                 else
                 {
+                    MessageBox.Show("El usuario ya posee pasajes o esta en viaje en esa fecha", "Error operacion");
                     Usuario_datos_Load();
                 }
-
             }
             else
             {
-                MessageBox.Show("El usuario ya posee pasajes o esta en viaje en esa fecha", "Error operacion");
-                Usuario_datos_Load();
-            }
+                MessageBox.Show("No estan todos los campos completos", "Error operacion");
 
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -137,18 +158,18 @@ namespace FrbaBus.Compra_de_Pasajes
             this.Close();
         }
 
-        private void Usuario_datos_Load()
+        private void Usuario_datos_Load(object sender, EventArgs e)
         {
-            this.maskedTextBox1.Text = string.Empty;
-            this.textBox1.Text = string.Empty;
-            this.textBox2.Text = string.Empty;
-            this.textBox3.Text = string.Empty;
-            this.maskedTextBox2.Text = string.Empty;
-            this.textBox4.Text = string.Empty;
-            this.dateTimePicker1.Value = DateTime.Now;
-            if (this.discapacitado || this.has_kg) this.checkBox1.Visible = false;
+            if (this.has_kg)
+            {
+                this.checkBox1.Visible = false;
+            }
+            else
+            {
+                this.checkBox1.Visible = true;
+            }
             this.is_client = false;
-        
+
         }
 
 
@@ -164,30 +185,24 @@ namespace FrbaBus.Compra_de_Pasajes
             this.is_client = true;
         }
 
-        /*private bool check_dup(string cliente)
+        private void Usuario_datos_Load()
         {
-            bool result;
-            Int32 valor;
-            if (this.cant_kg > 0) 
+            this.maskedTextBox1.Text = string.Empty;
+            this.textBox1.Text = string.Empty;
+            this.textBox2.Text = string.Empty;
+            this.textBox3.Text = string.Empty;
+            this.maskedTextBox2.Text = string.Empty;
+            this.textBox4.Text = string.Empty;
+            this.dateTimePicker1.Value = DateTime.Now;
+            if (this.discapacitado || this.has_kg)
             {
-                valor=1;
+                this.checkBox1.Visible = false;
             }
             else
             {
-                valor=0;
+                this.checkBox1.Visible = true;
             }
-
-            for (Int32 i= valor ; i <= pasaje_cli_id.Count; i++)
-            {
-                if (pasaje_cli_id[i-1] ==pasaje_cli_id[i-1])
-                {;
-                }
-            }*/
-
- 
-
-
-
-        
+            this.is_client = false;
+        }
     }
 }

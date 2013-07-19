@@ -585,6 +585,7 @@ CREATE TABLE [transportados].[pasajes](
       [pasa_clie_id] [int] NULL REFERENCES transportados.clientes (Cli_id),
       [pasa_kg_encomienda] [int] NULL,
       [pasa_bonificado] [bit] NULL,
+      [pasa_precio] [real] NOT NULL,
       [pasa_creado] [datetime] NULL,
       [pasa_modificado] [datetime] NULL,
       [pasa_cod_devolucion] [int] NULL,
@@ -610,6 +611,7 @@ GO
       [pasa_kg_encomienda] ,
       [pasa_bonificado] ,
       [pasa_creado],
+      [pasa_precio],
       [pasa_modificado] ,
       [pasa_clie_id])
 (select 
@@ -622,7 +624,8 @@ GO
       ,b.buta_id
       ,m.Paquete_KG
       ,0
-      ,Pasaje_FechaCompra
+      ,m.Pasaje_FechaCompra
+      ,m.Pasaje_Precio
       ,SYSDATETIME()
       ,cli.Cli_id
     from [GD1C2013].[gd_esquema].[Maestra] m
@@ -959,8 +962,8 @@ CREATE TABLE [transportados].[puntos_pas_frecuente](
   [punt_clie_id] [int] REFERENCES transportados.clientes (Cli_id),
 	[punt_fecha] [date] NULL,
 	[punt_puntos] [int] NOT NULL,
-	[punt_id_viaje] [int] NOT NULL,
-	[punt_valido] [bit] DEFAULT ((0)) NOT NULL
+  [punt_puntos_usados] [int] NOT NULL,
+	[punt_id_viaje] [int]  REFERENCES transportados.viajes (viaj_id)
  CONSTRAINT [PK_puntos_pas_frecuente] PRIMARY KEY CLUSTERED 
 (
 	[punt_id] ASC
@@ -1264,17 +1267,18 @@ CREATE PROCEDURE [transportados].[compra]
 @CANT_BUTACA int,
 @CANT_KG int,
 @CANT_DISCOUNT int,
-@compra  int out
+@compra  int out,
+@TOTAL real out
 AS
 BEGIN
-  declare @PRECIO real
+  
   declare @creado datetime
   
-  set @PRECIO =(select reco_precio_base*(1+tipo_porcentaje) from transportados.viajes
+  set @TOTAL =(select reco_precio_base*(1+tipo_porcentaje) from transportados.viajes
     left outer join transportados.recorrido on viaj_recorrido=reco_id
     left outer join transportados.tipo_servicio on reco_tipo_id=tipo_id
     where viaj_id=@VIAJE_ID)* (@CANT_BUTACA - (@CANT_DISCOUNT * 0.5))
-  set @PRECIO=@PRECIO + ((select reco_precio_encomienda*(1+tipo_porcentaje) from transportados.viajes
+  set @TOTAL=@TOTAL + ((select reco_precio_encomienda*(1+tipo_porcentaje) from transportados.viajes
     left outer join transportados.recorrido on viaj_recorrido=reco_id
     left outer join transportados.tipo_servicio on reco_tipo_id=tipo_id
     where viaj_id=@VIAJE_ID) * @CANT_KG)
@@ -1283,7 +1287,7 @@ BEGIN
   insert into [transportados].[voucher_de_compra]
   ([vouc_cliente_id],[vouc_creado],[vouc_modificado],[vouc_cantidad],[vouc_KG],[vouc_viaje_id],[vouc_precio_total])
   values
-  (@CLI_ID,@creado,SYSDATETIME(),@CANT_BUTACA,@CANT_KG,@VIAJE_ID,@PRECIO)
+  (@CLI_ID,@creado,SYSDATETIME(),@CANT_BUTACA,@CANT_KG,@VIAJE_ID,@TOTAL)
   
  set @compra= (select top 1 vouc_id from [transportados].[voucher_de_compra] where vouc_creado=@creado)
   
@@ -1292,7 +1296,7 @@ BEGIN
   (@CLI_ID,SYSDATETIME(),@compra)
   
 END
-
+go
 
 CREATE PROCEDURE [transportados].[Compra_pasaje]
   -- Add the parameters for the stored procedure here
@@ -1303,6 +1307,7 @@ CREATE PROCEDURE [transportados].[Compra_pasaje]
 @CANT_KG int,
 @BONIFICADO int,
 @CLIENTE_ID  int,
+@PRECIO real,
 @PASAJE int out
 
 AS
@@ -1320,11 +1325,12 @@ INSERT INTO [GD1C2013].[transportados].[pasajes]
                                         ,[pasa_butaca_id]
                                         ,[pasa_kg_encomienda]
                                         ,[pasa_bonificado]
+                                        ,[pasa_precio]
                                         ,[pasa_clie_id]
                                         ,[pasa_creado]
                                         ,[pasa_modificado])
                                        VALUES
-                                        (@VIAJE_ID,@VOUCHER_ID,@BUTACA_ID,@CANT_KG,@BONIFICADO,@CLIENTE_ID,SYSDATETIME(),SYSDATETIME())
+                                        (@VIAJE_ID,@VOUCHER_ID,@BUTACA_ID,@CANT_KG,@BONIFICADO,@PRECIO,@CLIENTE_ID,SYSDATETIME(),SYSDATETIME())
 set @PASAJE = (select pasa_id from transportados.pasajes where pasa_clie_id=@CLIENTE_ID and pasa_viaje_id=@VIAJE_ID)
 
   if @CANT_KG >0
@@ -1341,3 +1347,4 @@ set @PASAJE = (select pasa_id from transportados.pasajes where pasa_clie_id=@CLI
   end
 end
 end
+go
