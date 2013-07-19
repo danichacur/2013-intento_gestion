@@ -108,7 +108,7 @@ namespace FrbaBus
                                     transportados.micros M
                                     WHERE 
                                     C.ciud_id = R.reco_id_ciudad_destino
-                                    C2.ciud_id = R.reco_id_ciudad_origen
+                                    and C2.ciud_id = R.reco_id_ciudad_origen
                                     AND V.viaj_recorrido = R.reco_id
                                     AND V.viaj_micro = M.micr_id
                                     AND M.micr_patente = @PATENTE

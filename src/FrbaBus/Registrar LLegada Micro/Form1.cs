@@ -54,7 +54,7 @@ namespace FrbaBus.Registrar_LLegada_Micro
         {
             funciones analisis = new funciones();
             //int id_viaje = 0;
-            id_viaje = analisis.validar_terminal_arribo(textBox1.Text, comboBox2.SelectedText, comboBox1.SelectedText, dateTimePicker2.Value);
+            id_viaje = analisis.validar_terminal_arribo(textBox1.Text, comboBox2.Text, comboBox1.Text, dateTimePicker2.Value);
             if (id_viaje != 0)
             {
                 //mostrar datos del micro
