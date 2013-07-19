@@ -31,5 +31,12 @@ namespace FrbaBus
               login.MdiParent = this;
             login.Show();
         }
+
+        private void consultaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Canje_de_Ptos.canje canje = new Canje_de_Ptos.canje();
+            canje.MdiParent = this;
+            canje.Show();
+        }
     }
 }

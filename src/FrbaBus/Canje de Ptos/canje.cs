@@ -15,5 +15,10 @@ namespace FrbaBus.Canje_de_Ptos
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

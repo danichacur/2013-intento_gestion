@@ -625,7 +625,10 @@ GO
       ,m.Paquete_KG
       ,0
       ,m.Pasaje_FechaCompra
-      ,m.Pasaje_Precio
+      ,case m.Pasaje_Precio
+      when 0 then m.Paquete_Precio
+      else m.Pasaje_Precio
+      end
       ,SYSDATETIME()
       ,cli.Cli_id
     from [GD1C2013].[gd_esquema].[Maestra] m
@@ -961,8 +964,9 @@ CREATE TABLE [transportados].[puntos_pas_frecuente](
 	[punt_id] [int] IDENTITY(1,1) NOT NULL,
   [punt_clie_id] [int] REFERENCES transportados.clientes (Cli_id),
 	[punt_fecha] [date] NULL,
-	[punt_puntos] [int] NOT NULL,
+	[punt_puntos] [real] NOT NULL,
   [punt_puntos_usados] [int] NOT NULL,
+  [punt_vencido] [bit] NOT NULL,
 	[punt_id_viaje] [int]  REFERENCES transportados.viajes (viaj_id)
  CONSTRAINT [PK_puntos_pas_frecuente] PRIMARY KEY CLUSTERED 
 (
@@ -971,6 +975,17 @@ CREATE TABLE [transportados].[puntos_pas_frecuente](
 ) ON [PRIMARY]
 
 GO
+
+
+insert into transportados.puntos_pas_frecuente (punt_clie_id,punt_id_viaje,punt_fecha,punt_puntos,punt_vencido,punt_puntos_usados)
+select pasa_clie_id,pasa_viaje_id,viaj_fecha_llegada,pasa_precio/5 as 'puntos', case when viaj_fecha_llegada <DATEADD(year,-1, SYSDATETIME())then 1
+else 0
+end as 'Vencido',0
+  from transportados.pasajes 
+inner join transportados.viajes on pasa_viaje_id=viaj_id
+where pasa_precio>0
+and viaj_fecha_llegada is not null;
+
 
 
 
@@ -1348,3 +1363,20 @@ set @PASAJE = (select pasa_id from transportados.pasajes where pasa_clie_id=@CLI
 end
 end
 go
+
+
+CREATE PROCEDURE [transportados].[actualizar_puntos]
+@viaje_id int
+as
+begin
+insert into transportados.puntos_pas_frecuente (punt_clie_id,punt_id_viaje,punt_fecha,punt_puntos,punt_vencido,punt_puntos_usados)
+select pasa_clie_id,pasa_viaje_id,viaj_fecha_llegada,pasa_precio/5 as 'puntos', case when viaj_fecha_llegada <DATEADD(year,-1, SYSDATETIME())then 1
+else 0
+end as 'Vencido',0
+  from transportados.pasajes 
+inner join transportados.viajes on pasa_viaje_id=viaj_id
+where pasa_viaje_id=@viaje_id
+and pasa_precio>0
+end
+
+GO
