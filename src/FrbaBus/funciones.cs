@@ -551,7 +551,7 @@ order by rf.rolf_func_id desc", user_id);
 
         }
 
-        public bool modClient(Int32 id, Int32 dni, string nombre, string apellido, string direccion, Int32 telefono, string mail, DateTime fecha_nac)
+                public bool modClient(Int32 id, Int32 dni, string nombre, string apellido, string direccion, Int32 telefono, string mail, DateTime fecha_nac)
         {
             bool Resultado = false;
             Int32 result = 0;
@@ -596,7 +596,7 @@ order by rf.rolf_func_id desc", user_id);
                                       ,[cli_creado]
                                       ,[cli_modificado])
                                        VALUES
-                                        ({0},{1},{2},{3},{4},{5},{6},SYSDATETIME(),SYSDATETIME())", nombre, apellido, dni, direccion, telefono, mail, fecha_nac.ToString());
+                                        ('{0}','{1}',{2},'{3}',{4},'{5}','{6}',SYSDATETIME(),SYSDATETIME())", nombre, apellido, dni, direccion, telefono, mail, fecha_nac.ToString());
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
@@ -651,7 +651,7 @@ order by rf.rolf_func_id desc", user_id);
         {
             Int32 result = 0;
             Int32 salida=0;
-            SqlCommand cmd = new SqlCommand("transportados.compra", this.cnn);
+            SqlCommand cmd = new SqlCommand("transportados.Compra_pasaje", this.cnn);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.Add(new SqlParameter("@VOUCHER_ID", voucher_id));

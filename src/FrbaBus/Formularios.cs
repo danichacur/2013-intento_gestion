@@ -320,7 +320,7 @@ namespace FrbaBus
             return ds;
         }
 
-        public SqlDataReader datos_user(Int32 numero)
+                public SqlDataReader datos_user(Int32 numero)
         {
             
             this.sql = string.Format(@"SELECT [Cli_id]
@@ -350,13 +350,24 @@ namespace FrbaBus
         }
         public DataSet llenarComboButaca(Int32 viaje_id)
         {
-            this.sql = string.Format(@"  select buta_id,'butaca: ' +  CAST(buta_numero AS VARCHAR(10)) + ' piso: ' + CAST(buta_piso AS VARCHAR(10)) as 'Descripcion' from transportados.viajes
-                                      left outer join transportados.butaca on buta_micro_id=viaj_micro
-                                      where viaj_id={0}
-                                      and buta_id not in (select pasa_butaca_id 
-                                                            from transportados.pasajes 
-                                                            where pasa_viaje_id=viaj_id 
-                                                            and pasa_kg_encomienda <> 0)", viaje_id);
+            this.sql = string.Format(@"
+                select buta_id
+                ,'butaca: ' 
+                +  CAST(buta_numero AS VARCHAR(10))
+                + ' Ubicacion:'
+                + case buta_pasillo 
+                    when 1 then ' Pasillo' 
+                    else ' Ventanilla' 
+                    end
+                 + ' piso: ' + CAST(buta_piso AS VARCHAR(10)) 
+                 as 'Descripcion' 
+                from transportados.viajes
+                left outer join transportados.butaca on buta_micro_id=viaj_micro
+                where viaj_id= {0}
+                and buta_id not in (select pasa_butaca_id 
+                    from transportados.pasajes 
+                    where pasa_viaje_id=viaj_id 
+                    and pasa_kg_encomienda <> 0)", viaje_id);
             DataSet ds = new DataSet();
             //indicamos la consulta en SQL
             SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
@@ -366,7 +377,7 @@ namespace FrbaBus
         }
         public SqlDataReader getButacaEncomienda(Int32 viaje_id)
         {
-            this.sql = string.Format(@"  select buta_id,'butaca: ' +  CAST(buta_numero AS VARCHAR(10)) + ' piso: ' + CAST(buta_piso AS VARCHAR(10)) as 'Descripcion' from transportados.viajes
+            this.sql = string.Format(@"  select buta_id from transportados.viajes
                                       left outer join transportados.butaca on buta_micro_id=viaj_micro
                                       where viaj_id={0}
                                       and buta_piso=0", viaje_id);
@@ -379,3 +390,4 @@ namespace FrbaBus
 
     }
 }
+
