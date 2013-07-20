@@ -216,9 +216,9 @@ namespace FrbaBus
             this.sql = string.Format(@"UPDATE transportados.micros
                                         SET
                                         micr_baja = 1,
-                                        micr_fecha_baja = '(0)',
+                                        micr_fecha_baja = '{0}',
                                         micr_fecha_modificacion = SYSDATETIME()
-                                        WHERE micr_patente = '(1)' ", inicio, patente);
+                                        WHERE micr_patente = '{1}' ", inicio, patente);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
