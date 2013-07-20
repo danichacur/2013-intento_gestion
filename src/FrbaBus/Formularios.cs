@@ -135,7 +135,7 @@ namespace FrbaBus
 	                               [viaj_fecha_salida] as 'Fecha de salida'
                                   ,[viaj_fecha_llegada] as 'Fecha de llegada'
                                   ,[viaj_fecha_llegada_estimada] as 'Fecha estimada de llegada'
-                                  ,M.micr_patente as 'Patente del micro'
+                                  ,M.micr_patente as 'Patente'
                                   , M.micr_marca as 'Empresa del micro'
                                   , M.micr_modelo as 'Modelo del micro'
                                   ,M.micr_pisos as 'Cantidad de pisos'
