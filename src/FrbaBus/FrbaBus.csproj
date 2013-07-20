@@ -159,6 +159,12 @@
     <Compile Include="Cancelar Viaje\Baja de viaje.Designer.cs">
       <DependentUpon>Baja de viaje.cs</DependentUpon>
     </Compile>
+    <Compile Include="Canje de Ptos\ListadoPuntos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Canje de Ptos\ListadoPuntos.designer.cs">
+      <DependentUpon>ListadoPuntos.cs</DependentUpon>
+    </Compile>
     <Compile Include="ciudades\CiudadModificar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -370,6 +376,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abm Recorrido\Recorrido_buscar.resx">
       <DependentUpon>Recorrido_buscar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Canje de Ptos\ListadoPuntos.resx">
+      <DependentUpon>ListadoPuntos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ciudades\CiudadModificar.resx">
       <DependentUpon>CiudadModificar.cs</DependentUpon>
