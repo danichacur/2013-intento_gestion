@@ -588,7 +588,7 @@ CREATE TABLE [transportados].[pasajes](
       [pasa_precio] [real] NOT NULL,
       [pasa_creado] [datetime] NULL,
       [pasa_modificado] [datetime] NULL,
-      [pasa_cod_devolucion] [int] NULL,
+      [pasa_cod_devolucion] [int] NULL ,
 	  [pasa_fecha_devolucion] [datetime] NULL,
 	  [pasa_desc_devolucion] [varchar](100) NULL
     CONSTRAINT [PK_transportados.pasajes] PRIMARY KEY CLUSTERED 
@@ -1098,12 +1098,18 @@ CREATE PROCEDURE [transportados].devolucionPersonal
 
 AS
 BEGIN
-  
+ 
+DECLARE @MAXIMO INT
+SET @MAXIMO = 1 +(SELECT MAX(pasa_cod_devolucion) from transportados.pasajes)
+if (@MAXIMO is null)
+begin
+set @MAXIMO = 1
+end
 
 UPDATE transportados.pasajes
 SET pasa_fecha_devolucion = SYSDATETIME(),
   pasa_desc_devolucion = @MOTIVO,
-  pasa_cod_devolucion = pasa_viaje_id
+  pasa_cod_devolucion = @MAXIMO
 WHERE PASA_ID = @PASAJE
 
 END
@@ -1132,7 +1138,10 @@ IF(@BAJA = 'Fin vida útil')
 
 SET @DEVOLUCION = 1 + (SELECT MAX(pasa_cod_devolucion) 
 					FROM transportados.pasajes)
-
+if (@DEVOLUCION is null)
+begin
+set @DEVOLUCION = 1
+end
 UPDATE transportados.pasajes
 SET pasa_fecha_devolucion = SYSDATETIME(),
   pasa_desc_devolucion = 'Micro dado de baja',
