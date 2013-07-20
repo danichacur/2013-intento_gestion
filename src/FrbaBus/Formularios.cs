@@ -190,7 +190,7 @@ namespace FrbaBus
 
         }
 
-        public DataSet ListarDatosMicro()
+        public DataSet ListarDatosMicro(int viaje)
         {
 
             this.sql = string.Format(@"SELECT DISTINCT
@@ -207,8 +207,8 @@ namespace FrbaBus
                               INNER JOIN transportados.recorrido R ON R.reco_id = V.viaj_recorrido
                               INNER JOIN transportados.tipo_servicio T ON M.micr_tipo_id = T.tipo_id
                               inner join transportados.ciudad c on c.ciud_id = r.reco_id_ciudad_destino
-                              inner join transportados.ciudad c2 on c2.ciud_id = r.reco_id_ciudad_origen");
-            // where c2.ciud_nombre like '%(0)%'", viaje);
+                              inner join transportados.ciudad c2 on c2.ciud_id = r.reco_id_ciudad_origen
+                                where V.viaj_id = {0}",viaje);
 
             DataSet ds = new DataSet();
             //indicamos la consulta en SQL

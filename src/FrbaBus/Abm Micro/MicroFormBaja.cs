@@ -68,30 +68,41 @@ namespace FrbaBus.Abm_Micro
         private void button1_Click(object sender, EventArgs e)
         {
             funciones pasajes = new funciones();
-            if (pasajes.contarPasajesVendidos(dateTimePicker1.Value, dateTimePicker2.Value, this.textBox1.Text) == 0)
-                /*el micro no tiene pasajes vendidos asique todo ok*/
-            {
-                MessageBox.Show("Micro sin viajes asignados");
-                
-            }
-            else
-                /*preguntar si se cancelan los viajes existentes o se busca un micro sustituto*/
-            {
-                Abm_Micro.buscaMicro buscarMicro = new Abm_Micro.buscaMicro();
-                buscarMicro.Show();
-            }
-
+            bool baja_ok = false;
             if (comboBox1.Text == "Fin vida útil")
-                if(pasajes.bajaServicioMicro(dateTimePicker1.Value, this.textBox1.Text))
-                {MessageBox.Show("Micro dado de baja correctamente");}
-                else
-                {MessageBox.Show("Ocurrió un error al modificar el micro, intente mas tarde");}
-            else
-                if(pasajes.bajaTecnicaMicro(dateTimePicker1.Value, dateTimePicker2.Value, this.textBox1.Text))
+            {
+                baja_ok = pasajes.bajaServicioMicro(dateTimePicker1.Value, this.textBox1.Text);
+                if (baja_ok)
                 { MessageBox.Show("Micro dado de baja correctamente"); }
                 else
                 { MessageBox.Show("Ocurrió un error al modificar el micro, intente mas tarde"); }
- 
+            }
+            else
+            {
+                baja_ok = pasajes.bajaTecnicaMicro(dateTimePicker1.Value, dateTimePicker2.Value, this.textBox1.Text);
+                if (baja_ok)
+                { MessageBox.Show("Micro dado de baja correctamente"); }
+                else
+                { MessageBox.Show("Ocurrió un error al modificar el micro, intente mas tarde"); }
+            }
+            if (baja_ok)
+            {
+                if (pasajes.contarPasajesVendidos(dateTimePicker1.Value, dateTimePicker2.Value, this.textBox1.Text) == 0)
+                /*el micro no tiene pasajes vendidos asique todo ok*/
+                {
+                    MessageBox.Show("Micro sin viajes asignados");
+
+                }
+                else
+                /*preguntar si se cancelan los viajes existentes o se busca un micro sustituto*/
+                {
+                    Abm_Micro.buscaMicro buscarMicro = new Abm_Micro.buscaMicro();
+                    buscarMicro.Show();
+                    this.Close();
+                }
+            }
+
+
             this.Close();
         }
 

@@ -42,7 +42,7 @@ namespace FrbaBus.Registrar_LLegada_Micro
         {
 
             Formularios Viajes = new Formularios();
-            DataSet ListarDatosMicro = Viajes.ListarDatosMicro();
+            DataSet ListarDatosMicro = Viajes.ListarDatosMicro(Form1.f1.viaje);
             dataGridView1.DataSource = ListarDatosMicro.Tables[0].DefaultView;
 
         }

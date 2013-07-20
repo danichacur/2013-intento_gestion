@@ -94,7 +94,37 @@ namespace FrbaBus
 
         }
 
-        public int validar_terminal_arribo(string patente, string destino, string origen, DateTime salida)
+
+        public bool validar_fecha_salida(int viaje)
+        {
+            bool Resultado = false;
+            int result;
+
+            this.sql = string.Format(@"SELECT 1
+                                    FROM transportados.viajes 
+                                    WHERE viaj_id = @VIAJE
+                                    AND viaj_fecha_salida < SYSDATETIME()
+                                    ");
+
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@VIAJE", viaje));
+            //this.comandosSql.Parameters.Add(new SqlParameter("@FECHA", fecha));
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
+
+            this.cnn.Close();
+            return Resultado;
+        }
+
+        public int validar_terminal_arribo(string patente, string destino, string origen, DateTime llegada)
         {
             //bool Resultado = false;
             Object otro;
@@ -114,12 +144,13 @@ namespace FrbaBus
                                     AND M.micr_patente = @PATENTE
                                     and c2.ciud_nombre = @ORIGEN
                                     and c.ciud_nombre = @DESTINO
-                                    AND V.viaj_fecha_salida = @FECHA");
+                                    AND Convert(Char(10), V.viaj_fecha_llegada_estimada, 101) = Convert(Char(10),@FECHA, 101)");
+                                    //AND Convert(Char(10), V.viaj_fecha_salida, 101) = Convert(Char(10),@FECHA, 101)");
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.comandosSql.Parameters.Add(new SqlParameter("@PATENTE", patente));
             this.comandosSql.Parameters.Add(new SqlParameter("@ORIGEN", origen));
             this.comandosSql.Parameters.Add(new SqlParameter("@DESTINO", destino));
-            this.comandosSql.Parameters.Add(new SqlParameter("@FECHA", salida));
+            this.comandosSql.Parameters.Add(new SqlParameter("@FECHA", llegada));
             this.cnn.Open();
             otro = this.comandosSql.ExecuteScalar();
             result = Convert.ToInt32(otro);
@@ -741,9 +772,9 @@ order by rf.rolf_func_id desc", user_id);
             bool Resultado = false;
             int result;
 
-            this.comandosSql = new SqlCommand("transportados.actualiza_puntos", this.cnn);
+            this.comandosSql = new SqlCommand("transportados.actualizar_puntos", this.cnn);
             this.comandosSql.CommandType = CommandType.StoredProcedure;
-            this.comandosSql.Parameters.Add(new SqlParameter("@VIAJE", id_viaje));
+            this.comandosSql.Parameters.Add(new SqlParameter("@viaje_id", id_viaje));
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
             if (result > 0)
