@@ -46,18 +46,27 @@ namespace FrbaBus.Compra_de_Pasajes
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (maskedTextBox1.Text == "")
+            {
+                maskedTextBox1.Text = "0";
+            }
+            if (maskedTextBox2.Text == "")
+            {
+                maskedTextBox2.Text = "0";
+            }
+
             if (Convert.ToInt32(maskedTextBox1.Text) > this.buta_libre)
             {
                 MessageBox.Show("No hay las suficientes butacas", "Error");
             }
-            else if (Convert.ToInt32(maskedTextBox1.Text) > this.kg_libre)
+            else if (Convert.ToInt32(maskedTextBox2.Text) > this.kg_libre)
             {
-                MessageBox.Show("No hay las suficientes Tamaño en la bodega", "Error");
+                MessageBox.Show("No hay suficiente tamaño en la bodega", "Error");
             }
             else
             {
                 Usuario_datos data = new Usuario_datos();
-                data.cant_kg = Convert.ToInt32(maskedTextBox1.Text);
+                data.cant_kg = Convert.ToInt32(maskedTextBox2.Text);
                 data.cant_pasj = Convert.ToInt32(maskedTextBox1.Text);
                 data.viaje_id = this.viaje_id;
                 data.admin = this.admin;
