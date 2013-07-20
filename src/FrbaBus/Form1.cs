@@ -171,12 +171,12 @@ namespace FrbaBus
             cancViaj.Show();
         }
 
-        private void modificadoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            GenerarViaje.modificar modViaj = new GenerarViaje.modificar();
-            modViaj.MdiParent = this;
-            modViaj.Show();
-        }
+        //private void modificadoToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    GenerarViaje.modificar modViaj = new GenerarViaje.modificar();
+        //    modViaj.MdiParent = this;
+        //    modViaj.Show();
+        //}
 
         private void registrarLlegadaToolStripMenuItem_Click(object sender, EventArgs e)
         {

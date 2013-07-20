@@ -217,14 +217,14 @@
             this.listar_viaje.Text = "Listar";
             this.listar_viaje.Visible = false;
             this.listar_viaje.Click += new System.EventHandler(this.listarToolStripMenuItem2_Click);
-            // 
-            // modificar_viaje
-            // 
-            this.modificar_viaje.Name = "modificar_viaje";
-            this.modificar_viaje.Size = new System.Drawing.Size(128, 22);
-            this.modificar_viaje.Text = "Modificar";
-            this.modificar_viaje.Visible = false;
-            this.modificar_viaje.Click += new System.EventHandler(this.modificadoToolStripMenuItem_Click);
+            //// 
+            //// modificar_viaje
+            //// 
+            //this.modificar_viaje.Name = "modificar_viaje";
+            //this.modificar_viaje.Size = new System.Drawing.Size(128, 22);
+            //this.modificar_viaje.Text = "Modificar";
+            //this.modificar_viaje.Visible = false;
+            //this.modificar_viaje.Click += new System.EventHandler(this.modificadoToolStripMenuItem_Click);
             // 
             // Pasaje
             // 

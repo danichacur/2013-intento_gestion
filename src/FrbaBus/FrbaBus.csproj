@@ -312,12 +312,6 @@
     <Compile Include="GenerarViaje\ListarViajes.Designer.cs">
       <DependentUpon>ListarViajes.cs</DependentUpon>
     </Compile>
-    <Compile Include="GenerarViaje\modificar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GenerarViaje\modificar.Designer.cs">
-      <DependentUpon>modificar.cs</DependentUpon>
-    </Compile>
     <Compile Include="Inicio.cs">
       <SubType>Form</SubType>
     </Compile>

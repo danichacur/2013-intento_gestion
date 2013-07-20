@@ -9,7 +9,54 @@ namespace FrbaBus
 {
     class funciones : conexion
     {
-
+        public bool insertarViaje(int micro, int recorrido, DateTime f_salida, DateTime f_llegada)
+        {
+            bool Resultado = false;
+            Int32 result = 0;
+            this.sql = string.Format(@"
+                            INSERT INTO [GD1C2013].[transportados].[viajes] (
+                            [viaj_fecha_salida]
+                            ,[viaj_fecha_llegada_estimada]
+                            ,[viaj_micro]
+                            ,[viaj_recorrido]
+                            ,[viaj_creado]
+                            ,[viaj_modificado]
+                            ,[viaj_butacas_libres]
+                            ,[viaj_KG_disponible]
+	                        )
+                            (SELECT 
+                            @FECHA_SALIDA
+                            ,@FECHA_LLEGADA_ESTIMADA
+                            ,@MICRO
+                            ,@RECORRIDO
+                            ,SYSDATETIME()
+                            ,SYSDATETIME()
+                            ,isnull(mi.micr_cant_butacas,0)
+                            ,isnull(mi.micr_kg_encomienda,0) 
+                            FROM [GD1C2013].[transportados].[micros] mi
+                            where mi.micr_id = @MICRO
+                            and not exists (select top 1 1 
+                            from [transportados].[viajes] vi
+                            where vi.viaj_micro = @MICRO
+                            and vi.viaj_fecha_salida between @FECHA_SALIDA and @FECHA_LLEGADA_ESTIMADA))");
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@MICRO", micro));
+            this.comandosSql.Parameters.Add(new SqlParameter("@RECORRIDO", recorrido));
+            this.comandosSql.Parameters.Add(new SqlParameter("@FECHA_LLEGADA_ESTIMADA", f_llegada));
+            this.comandosSql.Parameters.Add(new SqlParameter("@FECHA_SALIDA", f_salida));
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
+            this.cnn.Close();
+            return Resultado;
+        }
         public bool insertarRecorrido(Int32 ciudOrigen, Int32 ciudDestino, Int32 tipoServ, Int32 basePasaje, Int32 baseEncomienda)
         {
             bool Resultado = false;

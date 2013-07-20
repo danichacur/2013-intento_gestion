@@ -57,7 +57,20 @@ namespace FrbaBus.GenerarViaje
 
         private void button1_Click(object sender, EventArgs e)
         {
+           funciones insertar = new funciones();
+           if (insertar.insertarViaje(Convert.ToInt32(comboBox2.SelectedValue), Convert.ToInt32(comboBox1.SelectedValue),dateTimePicker1.Value, dateTimePicker2.Value))
+           {
+                MessageBox.Show("Viaje dado de alta correctamente");
+                this.Close();
+           }
+           else
+           { MessageBox.Show("El micro ya tiene viajes asignados en esas fechas"); }
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
