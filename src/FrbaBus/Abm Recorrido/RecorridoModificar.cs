@@ -38,13 +38,13 @@ namespace FrbaBus.Abm_Recorrido
             }*/
             if (this.checkBox1.Checked)
             {
-                ModCiti.ModifyReco(Reco_id, 1,precioEncomienda,precioPasaje);
+                ModCiti.ModifyReco(Reco_id, 1, this.maskedTextBox2.Text, this.maskedTextBox1.Text);
                 MessageBox.Show("Ciudad dada de baja correctamente", "Modicar ciudad");
                 this.Close();
             }
             else
             {
-                ModCiti.ModifyReco(Reco_id, 0,precioEncomienda,precioPasaje);
+                ModCiti.ModifyReco(Reco_id, 0, this.maskedTextBox2.Text, this.maskedTextBox1.Text);
                 MessageBox.Show("Ciudad modificada correctamente", "Modicar ciudad");
                 this.Close();
             }
