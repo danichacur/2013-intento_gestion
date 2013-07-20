@@ -1100,7 +1100,7 @@ AS
 BEGIN
   
 
-UPDATE transportados.pasaje
+UPDATE transportados.pasajes
 SET pasa_fecha_devolucion = SYSDATETIME(),
   pasa_desc_devolucion = @MOTIVO,
   pasa_cod_devolucion = pasa_viaje_id
