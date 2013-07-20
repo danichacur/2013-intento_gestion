@@ -20,7 +20,9 @@ namespace FrbaBus.Canje_de_Ptos
         {
             Formularios puntos = new Formularios();
             ListadoPuntos listadopuntos = new ListadoPuntos();
-            listadopuntos.puntoslista=puntos.dataPuntosFrecuente(Convert.ToInt32(this.textBox1.Text));
+            listadopuntos.puntoslista = puntos.dataPuntosFrecuente(Convert.ToInt32(this.textBox1.Text));
+            listadopuntos.premiolista = puntos.datapremiosFrecuente(Convert.ToInt32(this.textBox1.Text));
+            listadopuntos.clie_dni = Convert.ToInt32(this.textBox1.Text);
             this.Hide();
             listadopuntos.Show();
         }

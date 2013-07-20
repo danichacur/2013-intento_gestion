@@ -12,6 +12,10 @@ namespace FrbaBus.Canje_de_Ptos
     public partial class ListadoPuntos : Form
     {
         public DataSet puntoslista;
+        public DataSet premiolista;
+        public int clie_dni;
+        double total;
+
         public ListadoPuntos()
         {
             InitializeComponent();
@@ -23,11 +27,22 @@ namespace FrbaBus.Canje_de_Ptos
             dataGridView1.DataSource = puntoslista.Tables[0].DefaultView;
             this.textBox1.Text = (Convert.ToDouble(puntoslista.Tables[0].Compute("Sum(Puntos)", "Vencido=false").ToString())
                                         - Convert.ToDouble(puntoslista.Tables[0].Compute("Sum(Puntos_Usados)", "Vencido=false").ToString())).ToString();
+            this.total = Convert.ToDouble(this.textBox1.Text);
+            dataGridView2.DataSource = premiolista.Tables[0].DefaultView;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Premios premioForm = new Premios();
+            premioForm.total = this.total;
+            premioForm.clie_dni = this.clie_dni;
+            this.Hide();
+            premioForm.Show();
         }
     }
 }

@@ -406,7 +406,38 @@ namespace FrbaBus
             da.Fill(ds, "Fecha");
             return ds;
         }
+        public DataSet datapremiosFrecuente(Int32 Clie_dni)
+        {
+            this.sql = string.Format(@"
+                select obte_fecha,obte_cantidad,prem_descripcion from transportados.clientes
+                left outer join transportados.premios_obtenidos on obte_clie_id=Cli_id
+                left outer join transportados.premios on prem_id=obte_id_premio
+                where Cli_Dni={0}
+                order by obte_fecha desc
+                ", Clie_dni);
 
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "Fecha");
+            return ds;
+        }
+        public DataSet datapremios(double total)
+        {
+            this.sql = string.Format(@"
+                select * from transportados.premios
+                where prem_puntos <= {0}
+                and prem_stock > 0;
+                ", Convert.ToInt32(total));
+
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "prem_id");
+            return ds;
+        }
     }
 }
 
