@@ -18,7 +18,16 @@ namespace FrbaBus.Canje_de_Ptos
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Formularios puntos = new Formularios();
+            ListadoPuntos listadopuntos = new ListadoPuntos();
+            listadopuntos.puntoslista=puntos.dataPuntosFrecuente(Convert.ToInt32(this.textBox1.Text));
+            this.Hide();
+            listadopuntos.Show();
+        }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

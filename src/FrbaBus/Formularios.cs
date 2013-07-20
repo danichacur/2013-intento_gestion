@@ -387,6 +387,25 @@ namespace FrbaBus
             Reg = this.comandosSql.ExecuteReader();
             return Reg;
         }
+        public DataSet dataPuntosFrecuente(Int32 Clie_dni)
+        {
+            this.sql = string.Format(@"
+                select punt_fecha as 'Fecha',c1.ciud_nombre as 'desde',c2.ciud_nombre as 'hasta',punt_puntos as 'Puntos',punt_puntos_usados as 'Puntos_Usados' ,punt_vencido as 'Vencido' from transportados.clientes
+                left outer join transportados.puntos_pas_frecuente on punt_clie_id=Cli_id
+                left outer join transportados.viajes on viaj_id=punt_id_viaje
+                left outer join transportados.recorrido on viaj_recorrido =reco_id
+                left outer join transportados.ciudad c1 on  c1.ciud_id=reco_id_ciudad_origen
+                left outer join transportados.ciudad c2 on c2.ciud_id=reco_id_ciudad_destino
+                where Cli_Dni={0}
+                order by punt_fecha desc", Clie_dni);
+
+            DataSet ds = new DataSet();
+            //indicamos la consulta en SQL
+            SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);
+            //return da;
+            da.Fill(ds, "Fecha");
+            return ds;
+        }
 
     }
 }
