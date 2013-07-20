@@ -144,8 +144,7 @@ namespace FrbaBus
                                     AND M.micr_patente = @PATENTE
                                     and c2.ciud_nombre = @ORIGEN
                                     and c.ciud_nombre = @DESTINO
-                                    AND Convert(Char(10), V.viaj_fecha_llegada_estimada, 101) = Convert(Char(10),@FECHA, 101)");
-                                    //AND Convert(Char(10), V.viaj_fecha_salida, 101) = Convert(Char(10),@FECHA, 101)");
+                                    and @FECHA between DATEADD(hh,-3,V.viaj_fecha_llegada_estimada) AND DATEADD(hh,3,V.viaj_fecha_llegada_estimada)");
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.comandosSql.Parameters.Add(new SqlParameter("@PATENTE", patente));
             this.comandosSql.Parameters.Add(new SqlParameter("@ORIGEN", origen));
