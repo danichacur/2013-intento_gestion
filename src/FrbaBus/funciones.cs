@@ -494,17 +494,21 @@ namespace FrbaBus
             return Resultado;
 
         }
-        public void ModifyReco(Int32 reco_id, Int32 IsBaja)
+        public void ModifyReco(Int32 reco_id, Int32 IsBaja, string precioEncomienda, string precioPasaje)
         {
 
             this.sql = string.Format(@"UPDATE [transportados].[recorrido]
                                         SET
                                         reco_baja = @Baja ,
-                                        reco_modificado=SYSDATETIME()
+                                        reco_modificado=SYSDATETIME(),
+                                        reco_precio_base=@pasaje,
+                                        reco_precio_encomienda=@encomienda
                                         where reco_id =@Reco_id");
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.comandosSql.Parameters.Add(new SqlParameter("@Reco_id", reco_id));
             this.comandosSql.Parameters.Add(new SqlParameter("@Baja", IsBaja));
+            this.comandosSql.Parameters.Add(new SqlParameter("@pasaje", Convert.ToInt32(precioPasaje)));
+            this.comandosSql.Parameters.Add(new SqlParameter("@encomienda", Convert.ToInt32(precioEncomienda)));
             this.cnn.Open();
             this.comandosSql.ExecuteNonQuery();
             this.cnn.Close();

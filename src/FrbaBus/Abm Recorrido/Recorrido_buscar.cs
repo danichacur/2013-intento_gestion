@@ -43,6 +43,8 @@ namespace FrbaBus.Abm_Recorrido
             RecoMod.RecoBaja = dataGridView1.CurrentRow.Cells["dado de baja"].Value.ToString();
             RecoMod.CiudOrig = dataGridView1.CurrentRow.Cells["Ciudad Origen"].Value.ToString();
             RecoMod.CiudDest = dataGridView1.CurrentRow.Cells["Ciudad Destino"].Value.ToString();
+            RecoMod.precioPasaje = dataGridView1.CurrentRow.Cells["Precio Base Pasaje"].Value.ToString();
+            RecoMod.precioEncomienda = dataGridView1.CurrentRow.Cells["Precio Base Encomienda"].Value.ToString();
             RecoMod.Reco_id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["ID_recorrido"].Value.ToString());
             RecoMod.Show();
         }

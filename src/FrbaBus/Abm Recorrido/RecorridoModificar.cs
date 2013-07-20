@@ -14,6 +14,8 @@ namespace FrbaBus.Abm_Recorrido
 
         public string CiudOrig;
         public string CiudDest;
+        public string precioPasaje;
+        public string precioEncomienda;
         public string RecoBaja;
         public Int32 Reco_id;
         public RecorridoModificar()
@@ -36,13 +38,13 @@ namespace FrbaBus.Abm_Recorrido
             }*/
             if (this.checkBox1.Checked)
             {
-                ModCiti.ModifyReco(Reco_id, 1);
+                ModCiti.ModifyReco(Reco_id, 1,precioEncomienda,precioPasaje);
                 MessageBox.Show("Ciudad dada de baja correctamente", "Modicar ciudad");
                 this.Close();
             }
             else
             {
-                ModCiti.ModifyReco(Reco_id, 0);
+                ModCiti.ModifyReco(Reco_id, 0,precioEncomienda,precioPasaje);
                 MessageBox.Show("Ciudad modificada correctamente", "Modicar ciudad");
                 this.Close();
             }
@@ -52,8 +54,10 @@ namespace FrbaBus.Abm_Recorrido
 
         private void RecorridoModificar_Load(object sender, EventArgs e)
         {
-            this.textBox1.Text = CiudOrig;
-            this.textBox2.Text = CiudDest;
+            this.textBox1.Text = this.CiudOrig;
+            this.textBox2.Text = this.CiudDest;
+            this.maskedTextBox1.Text = this.precioPasaje;
+            this.maskedTextBox2.Text = this.precioEncomienda;
             if (RecoBaja == "SI")
             {
                 this.checkBox1.Checked = true;
