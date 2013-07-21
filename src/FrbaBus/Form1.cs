@@ -248,6 +248,14 @@ namespace FrbaBus
             }
         }
 
+        private void consulta_puntos_Click(object sender, EventArgs e)
+        {
+            Canje_de_Ptos.canje puntosCanje = new Canje_de_Ptos.canje();
+            puntosCanje.admin = true;
+            puntosCanje.MdiParent = this;
+            puntosCanje.Show();
+        }
+
 
     }
 }

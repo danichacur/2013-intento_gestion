@@ -13,6 +13,7 @@ namespace FrbaBus.Canje_de_Ptos
     {
         public int clie_dni;
         public double total;
+        public bool admin;
 
         public Premios()
         {
@@ -32,7 +33,12 @@ namespace FrbaBus.Canje_de_Ptos
 
         private void button1_Click(object sender, EventArgs e)
         {
-                
+            if (this.admin)
+            { funciones user_func = new funciones();
+            user_func.canjearProducto(Convert.ToInt32(dataGridView1.CurrentRow.Cells["prem_id"].Value.ToString()), this.clie_dni);
+
+            }
+            this.Close();
         }
     }
 }

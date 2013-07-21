@@ -11,6 +11,7 @@ namespace FrbaBus.Canje_de_Ptos
 {
     public partial class canje : Form
     {
+        public bool admin = false;
         public canje()
         {
             InitializeComponent();
@@ -23,6 +24,7 @@ namespace FrbaBus.Canje_de_Ptos
             listadopuntos.puntoslista = puntos.dataPuntosFrecuente(Convert.ToInt32(this.textBox1.Text));
             listadopuntos.premiolista = puntos.datapremiosFrecuente(Convert.ToInt32(this.textBox1.Text));
             listadopuntos.clie_dni = Convert.ToInt32(this.textBox1.Text);
+            listadopuntos.admin = this.admin;
             this.Hide();
             listadopuntos.Show();
         }

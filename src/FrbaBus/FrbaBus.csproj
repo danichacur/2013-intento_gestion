@@ -165,6 +165,12 @@
     <Compile Include="Canje de Ptos\ListadoPuntos.designer.cs">
       <DependentUpon>ListadoPuntos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Canje de Ptos\Premios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Canje de Ptos\Premios.designer.cs">
+      <DependentUpon>Premios.cs</DependentUpon>
+    </Compile>
     <Compile Include="ciudades\CiudadModificar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -373,6 +379,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Canje de Ptos\ListadoPuntos.resx">
       <DependentUpon>ListadoPuntos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Canje de Ptos\Premios.resx">
+      <DependentUpon>Premios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ciudades\CiudadModificar.resx">
       <DependentUpon>CiudadModificar.cs</DependentUpon>

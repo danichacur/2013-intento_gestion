@@ -181,7 +181,6 @@
             this.listar_micro.Text = "Listar";
             this.listar_micro.Visible = false;
             this.listar_micro.Click += new System.EventHandler(this.listar_micro_Click);
-
             // 
             // registrar_llegada
             // 
@@ -205,7 +204,7 @@
             // crear_viaje
             // 
             this.crear_viaje.Name = "crear_viaje";
-            this.crear_viaje.Size = new System.Drawing.Size(128, 22);
+            this.crear_viaje.Size = new System.Drawing.Size(124, 22);
             this.crear_viaje.Text = "Generar";
             this.crear_viaje.Visible = false;
             this.crear_viaje.Click += new System.EventHandler(this.generarToolStripMenuItem_Click);
@@ -213,18 +212,15 @@
             // listar_viaje
             // 
             this.listar_viaje.Name = "listar_viaje";
-            this.listar_viaje.Size = new System.Drawing.Size(128, 22);
+            this.listar_viaje.Size = new System.Drawing.Size(124, 22);
             this.listar_viaje.Text = "Listar";
             this.listar_viaje.Visible = false;
             this.listar_viaje.Click += new System.EventHandler(this.listarToolStripMenuItem2_Click);
-            //// 
-            //// modificar_viaje
-            //// 
-            //this.modificar_viaje.Name = "modificar_viaje";
-            //this.modificar_viaje.Size = new System.Drawing.Size(128, 22);
-            //this.modificar_viaje.Text = "Modificar";
-            //this.modificar_viaje.Visible = false;
-            //this.modificar_viaje.Click += new System.EventHandler(this.modificadoToolStripMenuItem_Click);
+            // 
+            // modificar_viaje
+            // 
+            this.modificar_viaje.Name = "modificar_viaje";
+            this.modificar_viaje.Size = new System.Drawing.Size(124, 22);
             // 
             // Pasaje
             // 
@@ -264,9 +260,10 @@
             // consulta_puntos
             // 
             this.consulta_puntos.Name = "consulta_puntos";
-            this.consulta_puntos.Size = new System.Drawing.Size(127, 22);
-            this.consulta_puntos.Text = "Consulta";
+            this.consulta_puntos.Size = new System.Drawing.Size(152, 22);
+            this.consulta_puntos.Text = "Canjear";
             this.consulta_puntos.Visible = false;
+            this.consulta_puntos.Click += new System.EventHandler(this.consulta_puntos_Click);
             // 
             // Usuarios
             // 

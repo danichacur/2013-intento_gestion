@@ -15,6 +15,7 @@ namespace FrbaBus.Canje_de_Ptos
         public DataSet premiolista;
         public int clie_dni;
         double total;
+        public bool admin;
 
         public ListadoPuntos()
         {
@@ -41,6 +42,7 @@ namespace FrbaBus.Canje_de_Ptos
             Premios premioForm = new Premios();
             premioForm.total = this.total;
             premioForm.clie_dni = this.clie_dni;
+            premioForm.admin = this.admin;
             this.Hide();
             premioForm.Show();
         }

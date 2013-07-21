@@ -1382,3 +1382,53 @@ and pasa_precio>0
 end
 
 GO
+
+
+create procedure [transportados].[obtener_premios]
+@clie_dni int ,
+@premio_id int 
+as
+begin
+declare @clie_id int
+declare @puntos_id int 
+declare @puntos_premios int
+declare @puntos_usados int
+set @clie_id = (select Cli_id from transportados.clientes where Cli_Dni=@clie_dni)
+set @puntos_premios = (select prem_puntos from transportados.premios where prem_id=@premio_id)
+
+declare puntos_cursor cursor for 
+  select punt_id 
+  from transportados.puntos_pas_frecuente 
+  where punt_clie_id=@clie_id 
+    and punt_vencido=0 
+    and punt_puntos_usados< punt_puntos
+  order by punt_fecha asc
+
+open puntos_cursor
+FETCH NEXT FROM puntos_cursor into @puntos_id
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+if exists (select punt_id from transportados.puntos_pas_frecuente where punt_id=@puntos_id and punt_puntos<= @puntos_premios)
+begin
+update transportados.puntos_pas_frecuente set punt_puntos_usados=punt_puntos where punt_id=@puntos_id
+set @puntos_usados=(select punt_puntos_usados from  transportados.puntos_pas_frecuente where punt_id=@puntos_id)
+set @puntos_premios = @puntos_premios - @puntos_usados
+end
+else
+begin
+update transportados.puntos_pas_frecuente set punt_puntos_usados=@puntos_premios where punt_id=@puntos_id
+set @puntos_usados=(select punt_puntos_usados from  transportados.puntos_pas_frecuente where punt_id=@puntos_id)
+set @puntos_premios = @puntos_premios - @puntos_usados
+end
+FETCH NEXT FROM puntos_cursor into @puntos_id
+end
+insert into transportados.premios_obtenidos (obte_clie_id,obte_fecha,obte_cantidad,obte_id_premio)
+values
+(@clie_id,SYSDATETIME(),1,@premio_id)
+end
+
+
+
+
+GO

@@ -2,7 +2,9 @@ USE [GD1C2013]
 GO
 
 
-
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[obtener_premios]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [transportados].[obtener_premios]
+GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[actualizar_puntos]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [transportados].[actualizar_puntos]

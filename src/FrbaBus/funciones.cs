@@ -883,6 +883,30 @@ order by rf.rolf_func_id desc", user_id);
             return Resultado;
         }
 
+        public bool canjearProducto(int id_producto, int clie_dni)
+        {
+            bool Resultado = false;
+            int result;
+
+            this.comandosSql = new SqlCommand("[transportados].[obtener_premios]", this.cnn);
+            this.comandosSql.CommandType = CommandType.StoredProcedure;
+            this.comandosSql.Parameters.Add(new SqlParameter("@clie_dni", clie_dni));
+            this.comandosSql.Parameters.Add(new SqlParameter("@premio_id", id_producto));
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
+
+            this.cnn.Close();
+            return Resultado;
+        }
+
     }
 }
 
