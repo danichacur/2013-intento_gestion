@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace FrbaBus
 {
@@ -15,10 +16,11 @@ namespace FrbaBus
         protected SqlCommand comandosSql;
         protected string mensaje;
 
-
         public conexion()
         {
-            this.cadenaConexion = (@"Data Source=PC_PRUEBA\SQLSERVER2008;Initial Catalog =GD1C2013; integrated security =true;User Id=gd;Password=gd2013;");
+            //this.cadenaConexion = (@"Data Source=PC_PRUEBA\SQLSERVER2008;Initial Catalog =GD1C2013; integrated security =true;User Id=gd;Password=gd2013;");
+            this.cadenaConexion = ConfigurationSettings.AppSettings["conexionBD"];
+            
             this.cnn = new SqlConnection(this.cadenaConexion);
 
         }

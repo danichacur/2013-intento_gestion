@@ -1,6 +1,16 @@
 USE [GD1C2013]
 GO
 
+IF OBJECT_ID (N'transportados.SemYear', N'FN') IS NOT NULL
+    DROP FUNCTION transportados.SemYear;
+GO
+
+/****** Object:  View [transportados].[destino_view]    Script Date: 07/21/2013 09:44:52 ******/
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[transportados].[destino_view]'))
+DROP VIEW [transportados].[destino_view]
+GO
+
+
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[transportados].[obtener_premios]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [transportados].[obtener_premios]

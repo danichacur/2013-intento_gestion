@@ -5,10 +5,19 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 using System.Windows.Forms;
+using System.Configuration;
+
 namespace FrbaBus
 {
     class funciones : conexion
     {
+
+        public static DateTime Ahora()
+        {
+            var sNow = ConfigurationSettings.AppSettings["DateTimeNow"];
+            return DateTime.ParseExact(sNow, "yyyyMMdd HHmmss", System.Globalization.CultureInfo.CurrentCulture);
+        }
+
         public bool insertarViaje(int micro, int recorrido, DateTime f_salida, DateTime f_llegada)
         {
             bool Resultado = false;
@@ -29,8 +38,8 @@ namespace FrbaBus
                             ,@FECHA_LLEGADA_ESTIMADA
                             ,@MICRO
                             ,@RECORRIDO
-                            ,SYSDATETIME()
-                            ,SYSDATETIME()
+                            ,@Ahora
+                            ,@Ahora
                             ,isnull(mi.micr_cant_butacas,0)
                             ,isnull(mi.micr_kg_encomienda,0) 
                             FROM [GD1C2013].[transportados].[micros] mi
@@ -44,6 +53,7 @@ namespace FrbaBus
             this.comandosSql.Parameters.Add(new SqlParameter("@RECORRIDO", recorrido));
             this.comandosSql.Parameters.Add(new SqlParameter("@FECHA_LLEGADA_ESTIMADA", f_llegada));
             this.comandosSql.Parameters.Add(new SqlParameter("@FECHA_SALIDA", f_salida));
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
             if (result > 0)
@@ -71,8 +81,10 @@ namespace FrbaBus
                                             [reco_creado],
                                             [reco_modificado])
                                             values
-                                            ({0},{1},{2},{3},{4},SYSDATETIME(),SYSDATETIME())", ciudOrigen, ciudDestino, tipoServ, basePasaje, baseEncomienda);
+                                            ({0},{1},{2},{3},{4},@Ahora,@Ahora)", ciudOrigen, ciudDestino, tipoServ, basePasaje, baseEncomienda);
+            
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             this.cnn.Open();
             //SqlDataReader Reg = null;
             //Reg = this.comandosSql.ExecuteReader();
@@ -100,8 +112,10 @@ namespace FrbaBus
                                             ,[ciud_modificado]
                                             ,[ciud_baja])
                                             values
-                                            ('{0}',SYSDATETIME(),SYSDATETIME(),0)", ciudad);
+                                            ('{0}',@Ahora,@Ahora,0)", ciudad);
+            
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
             if (result > 0)
@@ -150,11 +164,12 @@ namespace FrbaBus
             this.sql = string.Format(@"SELECT 1
                                     FROM transportados.viajes 
                                     WHERE viaj_id = @VIAJE
-                                    AND viaj_fecha_salida < SYSDATETIME()
+                                    AND viaj_fecha_salida < @Ahora
                                     ");
 
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.comandosSql.Parameters.Add(new SqlParameter("@VIAJE", viaje));
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             //this.comandosSql.Parameters.Add(new SqlParameter("@FECHA", fecha));
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
@@ -212,11 +227,12 @@ namespace FrbaBus
 
             this.sql = string.Format(@"UPDATE transportados.viajes 
                                     SET viaj_fecha_llegada = @FECHA,
-                                    viaj_modificado = SYSDATETIME()
+                                    viaj_modificado = @Ahora
                                     WHERE viaj_id = @VIAJE");
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.comandosSql.Parameters.Add(new SqlParameter("@VIAJE", id_viaje));
             this.comandosSql.Parameters.Add(new SqlParameter("@FECHA", fecha_arribo));
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
              this.cnn.Open();
              result = this.comandosSql.ExecuteNonQuery();
              if (result > 0)
@@ -239,10 +255,11 @@ namespace FrbaBus
 
             this.sql = string.Format(@"INSERT INTO [GD1C2013].[transportados].[micros](
     [micr_tipo_id],[micr_cant_butacas],[micr_kg_encomienda],[micr_marca],[micr_modelo],[micr_baja],[micr_baja_tecnica],[micro_creado],[micr_patente],[micr_pisos] )
-    (select tipo_id,{0},{1},'{2}','{3}',0,0,SYSDATETIME(),'{4}',{5}
+    (select tipo_id,{0},{1},'{2}','{3}',0,0,@Ahora,'{4}',{5}
         from transportados.tipo_servicio where tipo_nombre = '{6}')"
                 , cantButaca, kgCarga, marca, modelo, patente, pisos, tipoServ);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             cnn.Open();
 
             result = this.comandosSql.ExecuteNonQuery();
@@ -294,9 +311,10 @@ namespace FrbaBus
                                         SET
                                         micr_baja = 1,
                                         micr_fecha_baja = '{0}',
-                                        micr_fecha_modificacion = SYSDATETIME()
+                                        micr_fecha_modificacion = @Ahora
                                         WHERE micr_patente = '{1}' ", inicio, patente);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
             if (result > 0)
@@ -322,9 +340,10 @@ namespace FrbaBus
                                         micr_baja_tecnica = 1,
                                         micr_fecha_baja_tecnica = {0} ,
                                         micr_fecha_regreso = {1},
-                                        micr_fecha_modificacion = SYSDATETIME()
+                                        micr_fecha_modificacion = @Ahora
                                         WHERE micr_patente = '{2}' ", inicio, fin, patente);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
             if (result > 0)
@@ -416,11 +435,12 @@ namespace FrbaBus
             this.sql = string.Format(@"UPDATE transportados.micros
                                         SET
                                         micr_marca = @MARCA,
-                                        micr_fecha_modificacion = SYSDATETIME()
+                                        micr_fecha_modificacion = @Ahora
                                         WHERE micr_patente = @PATENTE");
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.comandosSql.Parameters.Add(new SqlParameter("@PATENTE", patente));
             this.comandosSql.Parameters.Add(new SqlParameter("@MARCA", marca));
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
             if (result > 0)
@@ -524,11 +544,12 @@ namespace FrbaBus
             this.sql = string.Format(@"UPDATE [transportados].[ciudad]
                                         SET
                                         ciud_baja = @Baja ,
-                                        ciud_modificado=SYSDATETIME()
+                                        ciud_modificado=@Ahora
                                         where ciud_nombre =@CiudMod");
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
             this.comandosSql.Parameters.Add(new SqlParameter("@CiudMod", CiudName));
             this.comandosSql.Parameters.Add(new SqlParameter("@Baja", IsBaja));
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             this.cnn.Open();
             this.comandosSql.ExecuteNonQuery();
             this.cnn.Close();
@@ -577,7 +598,7 @@ namespace FrbaBus
             this.sql = string.Format(@"UPDATE [transportados].[recorrido]
                                         SET
                                         reco_baja = @Baja ,
-                                        reco_modificado=SYSDATETIME(),
+                                        reco_modificado=@Ahora,
                                         reco_precio_base=@pasaje,
                                         reco_precio_encomienda=@encomienda
                                         where reco_id =@Reco_id");
@@ -586,6 +607,7 @@ namespace FrbaBus
             this.comandosSql.Parameters.Add(new SqlParameter("@Baja", IsBaja));
             this.comandosSql.Parameters.Add(new SqlParameter("@pasaje", Convert.ToInt32(precioPasaje)));
             this.comandosSql.Parameters.Add(new SqlParameter("@encomienda", Convert.ToInt32(precioEncomienda)));
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             this.cnn.Open();
             this.comandosSql.ExecuteNonQuery();
             this.cnn.Close();
@@ -645,9 +667,10 @@ order by rf.rolf_func_id desc", user_id);
                                       ,[Cli_Telefono]={5}
                                       ,[Cli_Mail]={6}
                                       ,[Cli_Fecha_Nac]=CONVERT(datetime,'{7}',103)
-                                      ,[cli_modificado]=SYSDATETIME()
+                                      ,[cli_modificado]=@Ahora
                                         where [Cli_id]={0}", id, dni, nombre, apellido, direccion, telefono, mail, fecha_nac.ToString());
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
             if (result > 0)
@@ -677,8 +700,9 @@ order by rf.rolf_func_id desc", user_id);
                                       ,[cli_creado]
                                       ,[cli_modificado])
                                        VALUES
-                                        ('{0}','{1}',{2},'{3}',{4},'{5}','{6}',SYSDATETIME(),SYSDATETIME())", nombre, apellido, dni, direccion, telefono, mail, fecha_nac.ToString());
+                                        ('{0}','{1}',{2},'{3}',{4},'{5}','{6}',@Ahora,@Ahora)", nombre, apellido, dni, direccion, telefono, mail, fecha_nac.ToString());
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
             if (result > 0)
@@ -916,10 +940,11 @@ order by rf.rolf_func_id desc", user_id);
             this.sql = string.Format(@"
                 update transportados.puntos_pas_frecuente 
                 set punt_vencido=1
-                where punt_fecha < DATEADD(year,-1, SYSDATETIME()) 
+                where punt_fecha < DATEADD(year,-1, @Ahora) 
                 and punt_vencido=0;
                 ");
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.comandosSql.Parameters.Add(new SqlParameter("@Ahora", Ahora()));
             this.cnn.Open();
             result = this.comandosSql.ExecuteNonQuery();
             if (result > 0)

@@ -93,6 +93,9 @@ GO
 
 GO
 
+Select 'Migro los tipos de Servicio'
+GO
+
 /* Crear los tipos de servicio*/
     insert into [GD1C2013].[transportados].[tipo_servicio]
     ([tipo_nombre],
@@ -134,6 +137,9 @@ CREATE TABLE [transportados].[micros](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+
+Select 'Migro los micros'
 GO
 
 /* crear los micros */
@@ -197,6 +203,9 @@ CREATE TABLE [transportados].[ciudad](
 
 GO
 
+Select 'Migro las ciudades'
+GO
+
 /* crear las ciudades */
   INSERT INTO [transportados].[ciudad](
   [ciud_nombre],
@@ -238,6 +247,9 @@ GO
 SET IDENTITY_INSERT  [transportados].[recorrido] ON
 GO
 
+
+Select 'Migro los recorridos'
+GO
 /* crear recorridos */
   INSERT INTO [GD1C2013].[transportados].[recorrido](
       [reco_id],
@@ -291,6 +303,9 @@ CREATE TABLE [transportados].[butaca](
 ;
 
 
+GO
+
+Select 'Migro las butacas'
 GO
 
 /* creacion de butaca */
@@ -347,6 +362,8 @@ CREATE TABLE [transportados].[viajes](
 
 GO
 
+Select 'Migro los viajes'
+GO
 
 /* crear los viajes */
   INSERT INTO [GD1C2013].[transportados].[viajes] (
@@ -523,6 +540,9 @@ CONSTRAINT [PK_transportados.voucher_de_compra] PRIMARY KEY CLUSTERED
 
 GO
 
+Select 'Migro los voucher de compra'
+GO
+
 /* creacion del voucher */
    INSERT INTO [GD1C2013].[transportados].[voucher_de_compra] (
       [vouc_cliente_id],
@@ -602,6 +622,9 @@ GO
 SET IDENTITY_INSERT  [transportados].[pasajes] ON
 GO
 
+Select 'Migro los pasajes'
+GO
+
 /* creacion de los pasajes*/
   insert into [transportados].[pasajes](
 	  [pasa_id],
@@ -668,6 +691,9 @@ CREATE TABLE [transportados].[funcionalidad](
 
 GO
 
+Select 'Creo las funcionalidades'
+GO
+
 INSERT INTO [GD1C2013].[transportados].[funcionalidad]([func_name],[func_creado],[func_modificado])
   VALUES
 ('crear_recorrido',SYSDATETIME(),SYSDATETIME()) ,
@@ -695,8 +721,13 @@ INSERT INTO [GD1C2013].[transportados].[funcionalidad]([func_name],[func_creado]
 ('Viaje',SYSDATETIME(),SYSDATETIME()), 
 ('Pasaje',SYSDATETIME(),SYSDATETIME()) ,
 ('Puntos',SYSDATETIME(),SYSDATETIME()), 
-('Usuarios',SYSDATETIME(),SYSDATETIME()) 
-
+('Usuarios',SYSDATETIME(),SYSDATETIME()) ,
+('Estadisticas',SYSDATETIME(),SYSDATETIME()),
+('pasajesXDestino',SYSDATETIME(),SYSDATETIME()),
+('destinosConMicrosMasVacios',SYSDATETIME(),SYSDATETIME()),
+('clientesConMasPuntosAcumuladosALaFecha',SYSDATETIME(),SYSDATETIME()),
+('destinosConPasajesCancelados',SYSDATETIME(),SYSDATETIME()),
+('microsConMayorCantidadDeDiasFueraDeServicio',SYSDATETIME(),SYSDATETIME())
 
 GO
 
@@ -722,9 +753,12 @@ CREATE TABLE [transportados].[Rol](
 
 GO
 
+Select 'Creo los Roles'
+GO
+
 insert into transportados.Rol (rol_nombre,rol_creado,rol_modificado,rol_borrado)
 values
-('FULL_ACCESS',SYSDATETIME(),SYSDATETIME(),0)
+('FULL_ACCESS',SYSDATETIME(),SYSDATETIME(),0),
 ('Administrativo',SYSDATETIME(),SYSDATETIME(),0)
 
 GO
@@ -748,6 +782,9 @@ CONSTRAINT [PK_transportados.Rol_funcionalidad] PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+
+Select 'Creo la relacion entre el rol y la funcionalidad'
 GO
 
 insert into [GD1C2013].[transportados].[Rol_funcionalidad]
@@ -779,6 +816,12 @@ insert into [GD1C2013].[transportados].[Rol_funcionalidad]
 (1,24,SYSDATETIME(),SYSDATETIME()),
 (1,25,SYSDATETIME(),SYSDATETIME()),
 (1,26,SYSDATETIME(),SYSDATETIME()),
+(1,27,SYSDATETIME(),SYSDATETIME()),
+(1,28,SYSDATETIME(),SYSDATETIME()),
+(1,29,SYSDATETIME(),SYSDATETIME()),
+(1,30,SYSDATETIME(),SYSDATETIME()),
+(1,31,SYSDATETIME(),SYSDATETIME()),
+(1,32,SYSDATETIME(),SYSDATETIME()),
 (2,2,SYSDATETIME(),SYSDATETIME()),
 (2,5,SYSDATETIME(),SYSDATETIME()),
 (2,8,SYSDATETIME(),SYSDATETIME()),
@@ -821,6 +864,9 @@ CONSTRAINT [PK_transportados.usuario] PRIMARY KEY CLUSTERED
 GO
 
 ALTER TABLE [transportados].[usuario] ADD  CONSTRAINT [DF_usuario_usua_logins]  DEFAULT ((0)) FOR [usua_logins]
+GO
+
+Select 'Creo los usuarios'
 GO
 
 INSERT INTO [GD1C2013].[transportados].[usuario]
@@ -880,6 +926,8 @@ CREATE TABLE [transportados].[rol_usuario](
 
 GO
 
+Select 'Creo las relaciones entre el usuario y el rol'
+GO
 
   insert into [GD1C2013].[transportados].[rol_usuario]
   ([rolu_user_id],[rolu_rol_id],[rolu_creado],[rolu_modificado])
@@ -913,6 +961,31 @@ CREATE TABLE [transportados].[facturas] (
 
 GO
 
+Select 'Migro los datos de las facturas'
+GO
+/* creacion de las facturas*/
+  insert into [transportados].[facturas](
+    [fact_voucher_id],
+      [fact_cliente_id] ,
+      [fact_fecha_de_compra] 
+      )
+(    select 
+   vc.vouc_id
+  , vc.vouc_cliente_id
+      ,Pasaje_FechaCompra
+    from [GD1C2013].[gd_esquema].[Maestra] m
+    left outer join transportados.clientes cli on cli.Cli_Dni=m.Cli_Dni,
+  [GD1C2013].[transportados].[viajes] vi
+  left outer join [GD1C2013].[transportados].[micros] mi on vi.viaj_micro=mi.micr_id,
+   [GD1C2013].[transportados].[voucher_de_compra] vc
+  where vi.viaj_recorrido=m.Recorrido_Codigo
+  and vi.viaj_fecha_salida=m.FechaSalida
+  and vc.vouc_cliente_id=cli.Cli_id
+  and vc.vouc_viaje_id=vi.viaj_id
+  and m.Pasaje_FechaCompra=vc.vouc_creado)
+
+ GO
+
 
 /****** Object:  Table [transportados].[premios]    Script Date: 05/21/2013 22:23:12 ******/
 
@@ -934,6 +1007,8 @@ CREATE TABLE [transportados].[premios](
 
 GO
 
+Select 'Creo los Premios'
+GO
 /* creacion de los premios*/
 INSERT INTO transportados.premios([prem_descripcion],[prem_puntos],[prem_stock])
 VALUES	('Tablet',23000,10)
@@ -947,29 +1022,6 @@ INSERT INTO transportados.premios([prem_descripcion],[prem_puntos],[prem_stock])
 VALUES	('Planta',100,10)
 
 
-/* creacion de las facturas*/
-  insert into [transportados].[facturas](
-	  [fact_voucher_id],
-      [fact_cliente_id] ,
-      [fact_fecha_de_compra] 
-      )
-(    select 
-	 vc.vouc_id
-	, vc.vouc_cliente_id
-      ,Pasaje_FechaCompra
-
-    from [GD1C2013].[gd_esquema].[Maestra] m
-    left outer join transportados.clientes cli on cli.Cli_Dni=m.Cli_Dni,
-  [GD1C2013].[transportados].[viajes] vi
-  left outer join [GD1C2013].[transportados].[micros] mi on vi.viaj_micro=mi.micr_id,
-   [GD1C2013].[transportados].[voucher_de_compra] vc
-  where vi.viaj_recorrido=m.Recorrido_Codigo
-  and vi.viaj_fecha_salida=m.FechaSalida
-  and vc.vouc_cliente_id=cli.Cli_id
-  and vc.vouc_viaje_id=vi.viaj_id
-  and m.Pasaje_FechaCompra=vc.vouc_creado)
-
- GO
  
 
 
@@ -994,6 +1046,8 @@ CREATE TABLE [transportados].[puntos_pas_frecuente](
 
 GO
 
+Select 'Migro datos Puntos pasajero frecuente'
+GO
 
 insert into transportados.puntos_pas_frecuente (punt_clie_id,punt_id_viaje,punt_fecha,punt_puntos,punt_vencido,punt_puntos_usados)
 select pasa_clie_id,pasa_viaje_id,viaj_fecha_llegada,pasa_precio/5 as 'puntos', case when viaj_fecha_llegada <DATEADD(year,-1, SYSDATETIME())then 1
@@ -1455,4 +1509,61 @@ values
 (@clie_id,SYSDATETIME(),1,@premio_id)
 end
 
+GO
+
+create function transportados.SemYear (@DATE datetime)
+RETURNS int
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+DECLARE @SemYear int;
+if (month(@DATE) <=6)
+begin 
+set @SemYear = 1
+end
+else
+begin
+set @SemYear = 2
+end
+return @SemYear
+end
+go
+
+
+create view transportados.destino_view as select year(pasa_creado) as 'Año' ,transportados.SemYear(pasa_creado)as 'Semestre',reco_id_ciudad_destino as 'Ciudad' ,COUNT(*) as 'cantidad' from transportados.pasajes
+inner join transportados.viajes on viaj_id=pasa_viaje_id
+inner join transportados.recorrido on reco_id=viaj_recorrido
+group by year(pasa_creado),transportados.SemYear(pasa_creado),reco_id_ciudad_destino
+GO
+
+create view transportados.destinoMicroVacio_view as 
+select year(viaj_fecha_salida) as 'Año' ,
+transportados.SemYear(viaj_fecha_salida)as 'Semestre',reco_id_ciudad_destino as 'Ciudad' ,SUM(viaj_butacas_libres) as 'cantidad' 
+from transportados.viajes
+inner join transportados.recorrido on reco_id=viaj_recorrido
+group by year(viaj_fecha_salida),transportados.SemYear(viaj_fecha_salida),reco_id_ciudad_destino;
+
+GO
+
+
+create view transportados.destinoPasajeCancelado_view as 
+select year(pasa_fecha_devolucion) as 'Año' ,transportados.SemYear(pasa_fecha_devolucion)as 'Semestre',reco_id_ciudad_destino as 'Ciudad' ,COUNT(*) as 'cantidad' from transportados.pasajes
+inner join transportados.viajes on viaj_id=pasa_viaje_id
+inner join transportados.recorrido on reco_id=viaj_recorrido
+where pasa_fecha_devolucion is not null
+group by year(pasa_fecha_devolucion),transportados.SemYear(pasa_fecha_devolucion),reco_id_ciudad_destino
+GO
+
+
+create view transportados.puntosClientes_view as 
+select punt_clie_id, year(punt_fecha) as 'Año' ,transportados.SemYear(punt_fecha)as 'Semestre',cast(SUM(punt_puntos) as decimal (10,2)) as 'Puntos_Acumulados',cast(sum(punt_puntos_usados)as decimal (10,2)) as 'Puntos_usados' from transportados.puntos_pas_frecuente
+group by punt_clie_id,year(punt_fecha),transportados.SemYear(punt_fecha)
+
+GO
+
+
+create view transportados.MicrosView as
+SELECT micr_id,DATEDIFF(day,micr_fecha_regreso,micr_fecha_baja_tecnica ) as 'Cantidad_dias' ,year(micr_fecha_baja_tecnica) as 'Año' ,transportados.SemYear(micr_fecha_baja_tecnica)as 'Semestre'
+from transportados.micros
+where micr_fecha_baja_tecnica is not null
 GO

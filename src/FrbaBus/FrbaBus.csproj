@@ -256,11 +256,11 @@
     <Compile Include="Consulta Puntos Adquiridos\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="Admin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Admin.Designer.cs">
+      <DependentUpon>Admin.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios.cs" />
     <Compile Include="funciones.cs" />
@@ -416,8 +416,8 @@
     <EmbeddedResource Include="ciudades\CiudadBuscar.resx">
       <DependentUpon>CiudadBuscar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Admin.resx">
+      <DependentUpon>Admin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="func_usuario\AgregarFunc.resx">
       <DependentUpon>AgregarFunc.cs</DependentUpon>
@@ -460,6 +460,12 @@
     <EmbeddedResource Include="Registrar LLegada Micro\Nueva_carga.resx">
       <DependentUpon>Nueva_carga.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Top Destinos\resultadoEstadistica.resx">
+      <DependentUpon>resultadoEstadistica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Top Destinos\generarEstadistica.resx">
+      <DependentUpon>generarEstadistica.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -499,26 +505,20 @@
     <Compile Include="Top Clientes\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Top Destinos\Form1.cs">
+    <Compile Include="Top Destinos\generarEstadistica.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Top Destinos\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Top Destinos\generarEstadistica.Designer.cs">
+      <DependentUpon>generarEstadistica.cs</DependentUpon>
     </Compile>
-    <Compile Include="Top Destinos\Form2.cs">
+    <Compile Include="Top Destinos\resultadoEstadistica.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Top Destinos\Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Top Destinos\Form3.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Top Destinos\Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <Compile Include="Top Destinos\resultadoEstadistica.Designer.cs">
+      <DependentUpon>resultadoEstadistica.cs</DependentUpon>
     </Compile>
     <Compile Include="usuarios.cs" />
-    <Compile Include="vistas.cs" />
+    <Compile Include="func_estadisticas.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -565,6 +565,7 @@
     <None Include="Resources\images %281%29.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="Resources\images %282%29.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
