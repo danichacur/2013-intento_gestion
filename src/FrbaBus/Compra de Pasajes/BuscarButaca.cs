@@ -64,12 +64,18 @@ namespace FrbaBus.Compra_de_Pasajes
                 }
                 this.butaca_cli_id.Add(Convert.ToInt32(comboBox1.SelectedValue));
                 this.cantidad_act = this.cantidad_act + 1;
-                MessageBox.Show("Felicitaciones, elegiste la butaca" + comboBox1.SelectedItem, "Seleccion de butaca");
+                MessageBox.Show("Felicitaciones, elegiste la butaca" + comboBox1.SelectedText, "Seleccion de butaca");
             }
             else
             {
                 this.butaca_cli_id.Add(Convert.ToInt32(comboBox1.SelectedValue));
                 this.cantidad_act = this.cantidad_act + 1;
+                cant_butaca prueba = new cant_butaca();
+                if (prueba.kg == "")
+                {
+                    MessageBox.Show("Felicitaciones, elegiste la butaca" + comboBox1.SelectedText, "Seleccion de butaca");
+
+                }
             }
                 if (this.cantidad_act == this.cantidad)
                 {

@@ -21,11 +21,12 @@ namespace FrbaBus.Compra_de_Pasajes
         public Int32 buta_libre;
         public Int32 kg_libre;
         public bool admin;
-
+        public static cant_butaca c_butaca;
 
         public cant_butaca()
         {
             InitializeComponent();
+            cant_butaca.c_butaca = this;
         }
 
         private void cant_butaca_Load(object sender, EventArgs e)
@@ -79,5 +80,14 @@ namespace FrbaBus.Compra_de_Pasajes
             }
 
         }
+
+        public string kg
+        {
+            get
+            {
+                return maskedTextBox2.Text;
+            }
+        }
+
     }
 }
