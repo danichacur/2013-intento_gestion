@@ -41,6 +41,10 @@ namespace FrbaBus.Compra_de_Pasajes
             comboBox2.DisplayMember = "ciud_nombre";
             comboBox2.ValueMember = "ciud_id";
 
+
+            funciones func = new funciones();
+
+            this.dateTimePicker1.Value = func.Ahora();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -50,7 +54,9 @@ namespace FrbaBus.Compra_de_Pasajes
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (this.dateTimePicker1.Value >= DateTime.Now)
+            funciones func = new funciones();
+
+            if (this.dateTimePicker1.Value >= func.Ahora())
             {
                 if (Convert.ToInt32(comboBox1.SelectedValue) != Convert.ToInt32(comboBox2.SelectedValue))
                 {

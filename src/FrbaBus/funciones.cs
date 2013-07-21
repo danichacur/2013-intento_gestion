@@ -12,7 +12,7 @@ namespace FrbaBus
     class funciones : conexion
     {
 
-        public static DateTime Ahora()
+        public DateTime Ahora()
         {
             var sNow = ConfigurationSettings.AppSettings["DateTimeNow"];
             return DateTime.ParseExact(sNow, "yyyyMMdd HHmmss", System.Globalization.CultureInfo.CurrentCulture);

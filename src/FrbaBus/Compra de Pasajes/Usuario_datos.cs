@@ -116,7 +116,7 @@ namespace FrbaBus.Compra_de_Pasajes
                     else
                     {
                         this.add_psj = this.add_psj + 1;
-                        if ((DateTime.Now - this.dateTimePicker1.Value).TotalDays > 23360) this.pasaje_65.Add(Convert.ToInt32(cliente));
+                        if ((func_user.Ahora() - this.dateTimePicker1.Value).TotalDays > 23360) this.pasaje_65.Add(Convert.ToInt32(cliente));
                         MessageBox.Show("Gracias, ya ha ingresado un nuevo pasaje", "Ingreso de pasajeros");
                     }
 
@@ -189,13 +189,14 @@ namespace FrbaBus.Compra_de_Pasajes
 
         private void Usuario_datos_Load()
         {
+            funciones func = new funciones();
             this.maskedTextBox1.Text = string.Empty;
             this.textBox1.Text = string.Empty;
             this.textBox2.Text = string.Empty;
             this.textBox3.Text = string.Empty;
             this.maskedTextBox2.Text = string.Empty;
             this.textBox4.Text = string.Empty;
-            this.dateTimePicker1.Value = DateTime.Now;
+            this.dateTimePicker1.Value =  func.Ahora();
             if (this.discapacitado || this.has_kg)
             {
                 this.checkBox1.Visible = false;
