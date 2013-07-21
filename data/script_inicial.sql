@@ -725,6 +725,7 @@ GO
 insert into transportados.Rol (rol_nombre,rol_creado,rol_modificado,rol_borrado)
 values
 ('FULL_ACCESS',SYSDATETIME(),SYSDATETIME(),0)
+('Administrativo',SYSDATETIME(),SYSDATETIME(),0)
 
 GO
 
@@ -777,8 +778,22 @@ insert into [GD1C2013].[transportados].[Rol_funcionalidad]
 (1,23,SYSDATETIME(),SYSDATETIME()),
 (1,24,SYSDATETIME(),SYSDATETIME()),
 (1,25,SYSDATETIME(),SYSDATETIME()),
-(1,26,SYSDATETIME(),SYSDATETIME())
-
+(1,26,SYSDATETIME(),SYSDATETIME()),
+(2,2,SYSDATETIME(),SYSDATETIME()),
+(2,5,SYSDATETIME(),SYSDATETIME()),
+(2,8,SYSDATETIME(),SYSDATETIME()),
+(2,10,SYSDATETIME(),SYSDATETIME()),
+(2,13,SYSDATETIME(),SYSDATETIME()),
+(2,14,SYSDATETIME(),SYSDATETIME()),
+(2,15,SYSDATETIME(),SYSDATETIME()),
+(2,16,SYSDATETIME(),SYSDATETIME()),
+(2,20,SYSDATETIME(),SYSDATETIME()),
+(2,21,SYSDATETIME(),SYSDATETIME()),
+(2,22,SYSDATETIME(),SYSDATETIME()),
+(2,23,SYSDATETIME(),SYSDATETIME()),
+(2,24,SYSDATETIME(),SYSDATETIME()),
+(2,25,SYSDATETIME(),SYSDATETIME()),
+(2,26,SYSDATETIME(),SYSDATETIME())
 GO
 
 
@@ -870,8 +885,11 @@ GO
   ([rolu_user_id],[rolu_rol_id],[rolu_creado],[rolu_modificado])
   values
   (1,1,SYSDATETIME(),SYSDATETIME()),
-  (2,1,SYSDATETIME(),SYSDATETIME())
-
+  (2,1,SYSDATETIME(),SYSDATETIME()),
+  (3,2,SYSDATETIME(),SYSDATETIME()),
+  (4,2,SYSDATETIME(),SYSDATETIME()),
+  (5,2,SYSDATETIME(),SYSDATETIME()),
+  (6,2,SYSDATETIME(),SYSDATETIME())
   GO
   
   
@@ -1436,8 +1454,5 @@ insert into transportados.premios_obtenidos (obte_clie_id,obte_fecha,obte_cantid
 values
 (@clie_id,SYSDATETIME(),1,@premio_id)
 end
-
-
-
 
 GO

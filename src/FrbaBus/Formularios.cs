@@ -367,7 +367,7 @@ namespace FrbaBus
                 and buta_id not in (select pasa_butaca_id 
                     from transportados.pasajes 
                     where pasa_viaje_id=viaj_id 
-                    and pasa_kg_encomienda <> 0)", viaje_id);
+                    and pasa_kg_encomienda = 0)", viaje_id);
             DataSet ds = new DataSet();
             //indicamos la consulta en SQL
             SqlDataAdapter da = new SqlDataAdapter(this.sql, this.cnn);

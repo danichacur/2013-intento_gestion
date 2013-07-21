@@ -19,14 +19,30 @@ namespace FrbaBus.Canje_de_Ptos
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Formularios puntos = new Formularios();
-            ListadoPuntos listadopuntos = new ListadoPuntos();
-            listadopuntos.puntoslista = puntos.dataPuntosFrecuente(Convert.ToInt32(this.textBox1.Text));
-            listadopuntos.premiolista = puntos.datapremiosFrecuente(Convert.ToInt32(this.textBox1.Text));
-            listadopuntos.clie_dni = Convert.ToInt32(this.textBox1.Text);
-            listadopuntos.admin = this.admin;
-            this.Hide();
-            listadopuntos.Show();
+            if (this.textBox1.Text != string.Empty)
+            {
+                Formularios puntos = new Formularios();
+                funciones func = new funciones();
+                func.vencerPuntos();
+                ListadoPuntos listadopuntos = new ListadoPuntos();
+                listadopuntos.puntoslista = puntos.dataPuntosFrecuente(Convert.ToInt32(this.textBox1.Text));
+                if (listadopuntos.puntoslista.Tables[0].Rows.Count > 0)
+                {
+                    listadopuntos.premiolista = puntos.datapremiosFrecuente(Convert.ToInt32(this.textBox1.Text));
+                    listadopuntos.clie_dni = Convert.ToInt32(this.textBox1.Text);
+                    listadopuntos.admin = this.admin;
+                    this.Hide();
+                    listadopuntos.Show();
+                }
+                else
+                {
+                    MessageBox.Show("No existen datos para el DNI ingresado", "Puntos");
+                }
+            }
+            else
+            {
+                MessageBox.Show("El DNI no puede estar vacio", "Error");
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

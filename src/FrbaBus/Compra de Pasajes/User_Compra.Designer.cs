@@ -151,7 +151,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(105, 13);
             this.label7.TabIndex = 24;
-            this.label7.Text = "fecha de Nacimeinto";
+            this.label7.Text = "fecha de Nacimiento";
             // 
             // label6
             // 

@@ -44,7 +44,7 @@ namespace FrbaBus.Compra_de_Pasajes
             if (comboBox1.SelectedItem != string.Empty)
             {
                 User_Compra compra = new User_Compra();
-                compra.opcion = comboBox1.SelectedText;
+                compra.opcion = comboBox1.SelectedItem.ToString();
                 compra.pasaje_cli_id = this.pasaje_cli_id;
                 compra.butaca_cli_id = this.butaca_cli_id;
                 compra.viaje_id = this.viaje_id;
@@ -54,7 +54,7 @@ namespace FrbaBus.Compra_de_Pasajes
                 compra.has_discapacitado = this.has_discapacitado;
                 compra.cant_psj = this.cant_psj;
                 compra.Show();
-                this.Hide();
+                this.Close();
 
             }
            

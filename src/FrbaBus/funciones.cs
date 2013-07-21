@@ -776,6 +776,7 @@ order by rf.rolf_func_id desc", user_id);
                 transportados.viajes v2
                 where pasa_clie_id={0}
                 and v2.viaj_id = {1}
+                and pasa_kg_encomienda=0
                 and (((v2.viaj_fecha_salida < v1.viaj_fecha_llegada or    v2.viaj_fecha_salida < v1.viaj_fecha_llegada_estimada) 
 		                and v2.viaj_fecha_salida > v1.viaj_fecha_salida) or
                       ((v2.viaj_fecha_llegada > v1.viaj_fecha_salida or  v2.viaj_fecha_llegada_estimada > v1.viaj_fecha_salida) 
@@ -799,6 +800,7 @@ order by rf.rolf_func_id desc", user_id);
             this.sql = string.Format(@"select * from transportados.pasajes
                 where pasa_clie_id={0}
                 and pasa_viaje_id = {1}
+                and pasa_kg_encomienda=0
                 ", clie_id, viaj_id);
             this.comandosSql = new SqlCommand(this.sql, this.cnn);
 
@@ -903,6 +905,31 @@ order by rf.rolf_func_id desc", user_id);
                 Resultado = false;
             }
 
+            this.cnn.Close();
+            return Resultado;
+        }
+
+        public bool vencerPuntos()
+        {
+            bool Resultado ;
+            Int32 result;
+            this.sql = string.Format(@"
+                update transportados.puntos_pas_frecuente 
+                set punt_vencido=1
+                where punt_fecha < DATEADD(year,-1, SYSDATETIME()) 
+                and punt_vencido=0;
+                ");
+            this.comandosSql = new SqlCommand(this.sql, this.cnn);
+            this.cnn.Open();
+            result = this.comandosSql.ExecuteNonQuery();
+            if (result > 0)
+            {
+                Resultado = true;
+            }
+            else
+            {
+                Resultado = false;
+            }
             this.cnn.Close();
             return Resultado;
         }

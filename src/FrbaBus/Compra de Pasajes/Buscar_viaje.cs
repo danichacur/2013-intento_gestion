@@ -50,15 +50,26 @@ namespace FrbaBus.Compra_de_Pasajes
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(comboBox1.SelectedValue) != Convert.ToInt32(comboBox2.SelectedValue))
+            if (this.dateTimePicker1.Value >= DateTime.Now)
             {
+                if (Convert.ToInt32(comboBox1.SelectedValue) != Convert.ToInt32(comboBox2.SelectedValue))
+                {
 
-                Select_viaje form_viaje = new Select_viaje();
-                form_viaje.ciud_origen = Convert.ToInt32(comboBox1.SelectedValue);
-                form_viaje.ciud_destino = Convert.ToInt32(comboBox2.SelectedValue);
-                form_viaje.fecha = Convert.ToString(dateTimePicker1.Value);
-                form_viaje.admin = this.admin;
-                form_viaje.Show();
+                    Select_viaje form_viaje = new Select_viaje();
+                    form_viaje.ciud_origen = Convert.ToInt32(comboBox1.SelectedValue);
+                    form_viaje.ciud_destino = Convert.ToInt32(comboBox2.SelectedValue);
+                    form_viaje.fecha = Convert.ToString(dateTimePicker1.Value);
+                    form_viaje.admin = this.admin;
+                    form_viaje.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Las cidades de origen  y destino no pueden ser iguales", "Error Destinos");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar una fecha mayor al dia de hoy", "Error Fecha");
             }
         }
     }

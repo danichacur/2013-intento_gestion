@@ -61,6 +61,7 @@ namespace FrbaBus.Compra_de_Pasajes
         {
             if (comboBox1.SelectedItem.ToString() == "Visa")
             {
+                comboBox2.Items.Clear();
                 comboBox2.Items.Add("1");
                 comboBox2.Items.Add("3");
                 comboBox2.Items.Add("6");
@@ -68,6 +69,7 @@ namespace FrbaBus.Compra_de_Pasajes
             }
             else
             {
+                comboBox2.Items.Clear();
                 comboBox2.Items.Add("1");
             }
         }
@@ -226,7 +228,7 @@ namespace FrbaBus.Compra_de_Pasajes
             double precio_butaca = func.getPasjasjePrecio(this.viaje_id);
             double precio_encomienda = func.getEncomiendaPrecio(this.viaje_id);
 
-            for (Int32 i = 1; i < butaca_cli_id.Count; i++)
+            for (Int32 i = 0; i < butaca_cli_id.Count; i++)
             {
                 if (this.pasaje_65.Contains(Convert.ToInt32(this.pasaje_cli_id[i])))
                 {

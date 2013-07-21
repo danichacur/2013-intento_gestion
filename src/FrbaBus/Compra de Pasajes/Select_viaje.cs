@@ -26,7 +26,16 @@ namespace FrbaBus.Compra_de_Pasajes
         {
             Formularios Viaje = new Formularios();
             DataSet Viajelista = Viaje.ViajesListaBusqueda(ciud_origen, ciud_destino, fecha);
-            dataGridView1.DataSource = Viajelista.Tables[0].DefaultView;
+            if (Viajelista.Tables[0].Rows.Count > 0)
+            {
+                dataGridView1.DataSource = Viajelista.Tables[0].DefaultView;
+            }
+            else
+            {
+                MessageBox.Show("No existen viajes con los datos proporcionados", "Viajes");
+                this.Close();
+            }
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -45,7 +54,7 @@ namespace FrbaBus.Compra_de_Pasajes
             butaca.kg_libre = Convert.ToInt32(dataGridView1.CurrentRow.Cells["viaj_KG_disponible"].Value.ToString());
             butaca.admin = this.admin;
             butaca.Show();
-            this.Hide();
+            this.Close();
             
         }
     }

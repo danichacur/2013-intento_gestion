@@ -123,7 +123,7 @@ namespace FrbaBus.Compra_de_Pasajes
                     if (this.cant_pasj == this.add_psj && this.has_kg == false)
                     {
                         BuscarButaca busq = new BuscarButaca();
-                        this.Hide();
+                        
                         busq.cantidad = add_psj;
                         busq.kg = cant_kg;
                         busq.pasaje_cli_id = this.pasaje_cli_id;
@@ -133,6 +133,8 @@ namespace FrbaBus.Compra_de_Pasajes
                         busq.pasaje_65 = this.pasaje_65;
                         busq.has_discapacitado = this.has_discapacitado;
                         busq.Show();
+
+                        this.Close();
                     }
                     else
                     {

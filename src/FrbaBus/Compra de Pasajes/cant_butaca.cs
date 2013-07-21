@@ -21,12 +21,12 @@ namespace FrbaBus.Compra_de_Pasajes
         public Int32 buta_libre;
         public Int32 kg_libre;
         public bool admin;
-        public static cant_butaca c_butaca;
+        //public static cant_butaca c_butaca;
 
         public cant_butaca()
         {
             InitializeComponent();
-            cant_butaca.c_butaca = this;
+           // cant_butaca.c_butaca = this;
         }
 
         private void cant_butaca_Load(object sender, EventArgs e)
@@ -36,6 +36,7 @@ namespace FrbaBus.Compra_de_Pasajes
             textBox3.Text = ciud_dest_nombre;
             textBox4.Text = tipo_nombre;
             textBox5.Text = fecha;
+
 
         }
 
@@ -76,18 +77,18 @@ namespace FrbaBus.Compra_de_Pasajes
                     data.has_kg = true;
                 }
                 data.Show();
-                this.Hide();
+                this.Close();
             }
 
         }
 
-        public string kg
+       /* public string kg
         {
             get
             {
                 return maskedTextBox2.Text;
             }
-        }
+        }*/
 
     }
 }

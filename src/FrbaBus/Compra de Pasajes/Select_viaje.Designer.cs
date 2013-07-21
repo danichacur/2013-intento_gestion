@@ -55,7 +55,7 @@
             this.ClientSize = new System.Drawing.Size(625, 332);
             this.Controls.Add(this.dataGridView1);
             this.Name = "Select_viaje";
-            this.Text = "Select_viaje";
+            this.Text = "Eleccion del viaje";
             this.Load += new System.EventHandler(this.Select_viaje_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

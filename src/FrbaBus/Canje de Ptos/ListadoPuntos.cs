@@ -24,7 +24,8 @@ namespace FrbaBus.Canje_de_Ptos
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            if (this.admin == false)
+            { this.button2.Text = "Ver Premios"; }
             dataGridView1.DataSource = puntoslista.Tables[0].DefaultView;
             this.textBox1.Text = (Convert.ToDouble(puntoslista.Tables[0].Compute("Sum(Puntos)", "Vencido=false").ToString())
                                         - Convert.ToDouble(puntoslista.Tables[0].Compute("Sum(Puntos_Usados)", "Vencido=false").ToString())).ToString();
